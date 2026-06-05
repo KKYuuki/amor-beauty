@@ -1,6 +1,6 @@
 {
-    "name": "inksight-rdmd",
-    "version": "2026.3.2",
+    "name": "amorbeauty-system",
+    "version": "2026.1.0",
     "private": true,
     "packageManager": "bun@1.1.38",
     "scripts": {

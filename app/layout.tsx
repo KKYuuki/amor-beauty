@@ -42,7 +42,7 @@ export default async function RootLayout({
                 <meta name='theme-color' content='#000000' />
                 <meta name='apple-mobile-web-app-capable' content='yes' />
                 <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent' />
-                <meta name='apple-mobile-web-app-title' content='Inksight RDMD' />
+                <meta name='apple-mobile-web-app-title' content='Amor Beauty Lounge' />
                 <meta name='mobile-web-app-capable' content='yes' />
                 <link rel='apple-touch-icon' href='/icon-512.png' />
                 <link rel='manifest' href='/manifest.webmanifest' />

@@ -14,7 +14,7 @@ import {
     Head,
 } from "@react-email/components"
 
-const logo = "https://inksight.rdmdstudio.com/icon.png"
+const logo = "https://amorbeautylounge.com/icon.png"
 
 export function BaseEmailTemplate({
     subject,
@@ -34,7 +34,7 @@ export function BaseEmailTemplate({
                     <Container className='mx-auto my-0 max-w-[600px] px-0 pt-5 pb-12'>
                         <Img
                             src={logo}
-                            alt='InkSight'
+                            alt='Amor Beauty Lounge'
                             className='h-auto w-20'
                         />
                         <Heading className='font-serif text-[24px] tracking-[-0.5px] leading-[1.3] pt-[17px] px-0 pb-0'>
@@ -43,10 +43,10 @@ export function BaseEmailTemplate({
                         {children}
                         <Hr className='border-white/20 mt-[42px] mb-[26px]' />
                         <Link
-                            href='https://inksight.rdmdstudio.com'
+                            href='https://amorbeautylounge.com'
                             className='text-white/60 text-[14px]'
                         >
-                            InkSight by RDMD. Studio
+                            Amor Beauty Lounge
                         </Link>
                     </Container>
                 </Body>
@@ -88,12 +88,11 @@ export function SendInvitationTemplate({
 }) {
     return (
         <BaseEmailTemplate
-            subject='You have been invited to InkSight!'
+            subject='You have been invited to Amor Beauty Lounge!'
             preview='This link is only valid until the next day. Please use the link before the day ends.'
         >
             <Text className='mx-0 mt-0 leading-[1.4] text-[15px] text-white'>
-                Hello <b>{email}</b>, you have been invited to InkSight by RDMD.
-                Studio.
+                Hello <b>{email}</b>, you have been invited to Amor Beauty Lounge.
             </Text>
             <Text className='mx-0 mt-0 leading-[1.4] text-[15px] text-white'>
                 Please click the button below to accept your invitation or copy

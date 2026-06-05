@@ -5,7 +5,7 @@ import { branches } from './branches'
 // ============================================================================
 // Appointments Schema
 // ============================================================================
-// Core appointment management tables for InkSight RDMD
+// Core appointment management tables for Amor Beauty Lounge
 //
 // Tables:
 //   - appointments: Main appointments table (walk-in and scheduled)

@@ -28,7 +28,7 @@ export async function generateReceiptPdf(data: ReceiptData): Promise<Uint8Array>
     let y = 580
 
     // Header
-    page.drawText(data.branchName || 'INKSIGHT STUDIO', { x: 20, y, size: 14, font })
+    page.drawText(data.branchName || 'AMOR BEAUTY LOUNGE', { x: 20, y, size: 14, font })
     y -= 20
     page.drawText('================================', { x: 20, y, size: 10, font })
     y -= 15

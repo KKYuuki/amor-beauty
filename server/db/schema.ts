@@ -1,7 +1,7 @@
 // ============================================================================
 // DRIZZLE SCHEMA - Main Export File
 // ============================================================================
-// This file exports all database schemas for the InkSight RDMD application.
+// This file exports all database schemas for the Amor Beauty Lounge application.
 // Schema is organized by domain for maintainability.
 //
 // Structure:
@@ -70,18 +70,6 @@ export {
     payrollDeductionsRelations,
     payrollDisbursementRelations,
 } from './schema/payroll'
-
-// Appointments Schema
-export {
-    appointments,
-    tattooDetails,
-    shoeDetails,
-    piercingDetails,
-    appointmentServices,
-    appointmentItems,
-    appointmentsRelations,
-    appointmentServicesRelations,
-} from './schema/appointments'
 
 // Invitations Schema
 export {

@@ -46,7 +46,7 @@ export const auth = betterAuth({
     },
     plugins: [
         twoFactor({
-            issuer: 'Inksight',
+            issuer: 'Amor Beauty',
         }),
         admin(),
         passkey(),

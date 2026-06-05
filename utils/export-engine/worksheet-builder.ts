@@ -45,7 +45,7 @@ export function addTitleSection(
 
     worksheet.mergeCells('A2:I2')
     const subtitleCell = worksheet.getCell('A2')
-    subtitleCell.value = subtitle || 'InkSight RDMD'
+    subtitleCell.value = subtitle || 'Amor Beauty Lounge'
     subtitleCell.font = FONTS.subtitle
     subtitleCell.alignment = ALIGNMENTS.center
 

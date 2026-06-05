@@ -37,7 +37,7 @@ export async function sendEmail(
 
     // Send Email
     const { error:   mail_err } = await resend.emails.send({
-        from: "InkSight <inksight@rdmdstudio.com>",
+        from: "Amor Beauty Lounge <inksight@rdmdstudio.com>",
         to: to,
         subject: subject,
         html,
@@ -329,7 +329,7 @@ export async function requestPasswordResetEmail(email: string, authkey: string):
 export async function sendInviteEmail(email: string, authkey: string): Promise<ActionResponse<string>> {
     const link = `https://inksight.rdmdstudio.com/auth?action=user_type&key=${authkey}`
     const content = SendInvitationTemplate({ link, email })
-    return await sendEmail(email, 'InkSight Invitation', content)
+    return await sendEmail(email, 'Amor Beauty Lounge Invitation', content)
 }
 
 export interface BulkEmailResult {

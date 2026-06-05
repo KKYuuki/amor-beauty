@@ -1,12 +1,12 @@
-// Inksight RDMD Service Worker
+// Amor Beauty Lounge Service Worker
 // Provides offline support and caching for the PWA
 
 const CACHE_VERSION = "v1"
-const STATIC_CACHE = `inksight-static-${CACHE_VERSION}`
-const PAGES_CACHE = `inksight-pages-${CACHE_VERSION}`
-const API_CACHE = `inksight-api-${CACHE_VERSION}`
-const IMAGE_CACHE = `inksight-images-${CACHE_VERSION}`
-const FONT_CACHE = `inksight-fonts-${CACHE_VERSION}`
+const STATIC_CACHE = `amorbeauty-static-${CACHE_VERSION}`
+const PAGES_CACHE = `amorbeauty-pages-${CACHE_VERSION}`
+const API_CACHE = `amorbeauty-api-${CACHE_VERSION}`
+const IMAGE_CACHE = `amorbeauty-images-${CACHE_VERSION}`
+const FONT_CACHE = `amorbeauty-fonts-${CACHE_VERSION}`
 
 // Assets to precache on install
 const PRECACHE_URLS = [
@@ -34,7 +34,7 @@ self.addEventListener("activate", (event) => {
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames
-                    .filter((name) => name.startsWith("inksight-") && name !== STATIC_CACHE && name !== PAGES_CACHE && name !== API_CACHE && name !== IMAGE_CACHE && name !== FONT_CACHE)
+                    .filter((name) => name.startsWith("amorbeauty-") && name !== STATIC_CACHE && name !== PAGES_CACHE && name !== API_CACHE && name !== IMAGE_CACHE && name !== FONT_CACHE)
                     .map((name) => caches.delete(name))
             )
         })

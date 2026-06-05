@@ -27,7 +27,7 @@ export const user = pgTable('user', {
     // Better-Auth 2FA plugin field
     twoFactorEnabled: boolean('two_factor_enabled').default(false),
     
-    // Custom InkSight fields
+    // Custom Amor Beauty fields
     fullName: varchar('full_name', { length: 255 }),
     phoneNumber: varchar('phone_number', { length: 50 }),
     instagramHandle: varchar('instagram_handle', { length: 100 }),

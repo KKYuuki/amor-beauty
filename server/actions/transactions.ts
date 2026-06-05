@@ -1584,7 +1584,7 @@ export async function generateReceipt(transactionId: string): Promise<ActionResp
     const { transaction, items } = txnResult.data
 
     // Get branch name if branch_id exists
-    let branchName = 'INKSIGHT STUDIO'
+    let branchName = 'AMOR BEAUTY LOUNGE'
     if (transaction.branch_id) {
         const branchResult = await getBranchById(transaction.branch_id)
         if (branchResult.success && branchResult.data) {

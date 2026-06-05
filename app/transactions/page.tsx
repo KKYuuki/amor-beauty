@@ -6,7 +6,7 @@ import { getCurrentUser, canAccessTransactions } from "@/utils/auth/permissions"
 export const dynamic = "force-dynamic"
 
 export const metadata: Metadata = {
-    title: "Transactions | InkSight",
+    title: "Transactions | Amor Beauty",
     description: "Manage transactions",
 }
 

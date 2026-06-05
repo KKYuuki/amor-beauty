@@ -211,7 +211,7 @@ export async function seedDatabase(): Promise<SeedResult> {
 }
 
 async function main() {
-    console.log('\n🌱 InkSight Database Seed Script\n')
+    console.log('\n🌱 Amor Beauty Lounge Database Seed Script\n')
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n')
 
     const steps: { name: string; icon: string; fn: () => Promise<{ seeded: number; skipped: number }> }[] = [

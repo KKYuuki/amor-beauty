@@ -2,7 +2,7 @@ import Link from "next/link"
 import { ShieldAlert } from "lucide-react"
 
 export const metadata = {
-    title: "Unauthorized — InkSight",
+    title: "Unauthorized — Amor Beauty",
     description: "You don't have permission to access this page",
 }
 

@@ -1,18 +1,16 @@
 import { Metadata } from "next"
 
-const location = process.env.LOCATION || "RDMD"
-
 export default function consMeta({
-    title = `InkSight ${location}`,
-    description = `Your dedicated ${location} tattoo and piercing booking platform. Find availability, request appointments, and track your next ink—all in one place.`,
-    image = '/inksight-banner.png',
+    title = "Amor Beauty Lounge",
+    description = "Beauty and wellness management system for Amor Beauty Lounge.",
+    image = '/icon-512.png',
     icons = '/icon-512.png',
-    url = 'https://cebu.rdmdstudio.com',
+    url = 'https://amorbeautylounge.com',
     noIndex = true,
-    keywords = ['tattoo', 'piercing', 'cebu', 'booking', 'inksight', 'rdmd'],
-    author = "RDMD Studio",
-    twitterHandle = "@rdmdstudio",
-    themeColor = "#000000",
+    keywords = ['beauty', 'salon', 'management', 'amor', 'booking'],
+    author = "Amor Beauty Lounge",
+    twitterHandle = "@amorbeautylounge",
+    themeColor = "#d44b6e",
 }: {
     title?: string | { default: string, template: string },
     description?: string
@@ -26,7 +24,7 @@ export default function consMeta({
     themeColor?: string
 } = {}): Metadata {
     return {
-        title: typeof title === 'string' ? { default: title, template: `%s | InkSight ${location}` } : title,
+        title: typeof title === 'string' ? { default: title, template: `%s | Amor Beauty Lounge` } : title,
         description,
         keywords,
         authors: [{ name: author }],
@@ -34,7 +32,7 @@ export default function consMeta({
         openGraph: {
             title,
             description,
-            siteName: `Inksight ${location}`,
+            siteName: "Amor Beauty Lounge",
             url,
             images: [{ url: image }],
             locale: 'en_US',
@@ -62,8 +60,8 @@ export default function consMeta({
         manifest: '/manifest.webmanifest',
         appleWebApp: {
             capable: true,
-            statusBarStyle: 'black-translucent',
-            title: `InkSight ${location}`,
+            statusBarStyle: 'default',
+            title: "Amor Beauty Lounge",
             startupImage: image,
         },
         formatDetection: {
