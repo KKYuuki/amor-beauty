@@ -1,0 +1,1 @@
+ALTER TABLE "general_ledger" ADD CONSTRAINT "check_debit_credit_valid" CHECK (CAST(debit AS NUMERIC) >= 0 AND CAST(credit AS NUMERIC) >= 0 AND (CAST(debit AS NUMERIC) > 0 OR CAST(credit AS NUMERIC) > 0));

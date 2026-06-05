@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme inline {
+    --font-sans: var(--font-geist);
+    --font-bodoni: var(--font-bodoni);
+}
+
+@keyframes drain {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0); }
+}

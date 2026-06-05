@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "accounting_category_name_unique" ON "accounting_category" USING btree (LOWER("name"));
