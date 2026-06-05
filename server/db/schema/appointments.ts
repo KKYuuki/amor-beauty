@@ -37,7 +37,7 @@ export const appointments = pgTable('appointments', {
         enum: ['PENDING', 'CONFIRMED', 'ONGOING', 'COMPLETED', 'CANCELLED']
     }).notNull().default('PENDING'),
     type: text('type', {
-        enum: ['TATTOO', 'SHOE', 'PIERCING', 'OTHER']
+        enum: ['HAIR', 'NAILS', 'FACIAL', 'BODY_MASSAGE', 'WAXING', 'LASH_BROW', 'MAKEUP', 'OTHER']
     }),
     
     // Notes and metadata

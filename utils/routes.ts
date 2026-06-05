@@ -1,5 +1,4 @@
 import {
-    CalendarIcon,
     ChartAreaIcon,
     HomeIcon,
     PackageIcon,
@@ -21,7 +20,6 @@ import { routeConfig, RouteConfig } from "./routes-config"
 
 const iconMap: Record<string, LucideIcon> = {
     HomeIcon,
-    CalendarIcon,
     ClipboardListIcon,
     PackageIcon,
     ChartAreaIcon,

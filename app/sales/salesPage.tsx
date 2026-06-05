@@ -33,15 +33,6 @@ function SalesContent() {
         service.title.toLowerCase().includes(sales.searchQuery.toLowerCase()),
     )
 
-    const filteredAppointments = sales.appointments.filter((apt) => {
-        // Cast to access UnpaidAppointment properties
-        const unpaidApt =
-            apt as import("@/components/sales/context/SalesContext").UnpaidAppointment
-        return (unpaidApt.user_profiles?.full_name || apt.client_name || "")
-            .toLowerCase()
-            .includes(sales.searchQuery.toLowerCase())
-    })
-
     return (
         <AnimatePresence>
             <div
@@ -56,7 +47,6 @@ function SalesContent() {
                         {...sales}
                         filteredInventory={filteredInventory}
                         filteredServices={filteredServices}
-                        filteredAppointments={filteredAppointments}
                     />
                     <RecentTransactions
                         {...sales}

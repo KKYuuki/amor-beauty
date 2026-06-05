@@ -14,15 +14,23 @@ interface SalesDescriptionResult {
 }
 
 const SERVICE_TYPE_PREFIX: Record<string, string> = {
-    TATTOO: "Tattoo",
-    PIERCING: "Piercing",
-    SHOE: "Shoe",
+    HAIR: "Hair",
+    NAILS: "Nails",
+    FACIAL: "Facial",
+    BODY_MASSAGE: "Body Massage",
+    WAXING: "Waxing",
+    LASH_BROW: "Lash & Brow",
+    MAKEUP: "Makeup",
 }
 
 const SERVICE_TYPE_CATEGORY: Record<string, string> = {
-    TATTOO: "Tattoo Services",
-    PIERCING: "Piercing Services",
-    SHOE: "Shoe Services",
+    HAIR: "Hair Services",
+    NAILS: "Nail Services",
+    FACIAL: "Facial Services",
+    BODY_MASSAGE: "Massage Services",
+    WAXING: "Waxing Services",
+    LASH_BROW: "Lash & Brow Services",
+    MAKEUP: "Makeup Services",
     MANUAL: "Services",
 }
 

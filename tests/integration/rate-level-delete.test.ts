@@ -21,7 +21,7 @@ describe("Rate Level Deletion with Referencing Staff Rates", () => {
       .insert(payrollStaffRate)
       .values({
         rateName: "Test FK Rate",
-        serviceType: "TATTOO",
+        serviceType: "HAIR",
         clientType: "WALKIN",
         rateLevelId: levelId,
         shopPercentage: "50",

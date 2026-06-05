@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { routeConfig } from '@/utils/routes-config'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://inksight.rdmdstudio.com'
+    const baseUrl = 'https://amorbeautylounge.com'
 
     return routeConfig.map((route) => ({
         url: `${baseUrl}${route.href}`,

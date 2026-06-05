@@ -17,12 +17,12 @@ async function main() {
     console.log(`✅ Branch: ${branch.name}`)
 
     // Get artist
-    const [artist] = await db.select().from(user).where(eq(user.email, 'e2e-artist@rdmdstudio.com'))
+    const [artist] = await db.select().from(user).where(eq(user.email, 'e2e-artist@amorbeautylounge.com'))
     if (!artist) { console.error('❌ Artist not found'); process.exit(1) }
     console.log(`✅ Artist: ${artist.name}`)
 
     // Get manager
-    const [manager] = await db.select().from(user).where(eq(user.email, 'e2e-manager@rdmdstudio.com'))
+    const [manager] = await db.select().from(user).where(eq(user.email, 'e2e-manager@amorbeautylounge.com'))
     if (!manager) { console.error('❌ Manager not found'); process.exit(1) }
     console.log(`✅ Creator: ${manager.name}`)
 
@@ -35,12 +35,12 @@ async function main() {
     // Create appointments for each type
     const appts = [
         {
-            title: '[E2E] Full Tattoo Lifecycle Test',
+            title: '[E2E] Full Hair Appointment Lifecycle Test',
             staffId: artist.id,
             timeStart: new Date(tomorrow.setHours(10, 0, 0, 0)),
             timeEnd: new Date(tomorrow.setHours(12, 0, 0, 0)),
             status: 'COMPLETED' as const,
-            type: 'TATTOO' as const,
+            type: 'HAIR' as const,
             clientName: 'Test Client A',
             clientPhone: '+639000000001',
             createdBy: manager.id,
@@ -50,12 +50,12 @@ async function main() {
             paymentStatus: 'UNPAID' as const,
         },
         {
-            title: '[E2E] Piercing Lifecycle Test',
+            title: '[E2E] Nail Appointment Lifecycle Test',
             staffId: artist.id,
             timeStart: new Date(new Date(now).setDate(now.getDate() + 2)),
             timeEnd: new Date(new Date(now).setDate(now.getDate() + 2)),
             status: 'CONFIRMED' as const,
-            type: 'PIERCING' as const,
+            type: 'NAILS' as const,
             clientName: 'Test Client B',
             clientPhone: '+639000000002',
             createdBy: manager.id,
@@ -65,12 +65,12 @@ async function main() {
             paymentStatus: 'UNPAID' as const,
         },
         {
-            title: '[E2E] Shoe Cleaning Test',
+            title: '[E2E] Facial Appointment Test',
             staffId: artist.id,
             timeStart: new Date(new Date(now).setDate(now.getDate() + 3)),
             timeEnd: new Date(new Date(now).setDate(now.getDate() + 3)),
             status: 'CONFIRMED' as const,
-            type: 'SHOE' as const,
+            type: 'FACIAL' as const,
             clientName: 'Test Client C',
             clientPhone: '+639000000003',
             createdBy: manager.id,
@@ -80,12 +80,12 @@ async function main() {
             paymentStatus: 'UNPAID' as const,
         },
         {
-            title: '[E2E] Walk-in Tattoo with Downpayment',
+            title: '[E2E] Walk-in Hair Appointment with Downpayment',
             staffId: artist.id,
             timeStart: now,
             timeEnd: new Date(now.getTime() + 2 * 60 * 60 * 1000),
             status: 'COMPLETED' as const,
-            type: 'TATTOO' as const,
+            type: 'HAIR' as const,
             clientName: 'Walk-in Client Z',
             clientPhone: '+639000000005',
             createdBy: manager.id,
@@ -102,7 +102,7 @@ async function main() {
             timeStart: new Date(new Date(now).setDate(now.getDate() + 4)),
             timeEnd: new Date(new Date(now).setDate(now.getDate() + 4)),
             status: 'CONFIRMED' as const,
-            type: 'TATTOO' as const,
+            type: 'HAIR' as const,
             clientName: 'Test Client D',
             clientPhone: '+639000000004',
             createdBy: manager.id,

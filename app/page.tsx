@@ -4,7 +4,7 @@ import { UserProfile } from "@/utils/types/auth"
 import { getCurrentUser } from "@/utils/auth/permissions"
 import { redirect } from "next/navigation"
 import { getInventory } from "@/server/actions/inventory"
-import { getUserAppointments, getMonthlyAppointments } from "@/server/actions/appointments"
+
 import { getTodaySummary } from "@/server/actions/transactions"
 import { getFinancialMetrics } from "@/server/actions/metrics"
 import { createLogs } from "@/server/actions/logs"
@@ -26,11 +26,9 @@ export default async function Dashboard() {
         // The client component dispatches to the correct dashboard view.
         const isAdmin = currentUser.role === "admin"
 
-        const [inventory, monthlyAppts, userAppts, dailySales, financialMetrics] =
+        const [inventory, dailySales, financialMetrics] =
             await Promise.all([
                 getInventory(),
-                isAdmin ? getMonthlyAppointments() : Promise.resolve(null),
-                getUserAppointments(currentUser.id),
                 isAdmin ? getTodaySummary() : Promise.resolve(null),
                 isAdmin ? getFinancialMetrics() : Promise.resolve(null),
             ])
@@ -40,10 +38,6 @@ export default async function Dashboard() {
             admin: isAdmin
                 ? {
                       inventory: inventory || [],
-                      appointments:
-                          monthlyAppts?.success && monthlyAppts.data
-                              ? monthlyAppts.data
-                              : [],
                       dailySales: dailySales?.success && dailySales.data
                           ? dailySales.data
                           : { totalRevenue: 0, completedCount: 0, pendingCount: 0, itemsSold: 0, servicesRendered: 0 },
@@ -60,10 +54,6 @@ export default async function Dashboard() {
             staff: !isAdmin
                 ? {
                       inventory: inventory || [],
-                      appointments:
-                          userAppts?.success && userAppts.data
-                              ? userAppts.data
-                              : [],
                       dailySales: { totalRevenue: 0, completedCount: 0, pendingCount: 0, itemsSold: 0, servicesRendered: 0 },
                   }
                 : undefined,

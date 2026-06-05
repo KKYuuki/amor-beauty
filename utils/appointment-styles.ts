@@ -23,12 +23,20 @@ export function getStatusBadgeClasses(status: AppointmentStatus): string {
  */
 export function getTypeBadgeClasses(type: string | null): string {
     switch (type) {
-        case "TATTOO":
+        case "HAIR":
             return "bg-purple-400/20 text-purple-400 border-purple-400/20"
-        case "PIERCING":
+        case "NAILS":
             return "bg-pink-400/20 text-pink-400 border-pink-400/20"
-        case "SHOE":
+        case "FACIAL":
             return "bg-cyan-400/20 text-cyan-400 border-cyan-400/20"
+        case "BODY_MASSAGE":
+            return "bg-amber-400/20 text-amber-400 border-amber-400/20"
+        case "WAXING":
+            return "bg-rose-400/20 text-rose-400 border-rose-400/20"
+        case "LASH_BROW":
+            return "bg-indigo-400/20 text-indigo-400 border-indigo-400/20"
+        case "MAKEUP":
+            return "bg-orange-400/20 text-orange-400 border-orange-400/20"
         default:
             return "bg-white/10 text-white/60 border-white/10"
     }

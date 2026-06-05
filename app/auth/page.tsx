@@ -7,8 +7,8 @@ import { redirect } from "next/navigation"
 import { getCurrentUser } from "@/utils/auth/permissions"
 
 export const metadata: Metadata = {
-    title: "Auth",
-    description: "Authentication Page",
+    title: "Sign In",
+    description: "Sign in to Amor Beauty Lounge",
 }
 
 export const dynamic = 'force-dynamic'

@@ -108,7 +108,7 @@ export async function getServices(options?: GetServicesOptions): Promise<ActionR
                     is_active: service.isActive,
                     is_shared: service.isShared ?? false,
                     branch_id: service.branchId,
-                    service_type: service.serviceType as 'TATTOO' | 'PIERCING' | 'SHOE' | undefined,
+                    service_type: service.serviceType as 'HAIR' | 'NAILS' | 'FACIAL' | 'BODY_MASSAGE' | 'WAXING' | 'LASH_BROW' | 'MAKEUP' | undefined,
                     items: items.map(item => ({
                         service_id: item.serviceId,
                         inventory_id: item.inventoryId,
@@ -177,7 +177,7 @@ export async function getInactiveServices(): Promise<ActionResponse<GetServicesR
                     hourly_rate: Number(service.hourlyRate),
                     is_active: service.isActive,
                     is_shared: service.isShared ?? false,
-                    service_type: service.serviceType as 'TATTOO' | 'PIERCING' | 'SHOE' | undefined,
+                    service_type: service.serviceType as 'HAIR' | 'NAILS' | 'FACIAL' | 'BODY_MASSAGE' | 'WAXING' | 'LASH_BROW' | 'MAKEUP' | undefined,
                     items: items.map(item => ({
                         service_id: item.serviceId,
                         inventory_id: item.inventoryId,
@@ -231,7 +231,7 @@ export async function createService(payload: CreateServicePayload, user_id: stri
             hourlyRate: payload.hourly_rate ? String(payload.hourly_rate) : '0',
             branchId: payload.branch_id,
             isShared: payload.is_shared ?? false,
-            serviceType: payload.service_type || 'TATTOO',
+            serviceType: payload.service_type || 'HAIR',
             isActive: true,
         }).returning()
 
@@ -307,7 +307,7 @@ export async function updateService(id: string, payload: CreateServicePayload | 
                 hourlyRate: payload.hourly_rate ? String(payload.hourly_rate) : '0',
                 branchId: payload.branch_id,
                 isShared: payload.is_shared ?? false,
-                serviceType: payload.service_type || 'TATTOO',
+                serviceType: payload.service_type || 'HAIR',
                 updatedAt: new Date(),
             })
             .where(eq(services.id, id))

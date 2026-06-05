@@ -386,7 +386,7 @@ export default function PayrollPageClient() {
     ) => {
         const result = await createStaffRate({
             rate_name,
-            service_type: service_type as 'TATTOO' | 'PIERCING' | 'SHOE',
+            service_type: service_type as 'HAIR' | 'NAILS' | 'FACIAL' | 'BODY_MASSAGE' | 'WAXING' | 'LASH_BROW' | 'MAKEUP',
             client_type: client_type as 'WALKIN' | 'PERSONAL',
             rate_level_id,
             shop_percentage: shopPct,
@@ -1530,9 +1530,13 @@ function RatesTab({
     onDelete: (rate: PayrollStaffRate) => Promise<void>
 }) {
     // Group rates by service type
-    const tattooRates = rates.filter((r) => r.service_type === "TATTOO")
-    const piercingRates = rates.filter((r) => r.service_type === "PIERCING")
-    const shoeRates = rates.filter((r) => r.service_type === "SHOE")
+    const hairRates = rates.filter((r) => r.service_type === "HAIR")
+    const nailsRates = rates.filter((r) => r.service_type === "NAILS")
+    const facialRates = rates.filter((r) => r.service_type === "FACIAL")
+    const massageRates = rates.filter((r) => r.service_type === "BODY_MASSAGE")
+    const waxingRates = rates.filter((r) => r.service_type === "WAXING")
+    const lashBrowRates = rates.filter((r) => r.service_type === "LASH_BROW")
+    const makeupRates = rates.filter((r) => r.service_type === "MAKEUP")
 
     const RateTable = ({
         title,
@@ -1636,16 +1640,32 @@ function RatesTab({
                 </div>
             )}
             <RateTable
-                title='Tattoo Rates'
-                rateList={tattooRates}
+                title='Hair Rates'
+                rateList={hairRates}
             />
             <RateTable
-                title='Piercing Rates'
-                rateList={piercingRates}
+                title='Nails Rates'
+                rateList={nailsRates}
             />
             <RateTable
-                title='Shoe Rates'
-                rateList={shoeRates}
+                title='Facial Rates'
+                rateList={facialRates}
+            />
+            <RateTable
+                title='Body Massage Rates'
+                rateList={massageRates}
+            />
+            <RateTable
+                title='Waxing Rates'
+                rateList={waxingRates}
+            />
+            <RateTable
+                title='Lash & Brow Rates'
+                rateList={lashBrowRates}
+            />
+            <RateTable
+                title='Makeup Rates'
+                rateList={makeupRates}
             />
         </div>
     )

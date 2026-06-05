@@ -11,12 +11,6 @@ interface CartPanelProps {
     cart: CartItem[]
     services: ServiceWithItems[]
     taxSettings: CurrencyTaxValue
-    selectedAppointmentId: string | null
-    selectedAppointmentBuyerId: string | null
-    selectedAppointmentBuyerName: string | null
-    setSelectedAppointmentId: (id: string | null) => void
-    setSelectedAppointmentBuyerId: (id: string | null) => void
-    setSelectedAppointmentBuyerName: (name: string | null) => void
     grossTotal: number
     taxAmount: number
     netSubtotal: number
@@ -51,14 +45,6 @@ export default function CartPanel({
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     services,
     taxSettings,
-    selectedAppointmentId,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    selectedAppointmentBuyerId,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    selectedAppointmentBuyerName,
-    setSelectedAppointmentId,
-    setSelectedAppointmentBuyerId,
-    setSelectedAppointmentBuyerName,
     grossTotal,
     taxAmount,
     netSubtotal,
@@ -95,18 +81,6 @@ export default function CartPanel({
                     Current Order
                 </h2>
                 <div className='flex flex-col gap-2'>
-                    {selectedAppointmentId && (
-                        <button
-                            onClick={() => {
-                                setSelectedAppointmentId(null)
-                                setSelectedAppointmentBuyerId(null)
-                                setSelectedAppointmentBuyerName(null)
-                            }}
-                            className='px-2 py-1 bg-red-400/20 text-white text-xs rounded-full font-medium text-center border-2 border-white/10 cursor-pointer hover:bg-red-400/40 transition-colors'
-                        >
-                            Unlink Appointment
-                        </button>
-                    )}
                     {cart.length > 0 && (
                         <button
                             onClick={clearCart}

@@ -36,7 +36,7 @@ export default async function RootLayout({
     return (
         <html
             lang='en'
-            className='bg-black text-white scheme-dark [&_button]:cursor-pointer'
+            className='bg-background text-foreground'
         >
             <head>
                 <meta name='theme-color' content='#000000' />

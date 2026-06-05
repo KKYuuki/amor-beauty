@@ -9,7 +9,6 @@ import {
     Trash2Icon,
     UserRoundIcon,
     MoreVerticalIcon,
-    ClockIcon,
     BanknoteIcon,
 } from "lucide-react"
 import { motion, AnimatePresence } from "motion/react"
@@ -213,14 +212,6 @@ function UserRow({
                                     className="absolute right-0 top-full mt-1 w-40 bg-zinc-900 rounded-lg shadow-xl border border-white/10 z-50 overflow-hidden"
                                 >
                                     <div className="py-1">
-                                        <Link
-                                            href={`/admin/time-clock?staffId=${user.id}`}
-                                            className="w-full px-4 py-2 text-left text-sm hover:bg-white/5 transition-colors flex items-center gap-2"
-                                            onClick={() => setIsDropdownOpen(false)}
-                                        >
-                                            <ClockIcon size={16} className="text-green-400" />
-                                            Time Clock
-                                        </Link>
                                         <Link
                                             href={`/payroll?staffId=${user.id}`}
                                             className="w-full px-4 py-2 text-left text-sm hover:bg-white/5 transition-colors flex items-center gap-2"

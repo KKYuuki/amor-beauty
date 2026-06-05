@@ -3,7 +3,8 @@
 import { eq, and, gte, lte, sql, desc, asc, isNull, or, SQL, count } from 'drizzle-orm'
 
 import { db } from '@/server/db'
-import { generalLedger, appointments, inventory, ratings, reviews, user, payrollEntry, transactions } from '@/server/db/schema'
+import { generalLedger, inventory, ratings, reviews, user, payrollEntry, transactions } from '@/server/db/schema'
+import { appointments } from '@/server/db/schema/appointments'
 import { rateLevels } from '@/server/db/schema/rate-levels'
 import { getCurrentUser, canAccessAccounting, canViewMetrics } from '@/utils/auth/permissions'
 import type { MetricsExportFormat } from '@/utils/metrics-export-utils'

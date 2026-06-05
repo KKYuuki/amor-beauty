@@ -37,7 +37,7 @@ export async function sendEmail(
 
     // Send Email
     const { error:   mail_err } = await resend.emails.send({
-        from: "Amor Beauty Lounge <inksight@rdmdstudio.com>",
+        from: "Amor Beauty Lounge <hello@amorbeautylounge.com>",
         to: to,
         subject: subject,
         html,
@@ -88,13 +88,13 @@ export async function testEmail(
     switch (type) {
         case "reset":
             email = PasswordResetTemplate({
-                link: "https://inksight.rdmdstudio.com/reset-password",
+                link: "https://amorbeautylounge.com/reset-password",
             })
             subject = "Password Reset"
             break
         case "invite":
             email = SendInvitationTemplate({
-                link: "https://inksight.rdmdstudio.com/invite",
+                link: "https://amorbeautylounge.com/invite",
                 email: to,
             })
             subject = "Invitation"
@@ -105,7 +105,7 @@ export async function testEmail(
                 appointmentDate: "October 24, 2024",
                 appointmentTime: "2:00 PM",
                 serviceName: "Tattoo Session",
-                link: "https://inksight.rdmdstudio.com/appointments/123",
+                link: "https://amorbeautylounge.com/appointments/123",
             })
             subject = "Appointment Created"
             break
@@ -114,7 +114,7 @@ export async function testEmail(
                 clientName: "John Doe",
                 appointmentDate: "October 24, 2024",
                 status: "ACCEPTED",
-                link: "https://inksight.rdmdstudio.com/appointments/123",
+                link: "https://amorbeautylounge.com/appointments/123",
             })
             subject = "Appointment Accepted"
             break
@@ -124,7 +124,7 @@ export async function testEmail(
                 appointmentDate: "October 24, 2024",
                 status: "REJECTED",
                 reason: "Artist unavailable",
-                link: "https://inksight.rdmdstudio.com/appointments/123",
+                link: "https://amorbeautylounge.com/appointments/123",
             })
             subject = "Appointment Rejected"
             break
@@ -134,7 +134,7 @@ export async function testEmail(
                 appointmentDate: "October 24, 2024",
                 appointmentTime: "2:00 PM",
                 serviceName: "Tattoo Session",
-                link: "https://inksight.rdmdstudio.com/appointments/123",
+                link: "https://amorbeautylounge.com/appointments/123",
             })
             subject = "Appointment Reminder"
             break
@@ -143,7 +143,7 @@ export async function testEmail(
                 itemName: "Black Ink",
                 currentStock: 2,
                 threshold: 5,
-                link: "https://inksight.rdmdstudio.com/inventory/123",
+                link: "https://amorbeautylounge.com/inventory/123",
             })
             subject = "Low Stock Alert"
             break
@@ -152,7 +152,7 @@ export async function testEmail(
                 requesterName: "Jane Smith",
                 itemName: "Needles 5RL",
                 quantity: 50,
-                link: "https://inksight.rdmdstudio.com/inventory/requests/123",
+                link: "https://amorbeautylounge.com/inventory/requests/123",
             })
             subject = "Restock Request"
             break
@@ -160,7 +160,7 @@ export async function testEmail(
             email = GenericMessageTemplate({
                 title: "Important Update",
                 message: "This is a generic message to inform you about system maintenance.",
-                link: "https://inksight.rdmdstudio.com",
+                link: "https://amorbeautylounge.com",
             })
             subject = "Generic Message"
             break
@@ -168,7 +168,7 @@ export async function testEmail(
             email = NotificationTemplate({
                 title: "New Comment",
                 content: "Someone commented on your post.",
-                link: "https://inksight.rdmdstudio.com/notifications/123",
+                link: "https://amorbeautylounge.com/notifications/123",
             })
             subject = "New Notification"
             break
@@ -202,7 +202,7 @@ export async function sendAppointmentCreatedEmail(
     serviceName: string,
     appointmentId: string
 ): Promise<ActionResponse<string>> {
-    const link = `https://inksight.rdmdstudio.com/appointments?id=${appointmentId}`
+    const link = `https://amorbeautylounge.com/appointments?id=${appointmentId}`
     const content = AppointmentCreatedTemplate({
         clientName,
         appointmentDate,
@@ -221,7 +221,7 @@ export async function sendAppointmentStatusEmail(
     appointmentId: string,
     reason?: string
 ): Promise<ActionResponse<string>> {
-    const link = `https://inksight.rdmdstudio.com/appointments?id=${appointmentId}`
+    const link = `https://amorbeautylounge.com/appointments?id=${appointmentId}`
     const content = AppointmentStatusTemplate({
         clientName,
         appointmentDate,
@@ -242,7 +242,7 @@ export async function sendAppointmentReminderEmail(
     serviceName: string,
     appointmentId: string
 ): Promise<ActionResponse<string>> {
-    const link = `https://inksight.rdmdstudio.com/appointments?id=${appointmentId}`
+    const link = `https://amorbeautylounge.com/appointments?id=${appointmentId}`
     const content = AppointmentReminderTemplate({
         clientName,
         appointmentDate,
@@ -261,7 +261,7 @@ export async function sendInventoryLowEmail(
     threshold: number,
     inventoryId: string
 ): Promise<ActionResponse<string>> {
-    const link = `https://inksight.rdmdstudio.com/inventory?id=${inventoryId}`
+    const link = `https://amorbeautylounge.com/inventory?id=${inventoryId}`
     const content = InventoryLowTemplate({
         itemName,
         currentStock,
@@ -278,7 +278,7 @@ export async function sendInventoryRestockRequestEmail(
     quantity: number,
     inventoryId: string
 ): Promise<ActionResponse<string>> {
-    const link = `https://inksight.rdmdstudio.com/inventory?id=${inventoryId}`
+    const link = `https://amorbeautylounge.com/inventory?id=${inventoryId}`
     const content = InventoryRestockRequestTemplate({
         requesterName,
         itemName,
@@ -321,13 +321,13 @@ export async function sendNotificationEmail(
 
 // Password Reset
 export async function requestPasswordResetEmail(email: string, authkey: string): Promise<ActionResponse<string>> {
-    const link = `https://inksight.rdmdstudio.com/auth?action=reset&key=${authkey}`
+    const link = `https://amorbeautylounge.com/auth?action=reset&key=${authkey}`
     const content = PasswordResetTemplate({ link })
     return await sendEmail(email, 'Password Reset', content)
 }
 
 export async function sendInviteEmail(email: string, authkey: string): Promise<ActionResponse<string>> {
-    const link = `https://inksight.rdmdstudio.com/auth?action=user_type&key=${authkey}`
+    const link = `https://amorbeautylounge.com/auth?action=user_type&key=${authkey}`
     const content = SendInvitationTemplate({ link, email })
     return await sendEmail(email, 'Amor Beauty Lounge Invitation', content)
 }
@@ -398,7 +398,7 @@ export async function sendPayrollRequestNotification(
                 email,
                 'New Payment Request',
                 `${staffName} has submitted a payment request for ${currencySymbol}${requestAmount.toFixed(2)} covering the period ${periodStart} to ${periodEnd}. Please review and process this request.`,
-                'https://inksight.rdmdstudio.com/payroll',
+                'https://amorbeautylounge.com/payroll',
                 'View Request'
             )
         )
@@ -423,7 +423,7 @@ export async function sendPayrollConfirmedNotification(
         staffEmail,
         'Payment Request Confirmed',
         `Hi ${staffName}, your payment request for ${currencySymbol}${requestAmount.toFixed(2)} has been confirmed and is being processed. You will be notified when the payment is complete.`,
-        'https://inksight.rdmdstudio.com/my-payroll',
+        'https://amorbeautylounge.com/my-payroll',
         'View Status'
     )
 }
@@ -442,7 +442,7 @@ export async function sendPayrollCompletedNotification(
         staffEmail,
         'Payment Complete',
         `Hi ${staffName}, your payment of ${currencySymbol}${requestAmount.toFixed(2)} has been completed via ${paymentMethod}. Thank you for your hard work!`,
-        'https://inksight.rdmdstudio.com/my-payroll',
+        'https://amorbeautylounge.com/my-payroll',
         'View Payment History'
     )
 }
@@ -461,7 +461,7 @@ export async function sendPayrollCancelledNotification(
         staffEmail,
         'Payment Request Cancelled',
         `Hi ${staffName}, your payment request for ${currencySymbol}${requestAmount.toFixed(2)} has been cancelled. ${reason ? `Reason: ${reason}` : 'Please contact your manager for more details.'}`,
-        'https://inksight.rdmdstudio.com/my-payroll',
+        'https://amorbeautylounge.com/my-payroll',
         'View My Payroll'
     )
 }

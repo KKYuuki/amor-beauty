@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: '/',
             disallow: '/api/',
         },
-        sitemap: 'https://inksight.rdmdstudio.com/sitemap.xml',
+        sitemap: 'https://amorbeautylounge.com/sitemap.xml',
     }
 }

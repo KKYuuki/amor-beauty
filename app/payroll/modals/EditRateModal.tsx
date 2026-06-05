@@ -35,7 +35,7 @@ export function EditRateModal({
     deletable,
     entryCount,
 }: EditRateModalProps) {
-    const [serviceType, setServiceType] = useState<string>(rate.service_type || 'TATTOO')
+    const [serviceType, setServiceType] = useState<string>(rate.service_type || 'HAIR')
     const [clientType, setClientType] = useState<string>(rate.client_type || 'WALKIN')
     const [rateLevelId, setRateLevelId] = useState(rate.rate_level_id || '')
     const [shopPct, setShopPct] = useState(rate.shop_percentage)
@@ -106,9 +106,13 @@ export function EditRateModal({
                             onChange={(e) => setServiceType(e.target.value)}
                             className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none'
                         >
-                            <option value='TATTOO'>Tattoo</option>
-                            <option value='PIERCING'>Piercing</option>
-                            <option value='SHOE'>Shoe</option>
+                            <option value='HAIR'>Hair</option>
+                            <option value='NAILS'>Nails</option>
+                            <option value='FACIAL'>Facial</option>
+                            <option value='BODY_MASSAGE'>Body Massage</option>
+                            <option value='WAXING'>Waxing</option>
+                            <option value='LASH_BROW'>Lash & Brow</option>
+                            <option value='MAKEUP'>Makeup</option>
                         </select>
                     </div>
 

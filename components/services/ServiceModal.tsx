@@ -32,7 +32,18 @@ interface ServiceModalProps {
     saving?: boolean
 }
 
-const VALID_SERVICE_TYPES: ServiceType[] = ["TATTOO", "PIERCING", "SHOE"]
+const VALID_SERVICE_TYPES: ServiceType[] = ["HAIR", "NAILS", "FACIAL", "BODY_MASSAGE", "WAXING", "LASH_BROW", "MAKEUP"]
+
+const SERVICE_TYPE_LABELS: Record<string, string> = {
+    HAIR: "Hair",
+    NAILS: "Nails",
+    FACIAL: "Facial",
+    BODY_MASSAGE: "Body Massage",
+    WAXING: "Waxing",
+    LASH_BROW: "Lash & Brow",
+    MAKEUP: "Makeup",
+    MANUAL: "Manual",
+}
 
 function isValidServiceType(value: string | null | undefined): value is ServiceType {
     return VALID_SERVICE_TYPES.includes(value as ServiceType)
@@ -55,7 +66,7 @@ export default function ServiceModal({
         hourly_rate: 0,
         items: [],
         branch_id: null,
-        service_type: "TATTOO",
+        service_type: "HAIR",
         is_shared: false,
     })
     const [itemSearch, setItemSearch] = useState("")
@@ -77,7 +88,7 @@ export default function ServiceModal({
                     branch_id: editingService.branch_id ?? null,
                     service_type: isValidServiceType(editingService.service_type)
                         ? editingService.service_type
-                        : "TATTOO",
+                        : "HAIR",
                     is_shared: editingService.is_shared,
                 })
             } else {
@@ -88,7 +99,7 @@ export default function ServiceModal({
                     hourly_rate: 0,
                     items: [],
                     branch_id: null,
-                    service_type: "TATTOO",
+                    service_type: "HAIR",
                     is_shared: false,
                 })
             }
@@ -167,7 +178,7 @@ export default function ServiceModal({
                                 setFormData({ ...formData, title: e.target.value })
                             }
                             className="bg-white/10 rounded-md px-3 py-2 text-sm"
-                            placeholder="e.g., Full Sleeve Tattoo"
+                            placeholder="e.g., Haircut & Style"
                         />
                     </label>
                     <label className="flex flex-col gap-1">
@@ -225,7 +236,7 @@ export default function ServiceModal({
                 <div className="flex flex-col gap-3">
                     <span className="text-sm text-white/60">Service Type</span>
                     <div className="flex gap-2">
-                        {(["TATTOO", "PIERCING", "SHOE"] as ServiceType[]).map((type) => (
+                        {(["HAIR", "NAILS", "FACIAL", "BODY_MASSAGE", "WAXING", "LASH_BROW", "MAKEUP"] as ServiceType[]).map((type) => (
                             <button
                                 key={type}
                                 type="button"
@@ -236,7 +247,7 @@ export default function ServiceModal({
                                         : "bg-white/5 border-2 border-white/10 text-white/60 hover:border-white/20"
                                 }`}
                             >
-                                {type.charAt(0) + type.slice(1).toLowerCase()}
+                                {SERVICE_TYPE_LABELS[type] || type}
                             </button>
                         ))}
                     </div>

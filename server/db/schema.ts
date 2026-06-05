@@ -113,16 +113,6 @@ export {
     systemLogsRelations,
 } from './schema/logs'
 
-// Time Clock Schema
-export {
-    qrSessions,
-    timeClockEntries,
-    staffSchedules,
-    qrSessionsRelations,
-    timeClockEntriesRelations,
-    staffSchedulesRelations,
-} from './schema/timeclock'
-
 // Storage Schema
 export {
     storageFiles,
@@ -156,12 +146,3 @@ export {
 } from './schema/push-subscriptions'
 export type { PushSubscription, PushSubscriptionInsert } from './schema/push-subscriptions'
 
-// Appointments Schema (kept for data integrity)
-export {
-    appointments,
-    appointmentServices,
-    appointmentItems,
-    tattooDetails,
-    shoeDetails,
-    piercingDetails,
-} from './schema/appointments'

@@ -18,21 +18,7 @@ export const routeConfig: RouteConfig[] = [
         group: "core",
         exactMatch: true
     },
-    {
-        title: "Calendar",
-        href: "/calendar",
-        perms: "",
-        iconName: "CalendarIcon",
-        group: "core"
-    },
-    {
-        title: "Appointments",
-        href: "/appointments",
-        perms: "appointments_manage",
-        fallbackPerms: ["appointments_view"],
-        iconName: "ClipboardListIcon",
-        group: "core"
-    },
+
     // Management Routes - Business operations
     {
         title: "Inventory",
@@ -70,13 +56,6 @@ export const routeConfig: RouteConfig[] = [
         group: "management"
     },
     {
-        title: "My Time Clock",
-        href: "/my-time-clock",
-        perms: "",
-        iconName: "ClockIcon",
-        group: "core"
-    },
-    {
         title: "My Payroll",
         href: "/my-payroll",
         perms: "",
@@ -99,13 +78,6 @@ export const routeConfig: RouteConfig[] = [
         group: "admin"
     },
     {
-        title: "Notify",
-        href: "/notify",
-        perms: "notifications_send",
-        iconName: "MegaphoneIcon",
-        group: "admin"
-    },
-    {
         title: "Metrics",
         href: "/metrics",
         perms: "metrics_view",
@@ -118,13 +90,6 @@ export const routeConfig: RouteConfig[] = [
         perms: "admin",
         iconName: "Building2Icon",
         group: "admin"
-    },
-    {
-        title: "Time Clock",
-        href: "/admin/time-clock",
-        perms: "time_clock_manage",
-        iconName: "ClockIcon",
-        group: "management"
     },
     {
         title: "System Logs",

@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { db } from "@/server/db"
-import { branches, qrSessions } from "@/server/db/schema"
-import { eq, and, lt, sql } from "drizzle-orm"
-import { nanoid } from "nanoid"
+import { sql } from "drizzle-orm"
 import { createLogs } from "@/server/actions/logs"
 
 // ============================================================================
@@ -18,8 +16,6 @@ interface DailyMaintenanceResult {
     success: boolean
     timestamp: string
     tasks: {
-        qrDeactivation: TaskResult
-        qrGeneration: TaskResult
         logCleanup: TaskResult & { olderThanDays: number }
         sessionCleanup: TaskResult
         ledgerReconciliation: TaskResult
@@ -31,26 +27,6 @@ interface DailyMaintenanceResult {
 // ============================================================================
 // HELPER FUNCTIONS
 // ============================================================================
-
-/**
- * Format QR code string with prefix, branch ID, nanoid, and timestamp
- * Format: CLK-{branchId.slice(0,8)}-{nanoid(12)}-{timestamp}
- */
-function formatQRCode(branchId: string): string {
-    const shortBranchId = branchId.slice(0, 8)
-    const randomPart = nanoid(12)
-    const timestamp = Date.now().toString(36).toUpperCase()
-    return `CLK-${shortBranchId}-${randomPart}-${timestamp}`
-}
-
-/**
- * Get start of today at midnight
- */
-function getTodayStart(): Date {
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-    return today
-}
 
 /**
  * Verify CRON_SECRET from Authorization header or query parameter
@@ -87,143 +63,7 @@ function verifyCronSecret(request: NextRequest): boolean {
 // ============================================================================
 
 /**
- * Task 1: Deactivate expired QR codes from previous days
- */
-async function deactivateExpiredQRCodes(): Promise<TaskResult> {
-    const result: TaskResult = { count: 0, details: [] }
-
-    try {
-        const today = getTodayStart()
-
-        // Find all active QR codes with valid_date < today
-        const expiredSessions = await db
-            .select({
-                id: qrSessions.id,
-                qrCode: qrSessions.qrCode,
-                branchId: qrSessions.branchId,
-                validDate: qrSessions.validDate,
-            })
-            .from(qrSessions)
-            .where(
-                and(
-                    eq(qrSessions.isActive, true),
-                    lt(qrSessions.validDate, today)
-                )
-            )
-
-        if (expiredSessions.length === 0) {
-            result.details.push("No expired QR codes found")
-            return result
-        }
-
-        // Deactivate all expired sessions
-        for (const session of expiredSessions) {
-            await db
-                .update(qrSessions)
-                .set({ isActive: false })
-                .where(eq(qrSessions.id, session.id))
-
-            result.count++
-            result.details.push(
-                `Deactivated QR code ${session.qrCode.slice(0, 20)}... for branch ${session.branchId.slice(0, 8)}... (expired: ${session.validDate.toISOString().split("T")[0]})`
-            )
-        }
-
-        await createLogs({
-            logs: [{
-                level: "INFO",
-                type: "SYSTEM",
-                message: `Daily maintenance: Deactivated ${result.count} expired QR codes`,
-            }]
-        })
-
-        return result
-    } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : "Unknown error"
-        result.details.push(`Error deactivating QR codes: ${errorMessage}`)
-        throw error
-    }
-}
-
-/**
- * Task 2: Generate new QR codes for all active branches
- */
-async function generateNewQRCodes(): Promise<TaskResult> {
-    const result: TaskResult = { count: 0, details: [] }
-
-    try {
-        const today = getTodayStart()
-
-        // Get all active branches
-        const activeBranches = await db
-            .select({
-                id: branches.id,
-                name: branches.name,
-                code: branches.code,
-            })
-            .from(branches)
-            .where(eq(branches.isActive, true))
-
-        if (activeBranches.length === 0) {
-            result.details.push("No active branches found")
-            return result
-        }
-
-        // Generate QR code for each branch
-        for (const branch of activeBranches) {
-            // Check if QR code already exists for today
-            const existingSessions = await db
-                .select({ id: qrSessions.id })
-                .from(qrSessions)
-                .where(
-                    and(
-                        eq(qrSessions.branchId, branch.id),
-                        eq(qrSessions.validDate, today)
-                    )
-                )
-                .limit(1)
-
-            if (existingSessions.length > 0) {
-                result.details.push(`QR code already exists for branch ${branch.code} (${branch.name})`)
-                continue
-            }
-
-            // Generate new QR code
-            const qrCodeString = formatQRCode(branch.id)
-
-            // Insert new QR session
-            await db.insert(qrSessions).values({
-                branchId: branch.id,
-                validDate: today,
-                qrCode: qrCodeString,
-                isActive: true,
-                generatedBy: null, // System-generated
-            })
-
-            result.count++
-            result.details.push(
-                `Generated QR code ${qrCodeString.slice(0, 20)}... for branch ${branch.code} (${branch.name})`
-            )
-        }
-
-        await createLogs({
-            logs: [{
-                level: "INFO",
-                type: "SYSTEM",
-                message: `Daily maintenance: Generated ${result.count} new QR codes for ${activeBranches.length} active branches`,
-            }]
-        })
-
-        return result
-    } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : "Unknown error"
-        result.details.push(`Error generating QR codes: ${errorMessage}`)
-        throw error
-    }
-}
-
-/**
- * Task 3: Log cleanup (placeholder)
+ * Task 1: Log cleanup (placeholder)
  */
 async function performLogCleanup(): Promise<TaskResult & { olderThanDays: number }> {
     const olderThanDays = 90
@@ -262,7 +102,7 @@ async function performLogCleanup(): Promise<TaskResult & { olderThanDays: number
 }
 
 /**
- * Task 4: Session cleanup (placeholder)
+ * Task 2: Session cleanup (placeholder)
  */
 async function performSessionCleanup(): Promise<TaskResult> {
     const result: TaskResult = { count: 0, details: [] }
@@ -291,8 +131,7 @@ async function performSessionCleanup(): Promise<TaskResult> {
 }
 
 /**
- * Task 5: Reconcile transactions against general ledger
- * Finds transactions missing corresponding GL entries and vice versa
+ * Task 3: Reconcile transactions against general ledger
  */
 async function performLedgerReconciliation(): Promise<TaskResult> {
     const result: TaskResult = { count: 0, details: [] }
@@ -352,7 +191,7 @@ async function performLedgerReconciliation(): Promise<TaskResult> {
 }
 
 /**
- * Task 6: Reconcile payroll entries against transactions
+ * Task 4: Reconcile payroll entries against transactions
  */
 async function performPayrollReconciliation(): Promise<TaskResult> {
     const result: TaskResult = { count: 0, details: [] }
@@ -446,8 +285,6 @@ export async function GET(request: NextRequest) {
         success: true,
         timestamp,
         tasks: {
-            qrDeactivation: { count: 0, details: [] },
-            qrGeneration: { count: 0, details: [] },
             logCleanup: { count: 0, details: [], olderThanDays: 90 },
             sessionCleanup: { count: 0, details: [] },
             ledgerReconciliation: { count: 0, details: [] },
@@ -457,25 +294,7 @@ export async function GET(request: NextRequest) {
     }
 
     try {
-        // Task 1: Deactivate expired QR codes
-        try {
-            result.tasks.qrDeactivation = await deactivateExpiredQRCodes()
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : "Unknown error"
-            errors.push(`QR deactivation failed: ${errorMessage}`)
-            result.tasks.qrDeactivation.details.push(`ERROR: ${errorMessage}`)
-        }
-
-        // Task 2: Generate new QR codes
-        try {
-            result.tasks.qrGeneration = await generateNewQRCodes()
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : "Unknown error"
-            errors.push(`QR generation failed: ${errorMessage}`)
-            result.tasks.qrGeneration.details.push(`ERROR: ${errorMessage}`)
-        }
-
-        // Task 3: Log cleanup
+        // Task 1: Log cleanup
         try {
             result.tasks.logCleanup = await performLogCleanup()
         } catch (error) {
@@ -484,7 +303,7 @@ export async function GET(request: NextRequest) {
             result.tasks.logCleanup.details.push(`ERROR: ${errorMessage}`)
         }
 
-        // Task 4: Session cleanup
+        // Task 2: Session cleanup
         try {
             result.tasks.sessionCleanup = await performSessionCleanup()
         } catch (error) {
@@ -493,7 +312,7 @@ export async function GET(request: NextRequest) {
             result.tasks.sessionCleanup.details.push(`ERROR: ${errorMessage}`)
         }
 
-        // Task 5: Ledger reconciliation
+        // Task 3: Ledger reconciliation
         try {
             result.tasks.ledgerReconciliation = await performLedgerReconciliation()
         } catch (error) {
@@ -502,7 +321,7 @@ export async function GET(request: NextRequest) {
             result.tasks.ledgerReconciliation.details.push(`ERROR: ${errorMessage}`)
         }
 
-        // Task 6: Payroll reconciliation
+        // Task 4: Payroll reconciliation
         try {
             result.tasks.payrollReconciliation = await performPayrollReconciliation()
         } catch (error) {
@@ -524,7 +343,7 @@ export async function GET(request: NextRequest) {
             logs: [{
                 level: result.success ? "INFO" : "WARN",
                 type: "SYSTEM",
-                message: `Daily maintenance completed in ${duration}ms. Success: ${result.success}. Tasks: QR deactivation (${result.tasks.qrDeactivation.count}), QR generation (${result.tasks.qrGeneration.count}), Log cleanup (placeholder), Session cleanup (placeholder), Ledger reconciliation (${result.tasks.ledgerReconciliation.count}), Payroll reconciliation (${result.tasks.payrollReconciliation.count}). Errors: ${errors.length}`,
+                message: `Daily maintenance completed in ${duration}ms. Success: ${result.success}. Tasks: Log cleanup (placeholder), Session cleanup (placeholder), Ledger reconciliation (${result.tasks.ledgerReconciliation.count}), Payroll reconciliation (${result.tasks.payrollReconciliation.count}). Errors: ${errors.length}`,
             }]
         })
 

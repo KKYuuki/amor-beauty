@@ -801,7 +801,7 @@ export async function createManualPayrollEntry(
     const validatedPayload = validation.data
 
     try {
-        const serviceType = validatedPayload.service_type || 'TATTOO'
+        const serviceType = validatedPayload.service_type || 'HAIR'
 
         // Get staff rate level for rate lookup
         const [staffRecord] = await db

@@ -84,9 +84,13 @@ export function CreateRateModal({
                             onChange={(e) => setServiceType(e.target.value)}
                             className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none'
                         >
-                            <option value='TATTOO'>Tattoo</option>
-                            <option value='PIERCING'>Piercing</option>
-                            <option value='SHOE'>Shoe</option>
+                            <option value='HAIR'>Hair</option>
+                            <option value='NAILS'>Nails</option>
+                            <option value='FACIAL'>Facial</option>
+                            <option value='BODY_MASSAGE'>Body Massage</option>
+                            <option value='WAXING'>Waxing</option>
+                            <option value='LASH_BROW'>Lash & Brow</option>
+                            <option value='MAKEUP'>Makeup</option>
                         </select>
                     </div>
 

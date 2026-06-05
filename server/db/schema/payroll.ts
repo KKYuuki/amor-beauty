@@ -48,7 +48,7 @@ export const payrollStaffRate = pgTable('payroll_staff_rate', {
     // Rate Configuration
     rateName: varchar('rate_name', { length: 255 }).notNull(),
     serviceType: varchar('service_type', { length: 50 }).notNull(),
-    // Type: 'TATTOO', 'PIERCING', 'SHOE'
+    // Type: 'HAIR', 'NAILS', 'FACIAL', 'BODY_MASSAGE', 'WAXING', 'LASH_BROW', 'MAKEUP'
     clientType: varchar('client_type', { length: 50 }).notNull(),
     // Type: 'WALKIN', 'PERSONAL'
     rateLevelId: uuid('rate_level_id').references(() => rateLevels.id, { onDelete: 'set null' }),
@@ -91,7 +91,7 @@ export const payrollEntry = pgTable('payroll_entry', {
     serviceDate: timestamp('service_date').notNull().defaultNow(),
     serviceDescription: text('service_description'),
     serviceType: varchar('service_type', { length: 50 }),
-    // Type: 'TATTOO', 'PIERCING', 'SHOE', 'MANUAL'
+    // Type: 'HAIR', 'NAILS', 'FACIAL', 'BODY_MASSAGE', 'WAXING', 'LASH_BROW', 'MAKEUP', 'MANUAL'
     clientType: varchar('client_type', { length: 50 }),
     // Type: 'WALKIN', 'PERSONAL'
     

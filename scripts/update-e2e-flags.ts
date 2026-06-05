@@ -17,28 +17,28 @@ async function main() {
     await db.update(user).set({
         rateLevelId: levelMap.owner,
         accessFlags: ['artist', 'piercing', 'shoe'],
-    }).where(eq(user.email, 'e2e-admin@rdmdstudio.com'))
+    }).where(eq(user.email, 'e2e-admin@amorbeautylounge.com'))
     console.log('✅ e2e-admin updated')
 
     // Update e2e-manager
     await db.update(user).set({
         rateLevelId: levelMap.senior,
         accessFlags: ['appointments_manage', 'sales_access', 'payroll_manage', 'accounting_access', 'transactions_manage', 'inventory_manage', 'metrics_view', 'logs_view', 'notifications_send'],
-    }).where(eq(user.email, 'e2e-manager@rdmdstudio.com'))
+    }).where(eq(user.email, 'e2e-manager@amorbeautylounge.com'))
     console.log('✅ e2e-manager updated')
 
     // Update e2e-artist
     await db.update(user).set({
         rateLevelId: levelMap.standard,
         accessFlags: ['appointments_view', 'appointments_manage', 'time_clock_manage', 'artist'],
-    }).where(eq(user.email, 'e2e-artist@rdmdstudio.com'))
+    }).where(eq(user.email, 'e2e-artist@amorbeautylounge.com'))
     console.log('✅ e2e-artist updated')
 
     // Update e2e-staff
     await db.update(user).set({
         rateLevelId: levelMap.standard,
         accessFlags: ['appointments_view', 'time_clock_manage'],
-    }).where(eq(user.email, 'e2e-staff@rdmdstudio.com'))
+    }).where(eq(user.email, 'e2e-staff@amorbeautylounge.com'))
     console.log('✅ e2e-staff updated')
 
     console.log('\n✅ All accounts updated')

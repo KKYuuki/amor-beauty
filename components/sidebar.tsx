@@ -139,7 +139,7 @@ function RouteGroup({
                     aria-expanded={isOpen}
                     aria-controls={contentId}
                     aria-label={`Toggle ${title} section`}
-                    className='flex items-center justify-between px-2 py-1.5 text-xs font-medium text-white/40 uppercase tracking-wider hover:text-white/60 transition-colors'
+                    className='flex items-center justify-between px-2 py-1.5 text-xs font-medium text-sidebar-foreground/40 uppercase tracking-wider hover:text-sidebar-foreground/60 transition-colors'
                 >
                     <span>{title}</span>
                     <motion.div
@@ -169,8 +169,8 @@ function RouteGroup({
                                         route.href,
                                         route.exactMatch,
                                     )
-                                        ? "bg-white/5 text-white"
-                                        : "text-white/60 hover:bg-white/10 hover:text-white"
+                                        ? "bg-sidebar-accent text-sidebar-foreground"
+                                        : "text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground"
                                 }`}
                                 key={route.title}
                                 title={route.title}
@@ -185,7 +185,7 @@ function RouteGroup({
                                 ) && (
                                     <motion.div
                                         layoutId='activeIndicator'
-                                        className='absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-6 bg-blue-400 rounded-full'
+                                        className='absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-6 bg-primary rounded-full'
                                         initial={false}
                                         transition={{
                                             type: "spring",
@@ -415,7 +415,7 @@ export default function Sidebar({ children, maintenanceMode }: SidebarProps) {
 
     if (isInMaintenanceMode) {
         return (
-            <div className='w-svw h-svh flex flex-col items-center justify-center bg-black'>
+            <div className='w-svw h-svh flex flex-col items-center justify-center bg-background'>
                 <Image
                     src={logo}
                     alt=''
@@ -424,7 +424,7 @@ export default function Sidebar({ children, maintenanceMode }: SidebarProps) {
                 <h1 className='text-2xl sm:text-3xl md:text-4xl font-bodoni text-center px-8 mb-4'>
                     Maintenance Mode
                 </h1>
-                <p className='text-white/60 text-center px-8 max-w-md'>
+                <p className='text-muted-foreground text-center px-8 max-w-md'>
                     {maintenanceMode?.message ||
                         "System is under maintenance. Please check back later."}
                 </p>
@@ -486,7 +486,7 @@ export default function Sidebar({ children, maintenanceMode }: SidebarProps) {
                                 exit={{ opacity: 0, x: -20 }}
                             >
                                 <motion.div
-                                    className={`bg-black/80 md:bg-white/5 backdrop-blur-xl md:backdrop-blur-lg flex flex-col h-full gap-3 relative border-b md:border-r border-white/10 md:border-white/5 transition-all duration-300 ${
+                                    className={`bg-sidebar/95 md:bg-sidebar backdrop-blur-xl md:backdrop-blur-lg flex flex-col h-full gap-3 relative border-b md:border-r border-border md:border-border/50 transition-all duration-300 ${
                                         isMobile && !isExpanded
                                             ? "px-4 py-3"
                                             : "p-3"
@@ -505,10 +505,10 @@ export default function Sidebar({ children, maintenanceMode }: SidebarProps) {
                                         <Link
                                             href='/profile'
                                             title='Profile'
-                                            className='flex flex-row items-center gap-2 flex-1 group hover:bg-white/10 rounded-md transition-colors p-2'
+                                            className='flex flex-row items-center gap-2 flex-1 group hover:bg-sidebar-accent rounded-md transition-colors p-2'
                                         >
                                             <div
-                                                className={`aspect-square rounded-full w-8 h-8 flex items-center justify-center cursor-pointer bg-white/10 group-hover:bg-white/30 transition-colors overflow-clip ${
+                                                className={`aspect-square rounded-full w-8 h-8 flex items-center justify-center cursor-pointer bg-sidebar-accent group-hover:bg-border transition-colors overflow-clip ${
                                                     userInfo.avatar_url
                                                         ? ""
                                                         : "p-1"
@@ -552,7 +552,7 @@ export default function Sidebar({ children, maintenanceMode }: SidebarProps) {
                                                     : "Expand sidebar"
                                             }
                                             aria-expanded={isExpanded}
-                                            className='flex items-center justify-center hover:bg-white/10 rounded-md p-2 transition-colors cursor-pointer'
+                                            className='flex items-center justify-center hover:bg-sidebar-accent rounded-md p-2 transition-colors cursor-pointer'
                                             onClick={() =>
                                                 setIsExpanded(!isExpanded)
                                             }
@@ -599,7 +599,7 @@ export default function Sidebar({ children, maintenanceMode }: SidebarProps) {
 
                                     {/* Mobile overlay background */}
                                     {isMobile && isExpanded && (
-                                        <div className='fixed inset-0 bg-black/60 -z-10' />
+                                        <div className='fixed inset-0 bg-foreground/60 -z-10' />
                                     )}
 
                                     {/* Navigation Groups */}
@@ -641,7 +641,7 @@ export default function Sidebar({ children, maintenanceMode }: SidebarProps) {
                                     <motion.div
                                         key='logout-section'
                                         layout='position'
-                                        className={`flex items-center gap-3 font-medium text-sm hover:bg-white/10 active:bg-white/30 rounded-md p-2 transition-colors cursor-pointer ${
+                                        className={`flex items-center gap-3 font-medium text-sm hover:bg-sidebar-accent active:bg-border rounded-md p-2 transition-colors cursor-pointer ${
                                             !isExpanded && "justify-center"
                                         } ${
                                             isMobile && !isExpanded && "hidden"

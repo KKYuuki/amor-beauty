@@ -39,7 +39,7 @@
         "drizzle-orm": "^0.45.2",
         "exceljs": "^4.4.0",
         "html5-qrcode": "^2.3.8",
-        "inksight-rdmd": ".",
+        "amorbeauty-system": ".",
         "isomorphic-dompurify": "^3.6.0",
         "jspdf": "^3.0.4",
         "jspdf-autotable": "^5.0.2",

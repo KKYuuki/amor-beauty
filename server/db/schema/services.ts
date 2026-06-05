@@ -30,7 +30,7 @@ export const services = pgTable('services', {
 
     // Service type for payroll rate mapping
     serviceType: varchar('service_type', { length: 20 }).notNull(),
-    // Type: 'TATTOO', 'PIERCING', 'SHOE', 'OTHER'
+    // Type: 'HAIR', 'NAILS', 'FACIAL', 'BODY_MASSAGE', 'WAXING', 'LASH_BROW', 'MAKEUP', 'OTHER'
 }, (table) => ({
     isActiveIdx: index('idx_services_is_active').on(table.isActive),
     serviceTypeIdx: index('idx_services_service_type').on(table.serviceType),

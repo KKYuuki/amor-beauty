@@ -11,10 +11,10 @@ import { payrollStaffRate } from "../server/db/schema/payroll"
 import { eq, sql } from "drizzle-orm"
 
 const TEST_ACCOUNTS = [
-  { email: "e2e-admin@rdmdstudio.com", role: "admin" },
-  { email: "e2e-manager@rdmdstudio.com", role: "manager" },
-  { email: "e2e-artist@rdmdstudio.com", role: "artist" },
-  { email: "e2e-staff@rdmdstudio.com", role: "staff" },
+  { email: "e2e-admin@amorbeautylounge.com", role: "admin" },
+  { email: "e2e-manager@amorbeautylounge.com", role: "manager" },
+  { email: "e2e-artist@amorbeautylounge.com", role: "artist" },
+  { email: "e2e-staff@amorbeautylounge.com", role: "staff" },
 ]
 
 const CHECKS: { name: string; fn: () => Promise<boolean> }[] = [

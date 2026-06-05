@@ -95,7 +95,7 @@ export default function ConfigPage() {
         hourly_rate: 0,
         items: [] as { inventory_id: string; quantity: number }[],
         branch_id: null as string | null,
-        service_type: "TATTOO" as ServiceType,
+        service_type: "HAIR" as ServiceType,
         is_shared: false,
     })
 
@@ -305,7 +305,7 @@ export default function ConfigPage() {
             )
             setIsEditingService(false)
             setEditingServiceId(null)
-            setServiceForm({ title: "", price: 0, pricing_type: "FIXED", hourly_rate: 0, items: [], branch_id: null, service_type: "TATTOO", is_shared: false })
+            setServiceForm({ title: "", price: 0, pricing_type: "FIXED", hourly_rate: 0, items: [], branch_id: null, service_type: "HAIR", is_shared: false })
             await fetchServicesData()
             await fetchInactiveServicesData()
         } else {
@@ -392,7 +392,7 @@ export default function ConfigPage() {
                                         hourly_rate: 0,
                                         items: [],
                                         branch_id: currentBranch?.id ?? null,
-                                        service_type: "TATTOO",
+                                        service_type: "HAIR",
                                         is_shared: false,
                                     })
                                     setEditingServiceId(null)
@@ -440,9 +440,14 @@ export default function ConfigPage() {
                                             )}
                                             {service.service_type && (
                                                 <span className={`text-xs px-2 py-0.5 rounded ${
-                                                    service.service_type === 'TATTOO' ? 'bg-purple-400/20 text-purple-300' :
-                                                    service.service_type === 'PIERCING' ? 'bg-cyan-400/20 text-cyan-300' :
-                                                    'bg-orange-400/20 text-orange-300'
+                                                    service.service_type === 'HAIR' ? 'bg-purple-400/20 text-purple-300' :
+                                                    service.service_type === 'NAILS' ? 'bg-pink-400/20 text-pink-300' :
+                                                    service.service_type === 'FACIAL' ? 'bg-cyan-400/20 text-cyan-300' :
+                                                    service.service_type === 'BODY_MASSAGE' ? 'bg-amber-400/20 text-amber-300' :
+                                                    service.service_type === 'WAXING' ? 'bg-rose-400/20 text-rose-300' :
+                                                    service.service_type === 'LASH_BROW' ? 'bg-indigo-400/20 text-indigo-300' :
+                                                    service.service_type === 'MAKEUP' ? 'bg-orange-400/20 text-orange-300' :
+                                                    'bg-white/10 text-white/60'
                                                 }`}>
                                                     {service.service_type}
                                                 </span>
@@ -513,9 +518,14 @@ export default function ConfigPage() {
                                         )}
                                         {service.service_type && (
                                             <span className={`text-xs px-2 py-0.5 rounded ${
-                                                service.service_type === 'TATTOO' ? 'bg-purple-400/20 text-purple-300' :
-                                                service.service_type === 'PIERCING' ? 'bg-cyan-400/20 text-cyan-300' :
-                                                'bg-orange-400/20 text-orange-300'
+                                                service.service_type === 'HAIR' ? 'bg-purple-400/20 text-purple-300' :
+                                                service.service_type === 'NAILS' ? 'bg-pink-400/20 text-pink-300' :
+                                                service.service_type === 'FACIAL' ? 'bg-cyan-400/20 text-cyan-300' :
+                                                service.service_type === 'BODY_MASSAGE' ? 'bg-amber-400/20 text-amber-300' :
+                                                service.service_type === 'WAXING' ? 'bg-rose-400/20 text-rose-300' :
+                                                service.service_type === 'LASH_BROW' ? 'bg-indigo-400/20 text-indigo-300' :
+                                                service.service_type === 'MAKEUP' ? 'bg-orange-400/20 text-orange-300' :
+                                                'bg-white/10 text-white/60'
                                             }`}>
                                                 {service.service_type}
                                             </span>
@@ -555,7 +565,7 @@ export default function ConfigPage() {
                                                     })
                                                 ),
                                                 branch_id: service.branch_id ?? null,
-                                                service_type: service.service_type ?? "TATTOO",
+                                                service_type: service.service_type ?? "HAIR",
                                                 is_shared: service.is_shared ?? false,
                                             })
                                             setEditingServiceId(service.id)

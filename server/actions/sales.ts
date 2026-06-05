@@ -2,7 +2,7 @@
 
 import { db } from '@/server/db'
 import { transactions, transactionItems } from '@/server/db/schema/transactions'
-import { appointments, appointmentServices, appointmentItems } from '@/server/db/schema'
+import { appointments, appointmentServices, appointmentItems } from '@/server/db/schema/appointments'
 import { services } from '@/server/db/schema/services'
 import { inventory } from '@/server/db/schema/inventory'
 import { eq } from 'drizzle-orm'

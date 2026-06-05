@@ -37,10 +37,8 @@ import { ImageUploader } from "@/components/draganddrop"
 import { SideBarContext } from "@/components/sidebar"
 import { Image as ImageType } from "@/utils/types/storage"
 import { CheckIcon, XIcon } from "lucide-react"
-import ScheduleEditor from "@/components/schedules/scheduleEditor"
 import PasskeyManager from "@/components/profile/PasskeyManager"
 import PushNotificationSettings from "@/components/push-notification-settings"
-
 interface ProfilePageClientProps {
     initialUserProfile: UserProfile
     initialArtistProfile: ArtistProfile | null
@@ -74,7 +72,6 @@ export default function ProfilePageClient({
     const [imageFile, setImageFile] = useState<File | null>(null)
     const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null)
     const [avatarVersion, setAvatarVersion] = useState(0)
-    const [showSchedule, setShowSchedule] = useState(false)
 
     // Ref for avoiding stale closures in callbacks
     const userInfoRef = useRef(userInfo)
@@ -770,20 +767,6 @@ export default function ProfilePageClient({
                 </div>
             </div>
 
-            {(userInfo.role === "staff" || userInfo.role === "artist" || userInfo.role === "piercer" || userInfo.role === "shoe_tech") && (
-                <div className="w-full bg-white/10 border-2 border-white/5 rounded-lg p-4 flex flex-col gap-2">
-                    <div className="w-full flex flex-row gap-2 justify-between font-semibold text-lg md:text-xl items-start">
-                        Work Schedule
-                        <button
-                            type="button"
-                            className="px-3 py-1 bg-white/5 rounded-md border border-white/10 hover:bg-white/10 transition-colors cursor-pointer text-sm"
-                            onClick={() => setShowSchedule(true)}
-                        >
-                            View Schedule
-                        </button>
-                    </div>
-                </div>
-            )}
 
             {userInfo.access_flags?.includes("artist") && (
                 <div className='w-full bg-white/10 border-2 border-white/5 rounded-lg p-4 flex flex-col gap-2'>
@@ -921,14 +904,6 @@ export default function ProfilePageClient({
 
             <PushNotificationSettings />
 
-            {showSchedule && (
-                <ScheduleEditor
-                    staffId={userInfo.id}
-                    staffName={userInfo.full_name}
-                    onClose={() => setShowSchedule(false)}
-                    readonly={true}
-                />
-            )}
         </>
     )
 }

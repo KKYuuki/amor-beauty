@@ -1,13 +1,17 @@
 // Payroll Types
 
-export type ServiceType = 'TATTOO' | 'PIERCING' | 'SHOE' | 'MANUAL'
+export type ServiceType = 'HAIR' | 'NAILS' | 'FACIAL' | 'BODY_MASSAGE' | 'WAXING' | 'LASH_BROW' | 'MAKEUP' | 'MANUAL'
 
 export function mapAppointmentTypeToServiceType(type: string | null): ServiceType {
     switch (type) {
-        case 'TATTOO': return 'TATTOO'
-        case 'PIERCING': return 'PIERCING'
-        case 'SHOE': return 'SHOE'
-        default: return 'TATTOO'
+        case 'HAIR': return 'HAIR'
+        case 'NAILS': return 'NAILS'
+        case 'FACIAL': return 'FACIAL'
+        case 'BODY_MASSAGE': return 'BODY_MASSAGE'
+        case 'WAXING': return 'WAXING'
+        case 'LASH_BROW': return 'LASH_BROW'
+        case 'MAKEUP': return 'MAKEUP'
+        default: return 'HAIR'
     }
 }
 

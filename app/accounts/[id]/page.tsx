@@ -9,7 +9,6 @@ import {
     ArrowLeftIcon,
     UserIcon,
     ShieldIcon,
-    ClockIcon,
     CreditCardIcon,
     SaveIcon,
     EyeIcon,
@@ -24,10 +23,8 @@ import { RateLevelItem } from "@/utils/types/payroll"
 import { createLogs } from "@/server/actions/logs"
 import { NotificationContext } from "@/components/notifications"
 import { SideBarContext } from "@/components/sidebar"
-import ScheduleEditor from "@/components/schedules/scheduleEditor"
 import PaymentMethods from "@/components/accounts/PaymentMethods"
 import { FEATURE_ACCESS_FLAGS, VALID_FEATURE_FLAGS, CAPABILITY_FLAGS, VALID_CAPABILITY_FLAGS, normalizeFlag } from "@/utils/auth/access-flags"
-
 interface UserDetailPageProps {
     params: Promise<{
         id: string
@@ -37,7 +34,6 @@ interface UserDetailPageProps {
 const TABS = [
     { id: "main", label: "Main Info", icon: UserIcon },
     { id: "access", label: "Access & Work", icon: ShieldIcon },
-    { id: "schedule", label: "Schedule", icon: ClockIcon },
     { id: "payment", label: "Payment Methods", icon: CreditCardIcon },
 ] as const
 
@@ -589,33 +585,6 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
                         </motion.div>
                     )}
 
-                    {activeTab === "schedule" && (
-                        <motion.div
-                            key="schedule"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                        >
-                        {user.role === "staff" ||
-                        user.role === "artist" ||
-                        user.role === "piercer" ||
-                        user.role === "shoe_tech" ||
-                        (user.role === "admin" && user.access_flags?.some(f => ["artist", "piercing", "shoe"].includes(f))) ? (
-                            <ScheduleEditor
-                                staffId={userId!}
-                                staffName={user.full_name}
-                                onClose={() => {}}
-                                readonly={!isAdmin}
-                                inline
-                            />
-                        ) : (
-                            <div className="p-8 text-center text-white/40 bg-white/5 rounded-xl border border-white/10">
-                                <ClockIcon size={32} className="mx-auto mb-3 opacity-50" />
-                                <p>Scheduling is not available</p>
-                            </div>
-                        )}
-                        </motion.div>
-                    )}
 
                     {activeTab === "payment" && (
                         <motion.div

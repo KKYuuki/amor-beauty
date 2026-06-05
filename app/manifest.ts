@@ -36,7 +36,7 @@ export default function manifest(): MetadataRoute.Manifest {
         ],
         screenshots: [
             {
-                src: '/inksight-banner.png',
+                src: '/amor-banner.png',
                 sizes: '1200x600',
                 type: 'image/png',
                 form_factor: 'wide',

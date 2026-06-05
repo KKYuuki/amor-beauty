@@ -11,7 +11,6 @@ import React, {
 import { NotificationContext } from "@/components/notifications"
 import { useBranchContext } from "@/components/branch-context"
 import { InventoryItem } from "@/utils/types/inventory"
-import { Service } from "@/utils/types/general"
 import { ServiceWithItems } from "@/server/actions/services"
 import {
     CreateTransactionPayload,
@@ -33,13 +32,7 @@ import { getSetting } from "@/server/actions/settings"
 import { ActionResponse } from "@/utils/types/responses"
 import { GetServicesResult } from "@/server/actions/services"
 import { GetTransactionsResult, GetTodaySummaryResult, CreateTransactionResult } from "@/server/actions/transactions"
-import {
-    getUnpaidAppointments,
-    getAppointmentWithDetails,
-    updateAppointment,
-} from "@/server/actions/appointments"
 import { getStaffList } from "@/server/actions/profile"
-import { Appointment } from "@/utils/types/general"
 import { CurrencyTaxValue } from "@/utils/types/settings"
 import { NotificationType } from "@/utils/types/notifications"
 import { SplitPayment } from "@/utils/types/transactions"
@@ -61,19 +54,6 @@ export interface CartItem {
     service_type?: ServiceType
 }
 
-export interface UnpaidAppointment extends Appointment {
-    user_profiles: {
-        full_name: string
-    }
-    appointment_services: {
-        service: Service
-    }[]
-    appointment_items: {
-        quantity: number
-        inventory: InventoryItem
-    }[]
-}
-
 interface ConfirmModalConfig {
     title: string
     message: string
@@ -93,7 +73,6 @@ interface SalesContextType {
     inventory: InventoryItem[]
     services: ServiceWithItems[]
     transactions: Transaction[]
-    appointments: Appointment[]
     todayStats: { totalRevenue: number; completedCount: number; pendingCount: number; itemsSold: number; servicesRendered: number }
     taxSettings: CurrencyTaxValue
     loading: boolean
@@ -148,14 +127,6 @@ interface SalesContextType {
     addPaymentReference: string
     setAddPaymentReference: (reference: string) => void
     processing: boolean
-    activeTab: "PRODUCTS" | "APPOINTMENTS"
-    setActiveTab: (tab: "PRODUCTS" | "APPOINTMENTS") => void
-    selectedAppointmentId: string | null
-    setSelectedAppointmentId: (id: string | null) => void
-    selectedAppointmentBuyerId: string | null
-    setSelectedAppointmentBuyerId: (id: string | null) => void
-    selectedAppointmentBuyerName: string | null
-    setSelectedAppointmentBuyerName: (name: string | null) => void
     isTransactionsOpen: boolean
     setIsTransactionsOpen: (open: boolean) => void
     clientType: "WALKIN" | "PERSONAL"
@@ -212,7 +183,6 @@ interface SalesContextType {
     refreshTransactions: () => Promise<void>
     handleCheckout: () => Promise<ActionResponse<CreateTransactionResult> | undefined>
     handleVoid: (txnId: string) => void
-    handleAppointmentSelect: (appointment: Appointment) => void
     handleAddPayment: () => void
     confirmModalOpen: boolean
     setConfirmModalOpen: (open: boolean) => void
@@ -249,7 +219,6 @@ export function SalesProvider({ children, userInfo }: SalesProviderProps) {
     const [inventory, setInventory] = useState<InventoryItem[]>([])
     const [services, setServices] = useState<ServiceWithItems[]>([])
     const [transactions, setTransactions] = useState<Transaction[]>([])
-    const [appointments, setAppointments] = useState<Appointment[]>([])
     const [todayStats, setTodayStats] = useState<GetTodaySummaryResult>({
         totalRevenue: 0,
         completedCount: 0,
@@ -282,16 +251,6 @@ export function SalesProvider({ children, userInfo }: SalesProviderProps) {
         useState<PaymentMethod>("CASH")
     const [addPaymentReference, setAddPaymentReference] = useState<string>("")
     const [processing, setProcessing] = useState(false)
-    const [activeTab, setActiveTab] = useState<"PRODUCTS" | "APPOINTMENTS">(
-        "PRODUCTS",
-    )
-    const [selectedAppointmentId, setSelectedAppointmentId] = useState<
-        string | null
-    >(null)
-    const [selectedAppointmentBuyerId, setSelectedAppointmentBuyerId] =
-        useState<string | null>(null)
-    const [selectedAppointmentBuyerName, setSelectedAppointmentBuyerName] =
-        useState<string | null>(null)
     const [isTransactionsOpen, setIsTransactionsOpen] = useState(false)
     const [clientType, setClientType] = useState<"WALKIN" | "PERSONAL">(
         "WALKIN",
@@ -385,18 +344,16 @@ export function SalesProvider({ children, userInfo }: SalesProviderProps) {
                     }),
                     getTodaySummary(currentBranch?.id),
                     getSetting("currency_tax"),
-                    getUnpaidAppointments(),
                 ]),
                 timeoutPromise,
             ])
 
-            const [invData, servResult, txnResult, statsResult, taxResult, appointmentsResult] = raceResult as [
+            const [invData, servResult, txnResult, statsResult, taxResult] = raceResult as [
                 InventoryItem[],
                 ActionResponse<GetServicesResult>,
                 ActionResponse<GetTransactionsResult>,
                 ActionResponse<GetTodaySummaryResult>,
                 ActionResponse<CurrencyTaxValue | null>,
-                ActionResponse<Appointment[]>
             ]
 
             const staffData = await getStaffList()
@@ -421,16 +378,6 @@ export function SalesProvider({ children, userInfo }: SalesProviderProps) {
             }
             if (taxResult.success && taxResult.data) {
                 setTaxSettings(taxResult.data)
-            }
-            // FIX: Extract appointments from ActionResponse properly and filter by branch
-            if (appointmentsResult.success) {
-                const branchAppointments = (appointmentsResult.data as UnpaidAppointment[]).filter(
-                    (apt) => apt.branch_id === currentBranch?.id || apt.branch_id === null
-                )
-                setAppointments(branchAppointments)
-            } else {
-                console.error("Failed to fetch appointments:", appointmentsResult.error)
-                setAppointments([])
             }
         } catch (error) {
             console.error("Error fetching sales data:", error)
@@ -478,130 +425,6 @@ export function SalesProvider({ children, userInfo }: SalesProviderProps) {
             setHasInitializedStaff(true)
         }
     }, [userInfo?.id, hasInitializedStaff, selectedStaffId])
-
-    // Load appointment from URL query param (for walk-in flow)
-    useEffect(() => {
-        const loadAppointmentFromUrl = async () => {
-            const appointmentId = new URLSearchParams(
-                window.location.search,
-            ).get("appointment")
-
-            if (appointmentId) {
-                try {
-                    const result =
-                        await getAppointmentWithDetails(appointmentId)
-                    
-                    if (!result.success) {
-                        console.error("Failed to load appointment:", result.error)
-                        return
-                    }
-                    
-                    const appointment = result.data.appointment as
-                        | (UnpaidAppointment & { is_walkin?: boolean })
-                        | null
-
-                    if (appointment?.is_walkin) {
-                        // Load into cart
-                        const newCart: CartItem[] = []
-
-                        appointment.appointment_services?.forEach((as) => {
-                            if (as.service) {
-                                let totalHours: number | undefined
-                                if (as.service.pricing_type === "HOURLY") {
-                                    const startTime =
-                                        appointment.actual_time_start ||
-                                        appointment.time_start
-                                    const endTime =
-                                        appointment.actual_time_end ||
-                                        appointment.time_end
-                                    if (startTime && endTime) {
-                                        const start = new Date(startTime)
-                                        const end = new Date(endTime)
-                                        const diffMs =
-                                            end.getTime() - start.getTime()
-                                        totalHours = Math.max(
-                                            0,
-                                            diffMs / (1000 * 60 * 60),
-                                        )
-                                    }
-                                }
-
-                                newCart.push({
-                                    id: as.service.id,
-                                    type: "SERVICE",
-                                    name: as.service.title,
-                                    unit_price: as.service.price,
-                                    original_price: as.service.price,
-                                    quantity: 1,
-                                    pricing_type: as.service.pricing_type,
-                                    hourly_rate:
-                                        as.service.pricing_type === "HOURLY"
-                                            ? as.service.price
-                                            : undefined,
-                                    total_hours:
-                                        as.service.pricing_type === "HOURLY"
-                                            ? totalHours
-                                            : undefined,
-                                    service_type: as.service.service_type,
-                                })
-                            }
-                        })
-
-                        appointment.appointment_items?.forEach(
-                            (ai: {
-                                quantity: number
-                                inventory: InventoryItem
-                            }) => {
-                                if (ai.inventory) {
-                                    newCart.push({
-                                        id: ai.inventory.id,
-                                        type: "INVENTORY",
-                                        name: ai.inventory.name,
-                                        unit_price:
-                                            ai.inventory.unit_price || 0,
-                                        original_price:
-                                            ai.inventory.unit_price || 0,
-                                        quantity: ai.quantity,
-                                        max_quantity:
-                                            ai.inventory.current_stock,
-                                    })
-                                }
-                            },
-                        )
-
-                        setCart(newCart)
-                        setSelectedAppointmentId(appointment.id)
-
-                        // Set walk-in client info
-                        if (appointment.client_name) {
-                            setCustomerMode("WALKIN")
-                            setWalkinName(appointment.client_name)
-                            setWalkinPhone(appointment.client_phone || "")
-                            setWalkinEmail(appointment.client_email || "")
-                        }
-
-                        // Set staff if assigned
-                        if (appointment.staff_id) {
-                            setSelectedStaffId(appointment.staff_id)
-                        }
-
-                        addNotification(
-                            `Loaded walk-in appointment for ${appointment.client_name || "Client"}`,
-                            "SUCCESS",
-                        )
-
-                        // Clear URL param
-                        window.history.replaceState({}, "", "/sales")
-                    }
-                } catch (error) {
-                    console.error("Error loading appointment:", error)
-                    addNotification("Failed to load appointment", "ERROR")
-                }
-            }
-        }
-
-        loadAppointmentFromUrl()
-    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     const addToCart = (
         item: InventoryItem | ServiceWithItems,
@@ -714,7 +537,6 @@ export function SalesProvider({ children, userInfo }: SalesProviderProps) {
 
     const clearCart = () => {
         setCart([])
-        setSelectedAppointmentId(null)
         setTotalOverride(null)
     }
 
@@ -899,14 +721,11 @@ export function SalesProvider({ children, userInfo }: SalesProviderProps) {
 
             const payload: CreateTransactionPayload = {
                 staff_id: staff_id as string | null | undefined,
-                buyer_id:
-                    customerMode === "WALKIN"
-                        ? undefined
-                        : selectedAppointmentBuyerId || undefined,
+                buyer_id: undefined,
                 buyer_name:
                     customerMode === "WALKIN"
                         ? walkinName
-                        : selectedAppointmentBuyerName || undefined,
+                        : undefined,
                 customer_phone:
                     customerMode === "WALKIN" && walkinPhone
                         ? walkinPhone
@@ -998,7 +817,6 @@ export function SalesProvider({ children, userInfo }: SalesProviderProps) {
 
                     return lineItems
                 }),
-                appointment_id: selectedAppointmentId || undefined,
                 notes: discountReason
                     ? `Discount: ${discountReason}`
                     : undefined,
@@ -1038,25 +856,7 @@ export function SalesProvider({ children, userInfo }: SalesProviderProps) {
                     )
                 }
 
-                // ADD: Mark appointment as completed if it was a walk-in
-                if (selectedAppointmentId) {
-                    try {
-                        const appointmentResult = await updateAppointment(selectedAppointmentId, {
-                            status: 'COMPLETED',
-                            actual_time_end: new Date(),
-                        })
-                        if (!appointmentResult.success) {
-                            console.error('Failed to mark appointment as completed:', appointmentResult.error)
-                        }
-                    } catch (error) {
-                        console.error('Error marking appointment as completed:', error)
-                    }
-                }
-
                 setCart([])
-                setSelectedAppointmentId(null)
-                setSelectedAppointmentBuyerId(null)
-                setSelectedAppointmentBuyerName(null)
                 setIsCheckoutModalOpen(false)
                 setCashReceived("")
                 setReferenceNumber("")
@@ -1080,92 +880,6 @@ export function SalesProvider({ children, userInfo }: SalesProviderProps) {
             addNotification("An unexpected error occurred", "ERROR")
         } finally {
             setProcessing(false)
-        }
-    }
-
-    const loadAppointmentIntoCart = (appointment: Appointment) => {
-        const newCart: CartItem[] = []
-
-        const unpaidApt = appointment as UnpaidAppointment
-        unpaidApt.appointment_services?.forEach((as) => {
-            if (as.service) {
-                let totalHours: number | undefined
-                if (as.service.pricing_type === "HOURLY") {
-                    const startTime =
-                        appointment.actual_time_start ||
-                        appointment.time_start
-                    const endTime =
-                        appointment.actual_time_end ||
-                        appointment.time_end
-                    if (startTime && endTime) {
-                        const start = new Date(startTime)
-                        const end = new Date(endTime)
-                        const diffMs = end.getTime() - start.getTime()
-                        totalHours = Math.max(0, diffMs / (1000 * 60 * 60))
-                    }
-                }
-
-                newCart.push({
-                    id: as.service.id,
-                    type: "SERVICE",
-                    name: as.service.title,
-                    unit_price: as.service.price,
-                    original_price: as.service.price,
-                    quantity: 1,
-                    pricing_type: as.service.pricing_type,
-                    hourly_rate:
-                        as.service.pricing_type === "HOURLY"
-                            ? as.service.price
-                            : undefined,
-                    total_hours:
-                        as.service.pricing_type === "HOURLY"
-                            ? totalHours
-                            : undefined,
-                    service_type: as.service.service_type,
-                })
-            }
-        })
-
-        unpaidApt.appointment_items?.forEach((ai) => {
-            if (ai.inventory) {
-                newCart.push({
-                    id: ai.inventory.id,
-                    type: "INVENTORY",
-                    name: ai.inventory.name,
-                    unit_price: ai.inventory.unit_price || 0,
-                    original_price: ai.inventory.unit_price || 0,
-                    quantity: ai.quantity,
-                    max_quantity: ai.inventory.current_stock,
-                })
-            }
-        })
-
-        setCart(newCart)
-        setSelectedAppointmentId(appointment.id)
-        setSelectedAppointmentBuyerId(appointment.client_id || null)
-        setSelectedAppointmentBuyerName(
-            unpaidApt.user_profiles?.full_name || null,
-        )
-        addNotification(
-            `Loaded appointment for ${
-                unpaidApt.user_profiles?.full_name || "Client"
-            }`,
-            "SUCCESS",
-        )
-    }
-
-    const handleAppointmentSelect = (appointment: Appointment) => {
-        if (cart.length > 0) {
-            setConfirmModalConfig({
-                title: "Clear Cart?",
-                message:
-                    "Selecting an appointment will clear your current cart. Continue?",
-                onConfirm: () => loadAppointmentIntoCart(appointment),
-                variant: "warning",
-            })
-            setConfirmModalOpen(true)
-        } else {
-            loadAppointmentIntoCart(appointment)
         }
     }
 
@@ -1250,7 +964,6 @@ export function SalesProvider({ children, userInfo }: SalesProviderProps) {
         inventory,
         services,
         transactions,
-        appointments,
         todayStats,
         taxSettings,
         loading,
@@ -1302,14 +1015,6 @@ export function SalesProvider({ children, userInfo }: SalesProviderProps) {
         addPaymentReference,
         setAddPaymentReference,
         processing,
-        activeTab,
-        setActiveTab,
-        selectedAppointmentId,
-        setSelectedAppointmentId,
-        selectedAppointmentBuyerId,
-        setSelectedAppointmentBuyerId,
-        selectedAppointmentBuyerName,
-        setSelectedAppointmentBuyerName,
         isTransactionsOpen,
         setIsTransactionsOpen,
         clientType,
@@ -1358,7 +1063,6 @@ export function SalesProvider({ children, userInfo }: SalesProviderProps) {
         refreshTransactions,
         handleCheckout,
         handleVoid,
-        handleAppointmentSelect,
         handleAddPayment,
         confirmModalOpen,
         setConfirmModalOpen,

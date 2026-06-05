@@ -39,7 +39,7 @@ export type AppointmentStatus = 'PENDING' | 'CONFIRMED' | 'ONGOING' | 'COMPLETED
 
 export type PaymentStatus = 'UNPAID' | 'DEPOSIT_PAID' | 'PAID_IN_FULL' | 'REFUNDED'
 
-export type AppointmentType = 'TATTOO' | 'SHOE' | 'PIERCING' | 'OTHER'
+export type AppointmentType = 'HAIR' | 'NAILS' | 'FACIAL' | 'BODY_MASSAGE' | 'WAXING' | 'LASH_BROW' | 'MAKEUP' | 'OTHER'
 
 export interface Appointment {
     id: string

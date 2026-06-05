@@ -15,7 +15,7 @@ import { branches } from '../server/db/schema/branches'
 // ============================================================================
 const TEST_ACCOUNTS = [
     {
-        email: 'e2e-admin@rdmdstudio.com',
+        email: 'e2e-admin@amorbeautylounge.com',
         fullName: 'E2E Admin',
         role: 'admin' as const,
         accessFlags: [] as string[], // admin gets all by default
@@ -23,7 +23,7 @@ const TEST_ACCOUNTS = [
         branchIds: [] as string[], // will be filled
     },
     {
-        email: 'e2e-manager@rdmdstudio.com',
+        email: 'e2e-manager@amorbeautylounge.com',
         fullName: 'E2E Manager',
         role: 'manager' as const,
         accessFlags: [
@@ -37,7 +37,7 @@ const TEST_ACCOUNTS = [
         branchIds: [] as string[],
     },
     {
-        email: 'e2e-artist@rdmdstudio.com',
+        email: 'e2e-artist@amorbeautylounge.com',
         fullName: 'E2E Artist',
         role: 'artist' as const,
         accessFlags: [
@@ -50,7 +50,7 @@ const TEST_ACCOUNTS = [
         branchIds: [] as string[],
     },
     {
-        email: 'e2e-staff@rdmdstudio.com',
+        email: 'e2e-staff@amorbeautylounge.com',
         fullName: 'E2E Staff',
         role: 'staff' as const,
         accessFlags: [
@@ -66,16 +66,16 @@ const TEST_ACCOUNTS = [
 // Test-Specific Seed Data
 // ============================================================================
 const TEST_SERVICES = [
-    { title: '[E2E] Small Tattoo', price: '1500.00', pricingType: 'FIXED', serviceType: 'TATTOO', isActive: true },
-    { title: '[E2E] Standard Piercing', price: '500.00', pricingType: 'FIXED', serviceType: 'PIERCING', isActive: true },
-    { title: '[E2E] Shoe Cleaning Basic', price: '800.00', pricingType: 'FIXED', serviceType: 'SHOE', isActive: true },
+    { title: '[E2E] Haircut & Style', price: '1500.00', pricingType: 'FIXED', serviceType: 'HAIR', isActive: true },
+    { title: '[E2E] Gel Manicure', price: '800.00', pricingType: 'FIXED', serviceType: 'NAILS', isActive: true },
+    { title: '[E2E] Classic Facial', price: '1200.00', pricingType: 'FIXED', serviceType: 'FACIAL', isActive: true },
     { title: '[E2E] Consultation', price: '300.00', pricingType: 'FIXED', serviceType: 'OTHER', isActive: true },
 ]
 
 const TEST_INVENTORY = [
-    { name: '[E2E] Nitrile Gloves', itemType: 'ITEM', itemCategory: 'TATTOO', currentStock: '100', sellingPrice: '50.00', unitPrice: '25.00', isActive: true, showInSales: true },
-    { name: '[E2E] Black Ink 30ml', itemType: 'FLUID', itemCategory: 'TATTOO', currentStock: '50', sellingPrice: '300.00', unitPrice: '150.00', fluidUnitSize: '30', fluidRemaining: '30', fluidUnitOfMeasure: 'ml', isActive: true, showInSales: true },
-    { name: '[E2E] Titanium Stud', itemType: 'ITEM', itemCategory: 'PIERCING', currentStock: '200', sellingPrice: '150.00', unitPrice: '75.00', isActive: true, showInSales: true },
+    { name: '[E2E] Disposable Gloves', itemType: 'ITEM', itemCategory: 'EQUIPMENT', currentStock: '100', sellingPrice: '50.00', unitPrice: '25.00', isActive: true, showInSales: true },
+    { name: '[E2E] Hair Color Kit', itemType: 'ITEM', itemCategory: 'OTHER', currentStock: '10', sellingPrice: '500.00', unitPrice: '250.00', isActive: true, showInSales: true },
+    { name: '[E2E] Nail Polish Set', itemType: 'ITEM', itemCategory: 'OTHER', currentStock: '200', sellingPrice: '150.00', unitPrice: '75.00', isActive: true, showInSales: true },
 ]
 
 // ============================================================================
@@ -163,9 +163,6 @@ async function main() {
                 unitPrice: item.unitPrice,
                 isActive: item.isActive,
                 showInSales: item.showInSales,
-                ...(item.fluidUnitSize ? { fluidUnitSize: item.fluidUnitSize } : {}),
-                ...(item.fluidRemaining ? { fluidRemaining: item.fluidRemaining } : {}),
-                ...(item.fluidUnitOfMeasure ? { fluidUnitOfMeasure: item.fluidUnitOfMeasure } : {}),
                 branchId: branchId,
                 isShared: true,
             })

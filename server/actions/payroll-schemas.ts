@@ -4,7 +4,7 @@ import { z } from 'zod'
 // Payroll Validation Schemas
 // ============================================================================
 
-export const ServiceTypeSchema = z.enum(['TATTOO', 'PIERCING', 'SHOE', 'MANUAL'])
+export const ServiceTypeSchema = z.enum(['HAIR', 'NAILS', 'FACIAL', 'BODY_MASSAGE', 'WAXING', 'LASH_BROW', 'MAKEUP', 'MANUAL'])
 export const ClientTypeSchema = z.enum(['WALKIN', 'PERSONAL'])
 export const PayoutPeriodSchema = z.enum(['DAILY', 'WEEKLY', 'BIMONTHLY', 'MONTHLY'])
 export const PaymentStatusSchema = z.enum(['PENDING', 'REQUESTED', 'CONFIRMED', 'PAID', 'CANCELLED'])

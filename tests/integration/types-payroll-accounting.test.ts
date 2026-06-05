@@ -25,17 +25,17 @@ describe("LedgerEntry type", () => {
 describe("PayrollEntryTransactionItem type", () => {
     test("has expected shape", () => {
         const item: PayrollEntryTransactionItem = {
-            item_name: "Dragon Tattoo",
+            item_name: "Haircut",
             quantity: 1,
-            unit_price: 5000,
-            line_total: 5000,
-            service_type: "TATTOO",
+            unit_price: 1500,
+            line_total: 1500,
+            service_type: "HAIR",
             service_id: "svc-1",
-            staff_cut: 2500,
-            shop_cut: 2500,
+            staff_cut: 750,
+            shop_cut: 750,
         }
-        expect(item.item_name).toBe("Dragon Tattoo")
-        expect(item.service_type).toBe("TATTOO")
+        expect(item.item_name).toBe("Haircut")
+        expect(item.service_type).toBe("HAIR")
         expect(item.staff_cut).toBe(2500)
     })
 
@@ -56,7 +56,7 @@ describe("PayrollEntry type", () => {
         const entry: Partial<PayrollEntry> = {
             id: "pe-1",
             transaction_items: [
-                { item_name: "Tattoo", quantity: 1, unit_price: 5000, line_total: 5000 },
+                { item_name: "Haircut", quantity: 1, unit_price: 1500, line_total: 1500 },
             ],
         }
         expect(entry.transaction_items).toBeDefined()
