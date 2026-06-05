@@ -155,3 +155,13 @@ export {
     pushSubscriptions,
 } from './schema/push-subscriptions'
 export type { PushSubscription, PushSubscriptionInsert } from './schema/push-subscriptions'
+
+// Appointments Schema (kept for data integrity)
+export {
+    appointments,
+    appointmentServices,
+    appointmentItems,
+    tattooDetails,
+    shoeDetails,
+    piercingDetails,
+} from './schema/appointments'
