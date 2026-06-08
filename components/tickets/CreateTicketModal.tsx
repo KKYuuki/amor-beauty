@@ -71,7 +71,7 @@ export function CreateTicketModal({
             const res = await createTicket(payload)
             if (res.success) {
                 const newTicket = {
-                    id: 'temp-id-' + Date.now(),
+                    id: res.data.id,
                     queueNumber: res.data.queueNumber,
                     customerName: payload.customerName,
                     totalAmount,

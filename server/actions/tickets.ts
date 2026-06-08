@@ -17,7 +17,7 @@ export interface CreateTicketPayload {
     }[]
 }
 
-export async function createTicket(payload: CreateTicketPayload): Promise<ActionResponse<{ queueNumber: number }>> {
+export async function createTicket(payload: CreateTicketPayload): Promise<ActionResponse<{ id: string, queueNumber: number }>> {
     const user = await getCurrentUser()
     if (!user) {
         return failure('Not authenticated')
@@ -50,7 +50,7 @@ export async function createTicket(payload: CreateTicketPayload): Promise<Action
             return newTicket
         })
 
-        return success({ queueNumber: result.queueNumber }, `Ticket #${result.queueNumber} created successfully`)
+        return success({ id: result.id, queueNumber: result.queueNumber }, `Ticket #${result.queueNumber} created successfully`)
     } catch (error) {
         await logError({
             type: 'SYSTEM',
