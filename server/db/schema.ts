@@ -142,5 +142,11 @@ export {
     notifications,
 } from './schema/notifications'
 
-
-
+// Tickets Schema
+export {
+    ticketStatusEnum,
+    tickets,
+    ticketServices,
+    ticketsRelations,
+    ticketServicesRelations,
+} from './schema/tickets'

@@ -18,6 +18,13 @@ export const routeConfig: RouteConfig[] = [
         group: "core",
         exactMatch: true
     },
+    {
+        title: "Tickets",
+        href: "/tickets",
+        perms: "",
+        iconName: "ClipboardListIcon",
+        group: "core"
+    },
 
     // Management Routes - Business operations
     {
