@@ -5,7 +5,7 @@
     "packageManager": "bun@1.1.38",
     "scripts": {
         "dev": "next dev --turbopack --experimental-https",
-        "build": "next build --turbopack",
+        "build": "bun run db:push && next build --turbopack",
         "start": "next start",
         "lint": "eslint",
         "typecheck": "tsc --noEmit",
