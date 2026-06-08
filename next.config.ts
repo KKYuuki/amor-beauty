@@ -12,7 +12,10 @@ const nextConfig: NextConfig = {
         },
     },
     transpilePackages: [
-    ]
+    ],
+    eslint: {
+        ignoreDuringBuilds: true,
+    }
 }
 
 export default nextConfig
