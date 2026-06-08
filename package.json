@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "next dev --turbopack --experimental-https",
         "build": "next build --turbopack",
-        "start": "bun run db:migrate && next start",
+        "start": "next start",
         "lint": "eslint",
         "typecheck": "tsc --noEmit",
         "merge": "git as-work && git checkout prod && git merge dev && git push origin prod && git checkout dev && git as-personal",
