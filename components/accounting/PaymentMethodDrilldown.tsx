@@ -64,44 +64,44 @@ export default function PaymentMethodDrilldown({
 
     return (
         <div className='space-y-2'>
-            <h3 className='text-sm font-semibold text-white/60 uppercase tracking-wider'>
+            <h3 className='text-sm font-semibold text-muted-foreground uppercase tracking-wider'>
                 Payment Method Breakdown
             </h3>
             {breakdown.map((pm) => {
                 const isExpanded = expandedMethods.has(pm.method)
                 const methodColorClass = pm.method !== 'UNSPECIFIED' && pm.method !== null
-                    ? (ACCOUNTING_PAYMENT_METHOD_COLORS as Record<string, string>)[pm.method] || 'bg-white/20 text-white/70 border-white/30'
-                    : 'bg-white/10 text-white/50 border-white/20'
+                    ? (ACCOUNTING_PAYMENT_METHOD_COLORS as Record<string, string>)[pm.method] || 'bg-muted text-foreground/90 border-border'
+                    : 'bg-card text-muted-foreground border-border'
 
                 return (
                     <div
                         key={pm.method}
-                        className='bg-white/5 border border-white/10 rounded-lg overflow-hidden'
+                        className='bg-muted border border-border rounded-lg overflow-hidden'
                     >
                         <button
                             onClick={() => toggleMethod(pm.method)}
                             aria-expanded={isExpanded}
                             aria-controls={`method-content-${pm.method}`}
-                            className='w-full flex items-center justify-between p-4 hover:bg-white/5 transition-colors cursor-pointer'
+                            className='w-full flex items-center justify-between p-4 hover:bg-muted transition-colors cursor-pointer'
                         >
                             <div className='flex items-center gap-3'>
                                 {isExpanded ? (
-                                    <ChevronDownIcon aria-hidden="true" className='w-4 h-4 text-white/60' />
+                                    <ChevronDownIcon aria-hidden="true" className='w-4 h-4 text-muted-foreground' />
                                 ) : (
-                                    <ChevronRightIcon aria-hidden="true" className='w-4 h-4 text-white/60' />
+                                    <ChevronRightIcon aria-hidden="true" className='w-4 h-4 text-muted-foreground' />
                                 )}
                                 <span className={`text-xs px-2 py-0.5 rounded border ${methodColorClass}`}>
                                     {pm.method_label}
                                 </span>
-                                <span className='text-sm text-white/60'>
+                                <span className='text-sm text-muted-foreground'>
                                     {pm.count} entries
                                 </span>
                             </div>
                             <div className='flex items-center gap-4'>
-                                <span className='text-xs text-white/40'>
+                                <span className='text-xs text-muted-foreground/70'>
                                     DR {currencySymbol}{pm.total_debit.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                 </span>
-                                <span className='text-xs text-white/40'>
+                                <span className='text-xs text-muted-foreground/70'>
                                     CR {currencySymbol}{pm.total_credit.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                 </span>
                                 <span className={`text-sm font-bold ${pm.net >= 0 ? 'text-red-300' : 'text-green-300'}`}>
@@ -130,35 +130,35 @@ export default function PaymentMethodDrilldown({
                                                 return (
                                                     <div
                                                         key={catKey}
-                                                        className='bg-white/5 rounded-md border border-white/5'
+                                                        className='bg-muted rounded-md border border-border'
                                                     >
                                                         <button
                                                             onClick={() => toggleCategory(catKey)}
                                                             aria-expanded={isCatExpanded}
                                                             aria-controls={`category-content-${catKey}`}
-                                                            className='w-full flex items-center justify-between p-3 hover:bg-white/5 transition-colors cursor-pointer'
+                                                            className='w-full flex items-center justify-between p-3 hover:bg-muted transition-colors cursor-pointer'
                                                         >
                                                             <div className='flex items-center gap-2'>
                                                                 {isCatExpanded ? (
-                                                                    <ChevronDownIcon aria-hidden="true" className='w-3 h-3 text-white/40' />
+                                                                    <ChevronDownIcon aria-hidden="true" className='w-3 h-3 text-muted-foreground/70' />
                                                                 ) : (
-                                                                    <ChevronRightIcon aria-hidden="true" className='w-3 h-3 text-white/40' />
+                                                                    <ChevronRightIcon aria-hidden="true" className='w-3 h-3 text-muted-foreground/70' />
                                                                 )}
                                                                 <span className={`text-xs px-1.5 py-0.5 rounded border ${ENTRY_TYPE_COLORS[cat.entry_type]}`}>
                                                                     {cat.entry_type}
                                                                 </span>
-                                                                <span className='text-sm text-white/80'>
+                                                                <span className='text-sm text-foreground'>
                                                                     {cat.category}
                                                                 </span>
-                                                                <span className='text-xs text-white/40'>
+                                                                <span className='text-xs text-muted-foreground/70'>
                                                                     ({cat.count})
                                                                 </span>
                                                             </div>
                                                             <div className='flex items-center gap-3'>
-                                                                <span className='text-xs text-white/40'>
+                                                                <span className='text-xs text-muted-foreground/70'>
                                                                     DR {currencySymbol}{cat.total_debit.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                                                 </span>
-                                                                <span className='text-xs text-white/40'>
+                                                                <span className='text-xs text-muted-foreground/70'>
                                                                     CR {currencySymbol}{cat.total_credit.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                                                 </span>
                                                                 <span className={`text-sm font-semibold ${cat.net >= 0 ? 'text-red-300' : 'text-green-300'}`}>
@@ -178,8 +178,8 @@ export default function PaymentMethodDrilldown({
                                                                     className='overflow-hidden'
                                                                 >
                                                                     <div className='px-3 pb-3'>
-                                                                        <div className='flex items-center justify-between text-xs bg-white/5 rounded p-2 mb-1'>
-                                                                            <span className='text-white/50'>
+                                                                        <div className='flex items-center justify-between text-xs bg-muted rounded p-2 mb-1'>
+                                                                            <span className='text-muted-foreground'>
                                                                                 {cat.count} {cat.count === 1 ? 'entry' : 'entries'}
                                                                             </span>
                                                                             <div className='flex items-center gap-3'>
@@ -207,15 +207,15 @@ export default function PaymentMethodDrilldown({
                                                 )
                                             })}
 
-                                        <div className='flex items-center justify-between pt-2 border-t border-white/10'>
-                                            <span className='text-xs font-semibold text-white/50 uppercase'>
+                                        <div className='flex items-center justify-between pt-2 border-t border-border'>
+                                            <span className='text-xs font-semibold text-muted-foreground uppercase'>
                                                 Subtotal
                                             </span>
                                             <div className='flex items-center gap-3'>
-                                                <span className='text-xs text-white/40'>
+                                                <span className='text-xs text-muted-foreground/70'>
                                                     DR {currencySymbol}{pm.total_debit.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                                 </span>
-                                                <span className='text-xs text-white/40'>
+                                                <span className='text-xs text-muted-foreground/70'>
                                                     CR {currencySymbol}{pm.total_credit.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                                 </span>
                                                 <span className={`text-sm font-bold ${pm.net >= 0 ? 'text-red-300' : 'text-green-300'}`}>

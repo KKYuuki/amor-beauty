@@ -28,22 +28,21 @@ export default function PageHeader({
 }: PageHeaderProps) {
     return (
         <div className='w-full'>
-            {/* Breadcrumbs */}
             {breadcrumbs && breadcrumbs.length > 0 && (
                 <nav className='mb-3'>
-                    <ol className='flex flex-wrap items-center gap-1 text-sm text-white/60'>
+                    <ol className='flex flex-wrap items-center gap-1 text-sm text-muted-foreground'>
                         {breadcrumbs.map((crumb, index) => (
                             <li
                                 key={index}
                                 className='flex items-center'
                             >
                                 {index > 0 && (
-                                    <ChevronRightIcon className='w-4 h-4 mx-1 text-white/40' />
+                                    <ChevronRightIcon className='w-4 h-4 mx-1 text-muted-foreground/70' />
                                 )}
                                 {crumb.href ? (
                                     <Link
                                         href={crumb.href}
-                                        className='hover:text-white transition-colors'
+                                        className='hover:text-foreground transition-colors'
                                     >
                                         {crumb.label}
                                     </Link>
@@ -51,7 +50,7 @@ export default function PageHeader({
                                     <span
                                         className={
                                             index === breadcrumbs.length - 1
-                                                ? "text-white"
+                                                ? "text-foreground"
                                                 : ""
                                         }
                                     >
@@ -64,17 +63,15 @@ export default function PageHeader({
                 </nav>
             )}
 
-            {/* Header Content */}
             <div className='flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between'>
-                {/* Left Side: Title, Description, Icon */}
                 <div className='flex-1 min-w-0'>
                     <div className='flex items-center gap-3'>
                         {icon && (
-                            <span className='shrink-0 text-white/80'>
+                            <span className='shrink-0 text-foreground'>
                                 {icon}
                             </span>
                         )}
-                        <h1 className='text-xl sm:text-2xl font-bold text-white truncate'>
+                        <h1 className='text-xl sm:text-2xl font-bold text-foreground truncate'>
                             {title}
                         </h1>
                         {children && (
@@ -84,13 +81,12 @@ export default function PageHeader({
                         )}
                     </div>
                     {description && (
-                        <p className='mt-1 text-sm text-white/60 sm:mt-2'>
+                        <p className='mt-1 text-sm text-muted-foreground sm:mt-2'>
                             {description}
                         </p>
                     )}
                 </div>
 
-                {/* Right Side: Actions */}
                 {actions && (
                     <div className='grid grid-cols-2 gap-2 sm:flex sm:flex-row sm:items-center sm:shrink-0'>
                         {actions}

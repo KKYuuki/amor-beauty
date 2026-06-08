@@ -213,13 +213,13 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
             <div className="flex items-center gap-4">
                 <Link
                     href="/accounts"
-                    className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                    className="p-2 hover:bg-muted rounded-lg transition-colors"
                 >
                     <ArrowLeftIcon size={20} />
                 </Link>
                 <div className="flex-1">
                     <h1 className="text-2xl font-bold">{user.full_name}</h1>
-                    <p className="text-white/60">{user.email}</p>
+                    <p className="text-muted-foreground">{user.email}</p>
                 </div>
                 <button
                     type="button"
@@ -237,7 +237,7 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
             </div>
 
             {/* Tabs */}
-            <div className="flex flex-row gap-2 border-b border-white/10">
+            <div className="flex flex-row gap-2 border-b border-border">
                 {TABS.map((tab) => {
                     const Icon = tab.icon
                     return (
@@ -247,7 +247,7 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
                             className={`flex items-center gap-2 px-4 py-3 font-medium transition-colors border-b-2 ${
                                 activeTab === tab.id
                                     ? "border-blue-400 text-blue-400"
-                                    : "border-transparent text-white/60 hover:text-white"
+                                    : "border-transparent text-muted-foreground hover:text-foreground"
                             }`}
                         >
                             <Icon size={16} />
@@ -270,7 +270,7 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
                         >
                             {/* Avatar */}
                             <div className="flex items-center gap-4">
-                                <div className="w-20 h-20 rounded-full bg-white/10 overflow-hidden">
+                                <div className="w-20 h-20 rounded-full bg-card overflow-hidden">
                                     {user.avatar_url ? (
                                         <Image
                                             src={user.avatar_url}
@@ -281,45 +281,45 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
                                         />
                                     ) : (
                                         <div className="w-full h-full flex items-center justify-center">
-                                            <UserIcon size={32} className="text-white/40" />
+                                            <UserIcon size={32} className="text-muted-foreground/70" />
                                         </div>
                                     )}
                                 </div>
                                 <div>
-                                    <p className="text-sm text-white/60">Avatar</p>
-                                    <p className="text-xs text-white/40">Avatar upload coming soon</p>
+                                    <p className="text-sm text-muted-foreground">Avatar</p>
+                                    <p className="text-xs text-muted-foreground/70">Avatar upload coming soon</p>
                                 </div>
                             </div>
 
                             {/* Full Name */}
                             <label className="block">
-                                <span className="text-sm font-medium text-white/60">Full Name</span>
+                                <span className="text-sm font-medium text-muted-foreground">Full Name</span>
                                 <input
                                     type="text"
                                     value={editData.full_name || ""}
                                     onChange={(e) =>
                                         setEditData({ ...editData, full_name: e.target.value })
                                     }
-                                    className="mt-1 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-white/30"
+                                    className="mt-1 w-full bg-muted border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:border-primary"
                                 />
                             </label>
 
                             {/* Email */}
                             <label className="block">
-                                <span className="text-sm font-medium text-white/60">Email</span>
+                                <span className="text-sm font-medium text-muted-foreground">Email</span>
                                 <input
                                     type="email"
                                     value={editData.email || ""}
                                     onChange={(e) =>
                                         setEditData({ ...editData, email: e.target.value })
                                     }
-                                    className="mt-1 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-white/30"
+                                    className="mt-1 w-full bg-muted border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:border-primary"
                                 />
                             </label>
 
                             {/* Phone */}
                             <label className="block">
-                                <span className="text-sm font-medium text-white/60">Phone Number</span>
+                                <span className="text-sm font-medium text-muted-foreground">Phone Number</span>
                                 <input
                                     type="tel"
                                     value={editData.phone_number || ""}
@@ -327,29 +327,29 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
                                         setEditData({ ...editData, phone_number: e.target.value })
                                     }
                                     placeholder="+63..."
-                                    className="mt-1 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-white/30"
+                                    className="mt-1 w-full bg-muted border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:border-primary"
                                 />
                             </label>
 
                             {/* Password Reset (Admin only) */}
                             {isAdmin && (
-                                <div className="pt-6 border-t border-white/10">
+                                <div className="pt-6 border-t border-border">
                                     <h3 className="font-semibold mb-4">Reset Password</h3>
                                     <div className="space-y-4">
                                         <label className="block">
-                                            <span className="text-sm font-medium text-white/60">New Password</span>
+                                            <span className="text-sm font-medium text-muted-foreground">New Password</span>
                                             <div className="mt-1 relative">
                                                 <input
                                                     type={showPassword ? "text" : "password"}
                                                     value={newPassword}
                                                     onChange={(e) => setNewPassword(e.target.value)}
-                                                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 pr-10 text-white focus:outline-none focus:border-white/30"
+                                                    className="w-full bg-muted border border-border rounded-lg px-3 py-2 pr-10 text-foreground focus:outline-none focus:border-primary"
                                                     placeholder="Leave blank to keep current"
                                                 />
                                                 <button
                                                     type="button"
                                                     onClick={() => setShowPassword(!showPassword)}
-                                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
+                                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground/70 hover:text-foreground"
                                                 >
                                                     {showPassword ? (
                                                         <EyeOffIcon size={16} />
@@ -361,8 +361,8 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
                                         </label>
 
                                         {newPassword && (
-                                            <div className="bg-white/5 border border-white/10 rounded-lg p-4 space-y-2">
-                                                <p className="text-sm font-medium text-white/60">Password Requirements</p>
+                                            <div className="bg-muted border border-border rounded-lg p-4 space-y-2">
+                                                <p className="text-sm font-medium text-muted-foreground">Password Requirements</p>
                                                 {[
                                                     { key: "length", label: "At least 12 characters" },
                                                     { key: "uppercase", label: "One uppercase letter" },
@@ -375,14 +375,14 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
                                                         className={`flex items-center gap-2 text-sm ${
                                                             passwordReqs[key as keyof typeof passwordReqs]
                                                                 ? "text-green-400"
-                                                                : "text-white/40"
+                                                                : "text-muted-foreground/70"
                                                         }`}
                                                     >
                                                         <span
                                                             className={`w-2 h-2 rounded-full ${
                                                                 passwordReqs[key as keyof typeof passwordReqs]
                                                                     ? "bg-green-400"
-                                                                    : "bg-white/20"
+                                                                    : "bg-muted"
                                                             }`}
                                                         />
                                                         {label}
@@ -396,12 +396,12 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
 
                             {/* Login Information */}
                             {(user.last_login_at || user.last_login_method) && (
-                                <div className="pt-6 border-t border-white/10">
+                                <div className="pt-6 border-t border-border">
                                     <h3 className="font-semibold mb-4">Login Information</h3>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {user.last_login_at && (
                                             <div>
-                                                <span className="text-sm text-white/60">Last Login</span>
+                                                <span className="text-sm text-muted-foreground">Last Login</span>
                                                 <p className="font-medium">
                                                     {new Date(user.last_login_at).toLocaleString("en-PH", {
                                                         dateStyle: "medium",
@@ -412,7 +412,7 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
                                         )}
                                         {user.last_login_method && (
                                             <div>
-                                                <span className="text-sm text-white/60">Login Method</span>
+                                                <span className="text-sm text-muted-foreground">Login Method</span>
                                                 <p className="font-medium capitalize">
                                                     {user.last_login_method.replace("_", " ")}
                                                 </p>
@@ -434,7 +434,7 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
                         >
                             {/* Role */}
                             <label className="block">
-                                <span className="text-sm font-medium text-white/60">User Role</span>
+                                <span className="text-sm font-medium text-muted-foreground">User Role</span>
                                 <select
                                     value={editData.role || "staff"}
                                     onChange={(e) => {
@@ -467,7 +467,7 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
                                         setEditData(updates)
                                     }}
                                     disabled={!isAdmin}
-                                    className="mt-1 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-white/30 disabled:opacity-50"
+                                    className="mt-1 w-full bg-muted border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:border-primary disabled:opacity-50"
                                 >
                                     <option value="admin">Admin</option>
                                     <option value="manager">Manager</option>
@@ -495,7 +495,7 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
                                                     checked={isChecked}
                                                     onChange={() => toggleFlag(flag)}
                                                     disabled={!isAdmin}
-                                                    className="w-4 h-4 rounded border-white/20 bg-white/10 text-blue-500 focus:ring-2 focus:ring-blue-500/50 disabled:opacity-50"
+                                                    className="w-4 h-4 rounded border-border bg-card text-blue-500 focus:ring-2 focus:ring-blue-500/50 disabled:opacity-50"
                                                 />
                                                 <span className="capitalize">{meta?.label || flag.replace(/_/g, " ")}</span>
                                             </label>
@@ -518,7 +518,7 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
                                                             checked={isChecked}
                                                             onChange={() => toggleFlag(flag)}
                                                             disabled={!isAdmin}
-                                                            className="w-4 h-4 rounded border-white/20 bg-white/10 text-blue-500 focus:ring-2 focus:ring-blue-500/50 disabled:opacity-50"
+                                                            className="w-4 h-4 rounded border-border bg-card text-blue-500 focus:ring-2 focus:ring-blue-500/50 disabled:opacity-50"
                                                         />
                                                         <span className="capitalize">{meta?.label || flag}</span>
                                                     </label>
@@ -530,13 +530,13 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
                             </div>
 
                             {/* Payroll Settings */}
-                            <div className="pt-6 border-t border-white/10 space-y-4">
+                            <div className="pt-6 border-t border-border space-y-4">
                                 <h3 className="font-semibold">Payroll Settings</h3>
 
                                 <div className={`grid gap-4 ${hasWorkCapability(editData) ? 'grid-cols-2' : 'grid-cols-1'}`}>
                                     {hasWorkCapability(editData) && (
                                         <label className="block">
-                                            <span className="text-sm font-medium text-white/60">Rate Level</span>
+                                            <span className="text-sm font-medium text-muted-foreground">Rate Level</span>
                                             <select
                                                 value={editData.rate_level_id || ""}
                                                 onChange={(e) =>
@@ -546,7 +546,7 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
                                                     })
                                                 }
                                                 disabled={!isAdmin}
-                                                className="mt-1 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-white/30 disabled:opacity-50"
+                                                className="mt-1 w-full bg-muted border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:border-primary disabled:opacity-50"
                                             >
                                                 <option value="">Select Rate Level</option>
                                                 {rateLevels.map((level) => (
@@ -562,7 +562,7 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
                                     )}
 
                                     <label className="block">
-                                        <span className="text-sm font-medium text-white/60">Payout Period</span>
+                                        <span className="text-sm font-medium text-muted-foreground">Payout Period</span>
                                         <select
                                             value={editData.payout_period || "DAILY"}
                                             onChange={(e) =>
@@ -572,7 +572,7 @@ export default function UserDetailPage({ params }: UserDetailPageProps) {
                                                 })
                                             }
                                             disabled={!isAdmin}
-                                            className="mt-1 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-white/30 disabled:opacity-50"
+                                            className="mt-1 w-full bg-muted border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:border-primary disabled:opacity-50"
                                         >
                                             <option value="DAILY">Daily</option>
                                             <option value="WEEKLY">Weekly</option>

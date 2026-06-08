@@ -83,13 +83,7 @@ export const routeConfig: RouteConfig[] = [
         perms: "metrics_view",
         iconName: "ChartAreaIcon",
         group: "admin"
-    },
-    {
-        title: "Branches",
-        href: "/admin/branches",
-        perms: "admin",
-        iconName: "Building2Icon",
-        group: "admin"
+
     },
     {
         title: "System Logs",

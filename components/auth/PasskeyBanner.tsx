@@ -50,10 +50,10 @@ export default function PasskeyBanner() {
                                 <button
                                     type="button"
                                     onClick={handleDismiss}
-                                    className="p-1.5 hover:bg-white/10 rounded-md transition-colors"
+                                    className="p-1.5 hover:bg-muted rounded-md transition-colors"
                                     aria-label="Dismiss banner"
                                 >
-                                    <X className="w-4 h-4 text-white/60" />
+                                    <X className="w-4 h-4 text-muted-foreground" />
                                 </button>
                             </div>
                         </div>

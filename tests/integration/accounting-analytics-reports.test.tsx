@@ -65,7 +65,7 @@ describe("CashFlowSummary", () => {
         currencySymbol="₱"
       />
     )
-    expect(html).toContain("bg-white/5")
+    expect(html).toContain("bg-muted")
     expect(html).toContain("rounded-lg")
   })
 })
@@ -454,7 +454,7 @@ describe("AccountingTrendChart", () => {
         currencySymbol="₱"
       />
     )
-    expect(html).toContain("bg-white/5")
+    expect(html).toContain("bg-muted")
     expect(html).toContain("rounded-lg")
   })
 
@@ -571,7 +571,7 @@ describe("AccountingBreakdownChart", () => {
       />
     )
     expect(html).toContain("Expenses")
-    expect(html).toContain("bg-white/5")
+    expect(html).toContain("bg-muted")
     expect(html).toContain("rounded-lg")
   })
 })
@@ -608,7 +608,7 @@ describe("PeriodProjection", () => {
       />
     )
     expect(html).toContain("Period Projection")
-    expect(html).toContain("bg-white/5")
+    expect(html).toContain("bg-muted")
     expect(html).toContain("rounded-lg")
   })
 

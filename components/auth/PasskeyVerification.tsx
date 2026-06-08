@@ -98,29 +98,29 @@ export default function PasskeyVerification({
             <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-zinc-900 border border-white/10 rounded-xl w-full max-w-sm overflow-hidden shadow-2xl"
+                className="bg-card border border-border rounded-xl w-full max-w-sm overflow-hidden shadow-2xl"
             >
-                <div className="flex items-center justify-between p-4 border-b border-white/10">
-                    <h3 id="passkey-verification-title" className="text-lg font-semibold text-white">{title}</h3>
+                <div className="flex items-center justify-between p-4 border-b border-border">
+                    <h3 id="passkey-verification-title" className="text-lg font-semibold text-foreground">{title}</h3>
                     <button
                         onClick={onClose}
-                        className="p-2 hover:bg-white/10 rounded-full transition-colors"
+                        className="p-2 hover:bg-muted rounded-full transition-colors"
                         type="button"
                         aria-label="Close"
                     >
-                        <X className="w-5 h-5 text-white/60" />
+                        <X className="w-5 h-5 text-muted-foreground" />
                     </button>
                 </div>
 
                 <div className="p-6">
-                    <p className="text-white/60 text-sm mb-6">{description}</p>
+                    <p className="text-muted-foreground text-sm mb-6">{description}</p>
 
                     {error && (
                         <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-md flex items-start gap-2">
                             <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
                             <div className="flex flex-col gap-2">
                                 <p className="text-sm text-red-400">{error}</p>
-                                <p className="text-xs text-white/40">
+                                <p className="text-xs text-muted-foreground/70">
                                     Passkey verification is required. Please ensure you have a passkey set up on your device.
                                 </p>
                             </div>
@@ -131,14 +131,14 @@ export default function PasskeyVerification({
                         <button
                             onClick={handlePasskeyVerify}
                             disabled={isLoading}
-                            className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-500/50 text-white font-medium py-3 rounded-md transition-colors flex items-center justify-center gap-2"
+                            className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-500/50 text-foreground font-medium py-3 rounded-md transition-colors flex items-center justify-center gap-2"
                             type="button"
                         >
                             {isLoading ? (
                                 <motion.div
                                     animate={{ rotate: 360 }}
                                     transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                                    className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                                    className="w-5 h-5 border-2 border-border border-t-primary rounded-full"
                                 />
                             ) : (
                                 <>
@@ -151,7 +151,7 @@ export default function PasskeyVerification({
                         <div className="flex flex-col gap-3">
                             <button
                                 onClick={handleRetry}
-                                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 rounded-md transition-colors flex items-center justify-center gap-2"
+                                className="w-full bg-blue-500 hover:bg-blue-600 text-foreground font-medium py-3 rounded-md transition-colors flex items-center justify-center gap-2"
                                 type="button"
                             >
                                 <Fingerprint className="w-5 h-5" />

@@ -68,7 +68,7 @@ function UserRow({
 
     return (
         <motion.tr
-            className='hover:bg-white/5 transition-colors text-nowrap'
+            className='hover:bg-muted transition-colors text-nowrap'
             key={id}
             layout
             initial={{ opacity: 0 }}
@@ -77,7 +77,7 @@ function UserRow({
         >
             <td className='px-3 py-1 text-sm font-medium w-max capitalize'>
                 <div
-                    className={`border-2 border-white/10 px-2 capitalize rounded-lg cursor-pointer w-max ${
+                    className={`border-2 border-border px-2 capitalize rounded-lg cursor-pointer w-max ${
                         role === "admin" && "bg-orange-400/20"
                     }
                                                             ${
@@ -106,7 +106,7 @@ function UserRow({
             </td>
             <td className='px-3 py-1 text-sm font-medium h-10 w-max flex flex-row gap-2 items-center'>
                 <div
-                    className={`aspect-square rounded-full w-6 h-6 flex items-center justify-center cursor-pointer bg-white/10 hover:bg-white/30 transition-colors overflow-clip ${
+                    className={`aspect-square rounded-full w-6 h-6 flex items-center justify-center cursor-pointer bg-card hover:bg-muted transition-colors overflow-clip ${
                         avatar_url ? "p-0" : "p-1"
                     }`}
                     draggable={false}
@@ -133,7 +133,7 @@ function UserRow({
                 <a
                     href={`mailto:${email}`}
                     title={`send an email to ${full_name}`}
-                    className='hover:underline hover:text-white/60 transition-colors'
+                    className='hover:underline hover:text-foreground transition-colors'
                 >
                     {email}
                 </a>
@@ -158,7 +158,7 @@ function UserRow({
                         </span>
                     )
                 ) : (
-                    <span className='text-white/30'>—</span>
+                    <span className='text-muted-foreground/70'>—</span>
                 )}
             </td>
             <td className='px-3 py-1 text-sm font-medium w-max'>
@@ -177,7 +177,7 @@ function UserRow({
                         {user.payout_period}
                     </span>
                 ) : (
-                    <span className='text-white/30'>—</span>
+                    <span className='text-muted-foreground/70'>—</span>
                 )}
             </td>
             <td className='px-3 py-2 w-max'>
@@ -197,7 +197,7 @@ function UserRow({
                             type='button'
                             title='Actions'
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                            className='p-1 flex items-center justify-center rounded-md bg-transparent cursor-pointer transition-colors hover:bg-white/10'
+                            className='p-1 flex items-center justify-center rounded-md bg-transparent cursor-pointer transition-colors hover:bg-muted'
                         >
                             <MoreVerticalIcon size={16} />
                         </button>
@@ -209,21 +209,21 @@ function UserRow({
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
                                     exit={{ opacity: 0, y: -10, scale: 0.95 }}
                                     transition={{ duration: 0.1 }}
-                                    className="absolute right-0 top-full mt-1 w-40 bg-zinc-900 rounded-lg shadow-xl border border-white/10 z-50 overflow-hidden"
+                                    className="absolute right-0 top-full mt-1 w-40 bg-card rounded-lg shadow-xl border border-border z-50 overflow-hidden"
                                 >
                                     <div className="py-1">
                                         <Link
                                             href={`/payroll?staffId=${user.id}`}
-                                            className="w-full px-4 py-2 text-left text-sm hover:bg-white/5 transition-colors flex items-center gap-2"
+                                            className="w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors flex items-center gap-2"
                                             onClick={() => setIsDropdownOpen(false)}
                                         >
                                             <BanknoteIcon size={16} className="text-yellow-400" />
                                             Payroll
                                         </Link>
-                                        <div className="border-t border-white/10 my-1"></div>
+                                        <div className="border-t border-border my-1"></div>
                                         <button
                                             type='button'
-                                            className="w-full px-4 py-2 text-left text-sm hover:bg-white/5 transition-colors flex items-center gap-2"
+                                            className="w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors flex items-center gap-2"
                                             onClick={() => handleAction("edit")}
                                         >
                                             <EditIcon size={16} className="text-blue-400" />
@@ -231,7 +231,7 @@ function UserRow({
                                         </button>
                                         {isAdmin && (
                                             <>
-                                                <div className="border-t border-white/10 my-1"></div>
+                                                <div className="border-t border-border my-1"></div>
                                                 <AdminActionGuard
                                                     onAction={() =>
                                                         handleAction("delete")
@@ -239,7 +239,7 @@ function UserRow({
                                                 >
                                                     <button
                                                         type='button'
-                                                        className='w-full px-4 py-2 text-left text-sm hover:bg-white/5 transition-colors flex items-center gap-2 text-red-400'
+                                                        className='w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors flex items-center gap-2 text-red-400'
                                                     >
                                                         <Trash2Icon size={16} />
                                                         Deactivate

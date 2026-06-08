@@ -28,11 +28,11 @@ export function CreateRateLevelModal({ onClose, onSave }: CreateRateLevelModalPr
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className='bg-zinc-900 rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-white/10'
+                className='bg-card rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-border'
             >
-                <div className='p-6 border-b border-white/10 flex justify-between items-center'>
+                <div className='p-6 border-b border-border flex justify-between items-center'>
                     <h3 className='text-xl font-bold'>Create Rate Level</h3>
-                    <button onClick={onClose} className='text-white/60 hover:text-white'>
+                    <button onClick={onClose} className='text-muted-foreground hover:text-foreground'>
                         <XIcon className='w-5 h-5' />
                     </button>
                 </div>
@@ -45,12 +45,12 @@ export function CreateRateLevelModal({ onClose, onSave }: CreateRateLevelModalPr
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             placeholder='e.g. Standard, Senior, Owner'
-                            className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none'
+                            className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none'
                         />
                     </div>
 
                     <div className='flex justify-end gap-3 pt-4'>
-                        <button onClick={onClose} className='px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors'>Cancel</button>
+                        <button onClick={onClose} className='px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors'>Cancel</button>
                         <button
                             onClick={handleSave}
                             disabled={loading || !name.trim()}

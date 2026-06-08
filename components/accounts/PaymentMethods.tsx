@@ -46,7 +46,7 @@ function maskAccountNumber(number: string): string {
 function getPaymentTypeIcon(type: string) {
     const option = PAYMENT_TYPE_OPTIONS.find((opt) => opt.value === type)
     const Icon = option?.icon || CreditCardIcon
-    return <Icon size={20} className="text-white/60" />
+    return <Icon size={20} className="text-muted-foreground" />
 }
 
 export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps) {
@@ -197,7 +197,7 @@ export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps)
     if (loading) {
         return (
             <div className="flex items-center justify-center p-8">
-                <div className="animate-spin h-8 w-8 border-2 border-white/20 border-t-white rounded-full" />
+                <div className="animate-spin h-8 w-8 border-2 border-border border-t-white rounded-full" />
             </div>
         )
     }
@@ -208,13 +208,13 @@ export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps)
             <div className="flex flex-row items-center justify-between">
                 <div>
                     <h3 className="text-lg font-semibold">Payment Methods</h3>
-                    <p className="text-sm text-white/60">Manage bank accounts and e-wallets for payouts</p>
+                    <p className="text-sm text-muted-foreground">Manage bank accounts and e-wallets for payouts</p>
                 </div>
                 {isAdmin && (
                     <button
                         type="button"
                         onClick={handleAdd}
-                        className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-sm font-medium"
+                        className="flex items-center gap-2 px-4 py-2 bg-card hover:bg-muted rounded-lg transition-colors text-sm font-medium"
                     >
                         <PlusIcon size={16} />
                         Add Method
@@ -225,7 +225,7 @@ export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps)
             {/* Methods List */}
             <div className="flex flex-col gap-3">
                 {methods.length === 0 ? (
-                    <div className="p-8 text-center text-white/40 bg-white/5 rounded-xl border border-white/10">
+                    <div className="p-8 text-center text-muted-foreground/70 bg-muted rounded-xl border border-border">
                         <CreditCardIcon size={32} className="mx-auto mb-3 opacity-50" />
                         <p>No payment methods configured</p>
                         {isAdmin && (
@@ -247,12 +247,12 @@ export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps)
                             className={`p-4 rounded-xl border transition-colors ${
                                 method.is_default
                                     ? "bg-blue-400/10 border-blue-400/30"
-                                    : "bg-white/5 border-white/10 hover:bg-white/10"
+                                    : "bg-muted border-border hover:bg-muted"
                             }`}
                         >
                             <div className="flex items-start gap-4">
                                 {/* Icon */}
-                                <div className="p-3 bg-white/10 rounded-lg">
+                                <div className="p-3 bg-card rounded-lg">
                                     {getPaymentTypeIcon(method.type)}
                                 </div>
 
@@ -270,11 +270,11 @@ export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps)
                                         )}
                                     </div>
                                     {method.account_name && (
-                                        <p className="text-sm text-white/60 mb-1">{method.account_name}</p>
+                                        <p className="text-sm text-muted-foreground mb-1">{method.account_name}</p>
                                     )}
                                     {method.account_number && (
                                         <div className="flex items-center gap-2">
-                                            <span className="text-sm font-mono text-white/40">
+                                            <span className="text-sm font-mono text-muted-foreground/70">
                                                 {revealedNumbers.has(method.id)
                                                     ? method.account_number
                                                     : maskAccountNumber(method.account_number)}
@@ -282,7 +282,7 @@ export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps)
                                             <button
                                                 type="button"
                                                 onClick={() => toggleReveal(method.id)}
-                                                className="p-1 hover:bg-white/10 rounded transition-colors"
+                                                className="p-1 hover:bg-muted rounded transition-colors"
                                                 title={
                                                     revealedNumbers.has(method.id) ? "Hide" : "Reveal"
                                                 }
@@ -313,7 +313,7 @@ export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps)
                                         <button
                                             type="button"
                                             onClick={() => handleEdit(method)}
-                                            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                                            className="p-2 hover:bg-muted rounded-lg transition-colors"
                                             title="Edit"
                                         >
                                             <EditIcon size={16} />
@@ -346,7 +346,7 @@ export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps)
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.95 }}
-                            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-black/95 border border-white/10 rounded-2xl p-6 z-50"
+                            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-black/95 border border-border rounded-2xl p-6 z-50"
                         >
                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-lg font-semibold">
@@ -355,7 +355,7 @@ export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps)
                                 <button
                                     type="button"
                                     onClick={handleClose}
-                                    className="p-1 hover:bg-white/10 rounded-lg transition-colors"
+                                    className="p-1 hover:bg-muted rounded-lg transition-colors"
                                 >
                                     <XIcon size={20} />
                                 </button>
@@ -364,7 +364,7 @@ export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps)
                             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                                 {/* Type */}
                                 <label className="flex flex-col gap-1">
-                                    <span className="text-sm font-medium text-white/60">Type</span>
+                                    <span className="text-sm font-medium text-muted-foreground">Type</span>
                                     <select
                                         value={formData.type}
                                         onChange={(e) =>
@@ -373,7 +373,7 @@ export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps)
                                                 type: e.target.value as CreatePaymentMethodPayload["type"],
                                             })
                                         }
-                                        className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-white/30"
+                                        className="bg-muted border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:border-primary"
                                     >
                                         {PAYMENT_TYPE_OPTIONS.map((opt) => (
                                             <option key={opt.value} value={opt.value}>
@@ -385,7 +385,7 @@ export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps)
 
                                 {/* Provider */}
                                 <label className="flex flex-col gap-1">
-                                    <span className="text-sm font-medium text-white/60">
+                                    <span className="text-sm font-medium text-muted-foreground">
                                         Provider / Bank Name
                                     </span>
                                     <input
@@ -395,13 +395,13 @@ export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps)
                                             setFormData({ ...formData, provider: e.target.value })
                                         }
                                         placeholder="e.g. BDO, BPI, Metrobank"
-                                        className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder:text-white/30 focus:outline-none focus:border-white/30"
+                                        className="bg-muted border border-border rounded-lg px-3 py-2 text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:border-primary"
                                     />
                                 </label>
 
                                 {/* Account Name */}
                                 <label className="flex flex-col gap-1">
-                                    <span className="text-sm font-medium text-white/60">Account Name</span>
+                                    <span className="text-sm font-medium text-muted-foreground">Account Name</span>
                                     <input
                                         type="text"
                                         value={formData.account_name}
@@ -409,13 +409,13 @@ export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps)
                                             setFormData({ ...formData, account_name: e.target.value })
                                         }
                                         placeholder="Full name on account"
-                                        className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder:text-white/30 focus:outline-none focus:border-white/30"
+                                        className="bg-muted border border-border rounded-lg px-3 py-2 text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:border-primary"
                                     />
                                 </label>
 
                                 {/* Account Number */}
                                 <label className="flex flex-col gap-1">
-                                    <span className="text-sm font-medium text-white/60">Account Number</span>
+                                    <span className="text-sm font-medium text-muted-foreground">Account Number</span>
                                     <input
                                         type="text"
                                         value={formData.account_number}
@@ -426,7 +426,7 @@ export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps)
                                             })
                                         }
                                         placeholder="Account number"
-                                        className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder:text-white/30 focus:outline-none focus:border-white/30"
+                                        className="bg-muted border border-border rounded-lg px-3 py-2 text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:border-primary"
                                     />
                                 </label>
 
@@ -438,17 +438,17 @@ export default function PaymentMethods({ userId, isAdmin }: PaymentMethodsProps)
                                         onChange={(e) =>
                                             setFormData({ ...formData, is_default: e.target.checked })
                                         }
-                                        className="w-4 h-4 rounded border-white/20 bg-white/10 text-blue-500 focus:ring-2 focus:ring-blue-500/50"
+                                        className="w-4 h-4 rounded border-border bg-card text-blue-500 focus:ring-2 focus:ring-blue-500/50"
                                     />
                                     <span className="text-sm">Set as default payment method</span>
                                 </label>
 
                                 {/* Actions */}
-                                <div className="flex flex-row gap-2 justify-end pt-4 border-t border-white/10">
+                                <div className="flex flex-row gap-2 justify-end pt-4 border-t border-border">
                                     <button
                                         type="button"
                                         onClick={handleClose}
-                                        className="px-6 py-2 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors font-medium"
+                                        className="px-6 py-2 bg-muted rounded-lg border border-border hover:bg-muted transition-colors font-medium"
                                     >
                                         Cancel
                                     </button>

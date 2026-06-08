@@ -92,14 +92,14 @@ export function StaggeredPaymentModal({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className='bg-zinc-900 rounded-xl shadow-2xl w-full max-w-lg overflow-hidden border border-white/10 max-h-[90vh] flex flex-col'
+                className='bg-card rounded-xl shadow-2xl w-full max-w-lg overflow-hidden border border-border max-h-[90vh] flex flex-col'
             >
-                <div className='p-6 border-b border-white/10 flex justify-between items-center'>
+                <div className='p-6 border-b border-border flex justify-between items-center'>
                     <div>
                         <h3 className='text-xl font-bold'>Staggered Payment</h3>
-                        <p className='text-sm text-white/60'>Split payment across multiple methods</p>
+                        <p className='text-sm text-muted-foreground'>Split payment across multiple methods</p>
                     </div>
-                    <button onClick={onClose} className='text-white/60 hover:text-white'>
+                    <button onClick={onClose} className='text-muted-foreground hover:text-foreground'>
                         <XIcon className='w-5 h-5' />
                     </button>
                 </div>
@@ -107,20 +107,20 @@ export function StaggeredPaymentModal({
                 <div className='p-6 overflow-auto flex-1 space-y-4'>
                     {/* Summary */}
                     <div className='grid grid-cols-3 gap-3 text-center'>
-                        <div className='bg-white/5 rounded-lg p-3'>
-                            <p className='text-xs text-white/60 mb-1'>Total</p>
-                            <p className='text-lg font-bold text-white'>
+                        <div className='bg-muted rounded-lg p-3'>
+                            <p className='text-xs text-muted-foreground mb-1'>Total</p>
+                            <p className='text-lg font-bold text-foreground'>
                                 {currencySymbol}{Number(request.total_staff_cut).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                             </p>
                         </div>
-                        <div className='bg-white/5 rounded-lg p-3'>
-                            <p className='text-xs text-white/60 mb-1'>Disbursed</p>
+                        <div className='bg-muted rounded-lg p-3'>
+                            <p className='text-xs text-muted-foreground mb-1'>Disbursed</p>
                             <p className='text-lg font-bold text-green-400'>
                                 {currencySymbol}{totalDisbursed.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                             </p>
                         </div>
-                        <div className='bg-white/5 rounded-lg p-3'>
-                            <p className='text-xs text-white/60 mb-1'>Remaining</p>
+                        <div className='bg-muted rounded-lg p-3'>
+                            <p className='text-xs text-muted-foreground mb-1'>Remaining</p>
                             <p className='text-lg font-bold text-yellow-400'>
                                 {currencySymbol}{remaining.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                             </p>
@@ -130,13 +130,13 @@ export function StaggeredPaymentModal({
                     {/* Existing Disbursements */}
                     {existingDisbursements.length > 0 && (
                         <div>
-                            <p className='text-sm font-medium mb-2 text-white/60'>Existing Disbursements</p>
+                            <p className='text-sm font-medium mb-2 text-muted-foreground'>Existing Disbursements</p>
                             <div className='space-y-2'>
                                 {existingDisbursements.map((d) => (
-                                    <div key={d.id} className='flex items-center justify-between bg-white/5 rounded-lg p-2 text-sm'>
+                                    <div key={d.id} className='flex items-center justify-between bg-muted rounded-lg p-2 text-sm'>
                                         <div>
-                                            <span className='text-white/60'>{d.payment_method}</span>
-                                            {d.reference_number && <span className='ml-2 text-white/40 font-mono text-xs'>{d.reference_number}</span>}
+                                            <span className='text-muted-foreground'>{d.payment_method}</span>
+                                            {d.reference_number && <span className='ml-2 text-muted-foreground/70 font-mono text-xs'>{d.reference_number}</span>}
                                         </div>
                                         <span className='text-green-400 font-medium'>
                                             {currencySymbol}{Number(d.amount).toLocaleString(undefined, { minimumFractionDigits: 2 })}
@@ -150,7 +150,7 @@ export function StaggeredPaymentModal({
                     {/* New Lines */}
                     <div>
                         <div className='flex items-center justify-between mb-2'>
-                            <p className='text-sm font-medium text-white/60'>Add Disbursements</p>
+                            <p className='text-sm font-medium text-muted-foreground'>Add Disbursements</p>
                             <button
                                 onClick={addLine}
                                 className='text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1'
@@ -160,40 +160,40 @@ export function StaggeredPaymentModal({
                         </div>
 
                         {lines.length === 0 ? (
-                            <p className='text-sm text-white/40 text-center py-4 bg-white/5 rounded-lg'>
+                            <p className='text-sm text-muted-foreground/70 text-center py-4 bg-muted rounded-lg'>
                                 No disbursement lines added. Click Add Line to create one.
                             </p>
                         ) : (
                             <div className='space-y-2'>
                                 {lines.map((line, index) => (
-                                    <div key={index} className='bg-white/5 rounded-lg p-3 space-y-2'>
+                                    <div key={index} className='bg-muted rounded-lg p-3 space-y-2'>
                                         <div className='flex items-center justify-between'>
-                                            <span className='text-xs text-white/40'>Line {index + 1}</span>
+                                            <span className='text-xs text-muted-foreground/70'>Line {index + 1}</span>
                                             <button
                                                 onClick={() => removeLine(index)}
-                                                className='text-white/40 hover:text-red-400'
+                                                className='text-muted-foreground/70 hover:text-red-400'
                                             >
                                                 <XIcon className='w-4 h-4' />
                                             </button>
                                         </div>
                                         <div className='grid grid-cols-2 gap-2'>
                                             <div>
-                                                <label className='text-xs text-white/60 mb-1 block'>Amount</label>
+                                                <label className='text-xs text-muted-foreground mb-1 block'>Amount</label>
                                                 <input
                                                     type='number'
                                                     min='0'
                                                     step='0.01'
                                                     value={line.amount || ''}
                                                     onChange={(e) => updateLine(index, 'amount', e.target.value)}
-                                                    className='w-full px-2 py-1.5 bg-white/10 border border-white/10 rounded text-sm focus:border-white/30 outline-none font-mono'
+                                                    className='w-full px-2 py-1.5 bg-card border border-border rounded text-sm focus:border-primary outline-none font-mono'
                                                 />
                                             </div>
                                             <div>
-                                                <label className='text-xs text-white/60 mb-1 block'>Method</label>
+                                                <label className='text-xs text-muted-foreground mb-1 block'>Method</label>
                                                 <select
                                                     value={line.method}
                                                     onChange={(e) => updateLine(index, 'method', e.target.value)}
-                                                    className='w-full px-2 py-1.5 bg-white/10 border border-white/10 rounded text-sm focus:border-white/30 outline-none'
+                                                    className='w-full px-2 py-1.5 bg-card border border-border rounded text-sm focus:border-primary outline-none'
                                                 >
                                                     {PAYROLL_PAYMENT_METHODS.map((m) => (
                                                         <option key={m.key} value={m.key}>{m.label}</option>
@@ -202,23 +202,23 @@ export function StaggeredPaymentModal({
                                             </div>
                                         </div>
                                         <div>
-                                            <label className='text-xs text-white/60 mb-1 block'>Reference</label>
+                                            <label className='text-xs text-muted-foreground mb-1 block'>Reference</label>
                                             <input
                                                 type='text'
                                                 value={line.ref}
                                                 onChange={(e) => updateLine(index, 'ref', e.target.value)}
                                                 placeholder='Optional'
-                                                className='w-full px-2 py-1.5 bg-white/10 border border-white/10 rounded text-sm focus:border-white/30 outline-none'
+                                                className='w-full px-2 py-1.5 bg-card border border-border rounded text-sm focus:border-primary outline-none'
                                             />
                                         </div>
                                         <div>
-                                            <label className='text-xs text-white/60 mb-1 block'>Notes</label>
+                                            <label className='text-xs text-muted-foreground mb-1 block'>Notes</label>
                                             <input
                                                 type='text'
                                                 value={line.notes}
                                                 onChange={(e) => updateLine(index, 'notes', e.target.value)}
                                                 placeholder='Optional'
-                                                className='w-full px-2 py-1.5 bg-white/10 border border-white/10 rounded text-sm focus:border-white/30 outline-none'
+                                                className='w-full px-2 py-1.5 bg-card border border-border rounded text-sm focus:border-primary outline-none'
                                             />
                                         </div>
                                     </div>
@@ -230,7 +230,7 @@ export function StaggeredPaymentModal({
                     {/* Summary */}
                     {lines.length > 0 && (
                         <div className={`rounded-lg p-3 text-center ${lineTotal > remaining ? 'bg-red-500/20' : 'bg-green-500/20'}`}>
-                            <p className='text-sm text-white/60'>Line Total</p>
+                            <p className='text-sm text-muted-foreground'>Line Total</p>
                             <p className={`text-xl font-bold ${lineTotal > remaining ? 'text-red-400' : 'text-green-400'}`}>
                                 {currencySymbol}{lineTotal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                             </p>
@@ -241,11 +241,11 @@ export function StaggeredPaymentModal({
                     )}
                 </div>
 
-                <div className='p-4 border-t border-white/10 bg-white/5'>
+                <div className='p-4 border-t border-border bg-muted'>
                     <div className='flex gap-3'>
                         <button
                             onClick={onClose}
-                            className='flex-1 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors text-sm'
+                            className='flex-1 px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors text-sm'
                         >
                             Cancel
                         </button>

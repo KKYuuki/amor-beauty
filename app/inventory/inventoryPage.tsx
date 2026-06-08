@@ -44,13 +44,15 @@ import HistoryModal from "@/components/inventory/HistoryModal"
 import RestoreModal from "@/components/inventory/RestoreModal"
 import InventoryTable from "@/components/inventory/InventoryTable"
 import { SideBarContext } from "@/components/sidebar"
-import { useBranchContext } from "@/components/branch-context"
+
 import CSVImportModal from "@/components/ui/csv-import-modal"
 import React from "react"
 import PageHeader from "@/components/ui/PageHeader"
 import StatsGrid from "@/components/ui/StatsGrid"
 import StatCard from "@/components/ui/StatCard"
 import FilterBar from "@/components/ui/FilterBar"
+
+const currentBranch: any = null;
 
 type ModalType =
     | "edit"
@@ -78,7 +80,7 @@ const inventoryCSVColumns: CSVColumn[] = [
 export default function InventoryPageClientComponent() {
     const { addNotification } = useContext(NotificationContext)
     const { userInfo } = useContext(SideBarContext)
-    const { currentBranch } = useBranchContext()
+    
     const userId = userInfo?.id || ""
 
     // State
@@ -349,19 +351,19 @@ export default function InventoryPageClientComponent() {
                 />
 
                 {/* Tabs */}
-                <div className='flex items-center gap-4 border-b border-white/10'>
+                <div className='flex items-center gap-4 border-b border-border'>
                     <button
                         onClick={() => setActiveTab("active")}
                         className={`pb-2 px-1 font-medium transition-colors border-b-2 ${
                             activeTab === "active"
-                                ? "border-blue-500 text-white"
-                                : "border-transparent text-white/60 hover:text-white"
+                                ? "border-blue-500 text-foreground"
+                                : "border-transparent text-muted-foreground hover:text-foreground"
                         }`}
                     >
                         <span className='flex items-center gap-2'>
                             <BoxesIcon className='w-4 h-4' />
                             Active Items
-                            <span className='px-2 py-0.5 bg-white/10 rounded-full text-xs'>
+                            <span className='px-2 py-0.5 bg-card rounded-full text-xs'>
                                 {inventoryItems.length}
                             </span>
                         </span>
@@ -370,14 +372,14 @@ export default function InventoryPageClientComponent() {
                         onClick={() => setActiveTab("inactive")}
                         className={`pb-2 px-1 font-medium transition-colors border-b-2 ${
                             activeTab === "inactive"
-                                ? "border-blue-500 text-white"
-                                : "border-transparent text-white/60 hover:text-white"
+                                ? "border-blue-500 text-foreground"
+                                : "border-transparent text-muted-foreground hover:text-foreground"
                         }`}
                     >
                         <span className='flex items-center gap-2'>
                             <ArchiveIcon className='w-4 h-4' />
                             Inactive Items
-                            <span className='px-2 py-0.5 bg-white/10 rounded-full text-xs'>
+                            <span className='px-2 py-0.5 bg-card rounded-full text-xs'>
                                 {inactiveItems.length}
                             </span>
                         </span>
@@ -406,13 +408,13 @@ export default function InventoryPageClientComponent() {
             <FilterBar>
                 {/* Search */}
                 <div className='relative flex-1 min-w-0 sm:min-w-[200px] sm:max-w-xs'>
-                    <SearchIcon className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40' />
+                    <SearchIcon className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/70' />
                     <input
                         type='text'
                         placeholder='Search items...'
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className='w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:border-blue-500/50 outline-none transition-colors'
+                        className='w-full pl-10 pr-4 py-2 bg-muted border border-border rounded-lg focus:border-blue-500/50 outline-none transition-colors'
                     />
                 </div>
 
@@ -420,7 +422,7 @@ export default function InventoryPageClientComponent() {
                 <select
                     value={categoryFilter}
                     onChange={(e) => setCategoryFilter(e.target.value)}
-                    className='px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:border-blue-500/50 outline-none transition-colors'
+                    className='px-3 py-2 bg-muted border border-border rounded-lg focus:border-blue-500/50 outline-none transition-colors'
                 >
                     <option value=''>All Categories</option>
                     {categories.map((cat) => (
@@ -437,7 +439,7 @@ export default function InventoryPageClientComponent() {
                 <select
                     value={typeFilter}
                     onChange={(e) => setTypeFilter(e.target.value)}
-                    className='px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:border-blue-500/50 outline-none transition-colors'
+                    className='px-3 py-2 bg-muted border border-border rounded-lg focus:border-blue-500/50 outline-none transition-colors'
                 >
                     <option value=''>All Types</option>
                     <option value='ITEM'>Item</option>
@@ -445,12 +447,12 @@ export default function InventoryPageClientComponent() {
                 </select>
 
                 {/* Low Stock Toggle */}
-                <label className='flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-lg cursor-pointer hover:bg-white/10 transition-colors'>
+                <label className='flex items-center gap-2 px-3 py-2 bg-muted border border-border rounded-lg cursor-pointer hover:bg-muted transition-colors'>
                     <input
                         type='checkbox'
                         checked={lowStockOnly}
                         onChange={(e) => setLowStockOnly(e.target.checked)}
-                        className='rounded border-white/20'
+                        className='rounded border-border'
                     />
                     <span className='text-sm'>Low Stock Only</span>
                 </label>
@@ -464,7 +466,7 @@ export default function InventoryPageClientComponent() {
                         onClick={() =>
                             setExportDropdownOpen(!exportDropdownOpen)
                         }
-                        className='flex items-center gap-2 px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-colors'
+                        className='flex items-center gap-2 px-3 py-2 bg-muted hover:bg-muted border border-border rounded-lg transition-colors'
                         title='Download'
                     >
                         <DownloadIcon className='w-4 h-4' />
@@ -475,13 +477,13 @@ export default function InventoryPageClientComponent() {
                     </button>
 
                     {exportDropdownOpen && (
-                        <div className='absolute right-0 top-full mt-1 w-40 bg-zinc-900 rounded-lg shadow-xl border border-white/10 z-50 overflow-hidden'>
+                        <div className='absolute right-0 top-full mt-1 w-40 bg-card rounded-lg shadow-xl border border-border z-50 overflow-hidden'>
                             <button
                                 onClick={() => {
                                     handleExport("csv")
                                     setExportDropdownOpen(false)
                                 }}
-                                className='w-full px-4 py-2 text-left text-sm hover:bg-white/5 transition-colors flex items-center gap-2'
+                                className='w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors flex items-center gap-2'
                             >
                                 <FileTextIcon className='w-4 h-4 text-green-400' />
                                 CSV
@@ -491,7 +493,7 @@ export default function InventoryPageClientComponent() {
                                     handleExport("excel")
                                     setExportDropdownOpen(false)
                                 }}
-                                className='w-full px-4 py-2 text-left text-sm hover:bg-white/5 transition-colors flex items-center gap-2'
+                                className='w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors flex items-center gap-2'
                             >
                                 <FileSpreadsheetIcon className='w-4 h-4 text-blue-400' />
                                 Excel
@@ -501,7 +503,7 @@ export default function InventoryPageClientComponent() {
                                     handleExport("pdf")
                                     setExportDropdownOpen(false)
                                 }}
-                                className='w-full px-4 py-2 text-left text-sm hover:bg-white/5 transition-colors flex items-center gap-2'
+                                className='w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors flex items-center gap-2'
                             >
                                 <FileIcon className='w-4 h-4 text-red-400' />
                                 PDF

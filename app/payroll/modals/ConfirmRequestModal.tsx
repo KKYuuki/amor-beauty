@@ -31,25 +31,25 @@ export function ConfirmRequestModal({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className='bg-zinc-900 rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-white/10'
+                className='bg-card rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-border'
             >
-                <div className='p-6 border-b border-white/10'>
+                <div className='p-6 border-b border-border'>
                     <h3 className='text-xl font-bold text-blue-400'>Confirm Payroll Request</h3>
-                    <p className='text-sm text-white/60 mt-1'>
+                    <p className='text-sm text-muted-foreground mt-1'>
                         Review the request details before confirming
                     </p>
                 </div>
 
                 <div className='p-6 space-y-4'>
-                    <div className='bg-white/5 rounded-lg p-3 text-sm space-y-1'>
-                        <p><span className='text-white/60'>Staff:</span> {(request.staff as { full_name?: string })?.full_name || 'Staff'}</p>
-                        <p><span className='text-white/60'>Period:</span> {new Date(request.period_start).toLocaleDateString()} - {new Date(request.period_end).toLocaleDateString()}</p>
-                        <p><span className='text-white/60'>Gross:</span> {currencySymbol}{Number(request.total_gross).toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
-                        <p><span className='text-white/60'>Staff Cut:</span> {currencySymbol}{Number(request.total_staff_cut).toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                    <div className='bg-muted rounded-lg p-3 text-sm space-y-1'>
+                        <p><span className='text-muted-foreground'>Staff:</span> {(request.staff as { full_name?: string })?.full_name || 'Staff'}</p>
+                        <p><span className='text-muted-foreground'>Period:</span> {new Date(request.period_start).toLocaleDateString()} - {new Date(request.period_end).toLocaleDateString()}</p>
+                        <p><span className='text-muted-foreground'>Gross:</span> {currencySymbol}{Number(request.total_gross).toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                        <p><span className='text-muted-foreground'>Staff Cut:</span> {currencySymbol}{Number(request.total_staff_cut).toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
                     </div>
 
                     <div className='flex justify-end gap-3'>
-                        <button onClick={onClose} className='px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors'>
+                        <button onClick={onClose} className='px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors'>
                             Cancel
                         </button>
                         <button

@@ -3,6 +3,7 @@
 import { ReactNode } from "react"
 import { motion } from "motion/react"
 import { XIcon, LucideIcon } from "lucide-react"
+import { Surfaces } from "@/components/ui/design-system"
 
 interface BaseModalProps {
     isOpen: boolean
@@ -34,8 +35,8 @@ export default function BaseModal({
     title,
     description,
     icon: Icon,
-    iconColor = "text-blue-400",
-    iconBgColor = "bg-blue-500/10",
+    iconColor = "text-blue-600",
+    iconBgColor = "bg-blue-50",
     children,
     footer,
     size = "md",
@@ -47,18 +48,17 @@ export default function BaseModal({
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            className={`${Surfaces.overlay} z-50 flex items-center justify-center p-4`}
             onClick={onClose}
         >
             <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className={`bg-zinc-900 rounded-xl shadow-2xl w-full ${sizeClasses[size]} overflow-hidden border border-white/10 ${maxHeight ? "flex flex-col" : ""}`}
+                className={`bg-card rounded-xl shadow-2xl w-full ${sizeClasses[size]} overflow-hidden border border-border ${maxHeight ? "flex flex-col" : ""}`}
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Header */}
-                <div className={`p-6 border-b border-white/10 flex justify-between items-center ${maxHeight ? "flex-shrink-0" : ""}`}>
+                <div className={`p-6 border-b border-border flex justify-between items-center ${maxHeight ? "flex-shrink-0" : ""}`}>
                     <div className="flex items-center gap-3">
                         {Icon && (
                             <div className={`p-2 ${iconBgColor} rounded-lg`}>
@@ -66,9 +66,9 @@ export default function BaseModal({
                             </div>
                         )}
                         <div>
-                            <h3 className="text-xl font-bold">{title}</h3>
+                            <h3 className="text-xl font-bold text-foreground">{title}</h3>
                             {description && (
-                                <p className="text-sm text-white/60">{description}</p>
+                                <p className="text-sm text-muted-foreground">{description}</p>
                             )}
                         </div>
                     </div>
@@ -76,21 +76,19 @@ export default function BaseModal({
                         <button
                             onClick={onClose}
                             disabled={loading}
-                            className="text-white/60 hover:text-white transition-colors disabled:opacity-50"
+                            className="text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
                         >
                             <XIcon className="w-5 h-5" />
                         </button>
                     )}
                 </div>
 
-                {/* Content */}
                 <div className={`p-6 ${maxHeight ? "flex-1 overflow-auto" : ""}`}>
                     {children}
                 </div>
 
-                {/* Footer */}
                 {footer && (
-                    <div className={`p-6 border-t border-white/10 ${maxHeight ? "flex-shrink-0" : ""}`}>
+                    <div className={`p-6 border-t border-border ${maxHeight ? "flex-shrink-0" : ""}`}>
                         {footer}
                     </div>
                 )}

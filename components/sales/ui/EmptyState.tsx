@@ -37,19 +37,19 @@ export function EmptyState({ type, action, actionLabel }: EmptyStateProps) {
             animate={{ opacity: 1, y: 0 }}
             className='flex flex-col items-center justify-center p-8 text-center'
         >
-            <div className='w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4'>
-                <Icon className='w-8 h-8 text-white/40' />
+            <div className='w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4'>
+                <Icon className='w-8 h-8 text-muted-foreground/70' />
             </div>
-            <h3 className='text-lg font-medium text-white/60 mb-2'>
+            <h3 className='text-lg font-medium text-muted-foreground mb-2'>
                 {config.title}
             </h3>
-            <p className='text-sm text-white/40 mb-4'>
+            <p className='text-sm text-muted-foreground/70 mb-4'>
                 {config.message}
             </p>
             {action && actionLabel && (
                 <button
                     onClick={action}
-                    className='px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors'
+                    className='px-4 py-2 bg-blue-600 hover:bg-blue-700 text-foreground rounded-lg text-sm font-medium transition-colors'
                 >
                     {actionLabel}
                 </button>

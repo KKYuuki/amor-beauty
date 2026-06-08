@@ -51,7 +51,7 @@ export default function DeleteUserModal({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className='fixed top-1/2 left-1/2 -translate-1/2 bg-black/90 border-2 border-white/10 rounded-3xl px-4 py-5 flex flex-col w-max max-w-[calc(100%-1rem)] z-10 items-center'
+            className='fixed top-1/2 left-1/2 -translate-1/2 bg-black/90 border-2 border-border rounded-3xl px-4 py-5 flex flex-col w-max max-w-[calc(100%-1rem)] z-10 items-center'
         >
             <div className='font-bold'>Delete User</div>
             <p className='font-medium text-sm mt-2'>
@@ -64,7 +64,7 @@ export default function DeleteUserModal({
                 <button
                     title='Cancel'
                     type='button'
-                    className='bg-green-400/20 px-2 py-1 font-semibold border-2 border-white/10 rounded-lg cursor-pointer transition-colors hover:bg-green-400/30 active:hover:bg-green-400/40'
+                    className='bg-green-400/20 px-2 py-1 font-semibold border-2 border-border rounded-lg cursor-pointer transition-colors hover:bg-green-400/30 active:hover:bg-green-400/40'
                     onClick={onClose}
                 >
                     Cancel
@@ -72,7 +72,7 @@ export default function DeleteUserModal({
                 <button
                     title='Are you sure?'
                     type='button'
-                    className='bg-red-400/20 px-2 py-1 font-semibold border-2 border-white/10 rounded-lg cursor-pointer transition-colors hover:bg-red-400/30 active:hover:bg-red-400/40 text-nowrap'
+                    className='bg-red-400/20 px-2 py-1 font-semibold border-2 border-border rounded-lg cursor-pointer transition-colors hover:bg-red-400/30 active:hover:bg-red-400/40 text-nowrap'
                     onClick={handleDeleteUser}
                 >
                     Confirm Delete

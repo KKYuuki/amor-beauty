@@ -320,35 +320,35 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                     </button>
 
                     {showExportMenu && (
-                        <div className='absolute right-0 top-full mt-1 w-40 bg-zinc-900 border border-white/10 rounded-md shadow-lg z-50 overflow-hidden'>
+                        <div className='absolute right-0 top-full mt-1 w-40 bg-card border border-border rounded-md shadow-lg z-50 overflow-hidden'>
                             <button
                                 onClick={() => handleExport("csv")}
-                                className='w-full px-4 py-2 text-left text-sm hover:bg-white/10 transition-colors cursor-pointer flex items-center gap-2'
+                                className='w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors cursor-pointer flex items-center gap-2'
                             >
                                 <span className='text-green-400 font-mono text-xs'>
                                     CSV
                                 </span>
-                                <span className='text-white/60'>
+                                <span className='text-muted-foreground'>
                                     Spreadsheet
                                 </span>
                             </button>
                             <button
                                 disabled={!timeframe}
-                                className='w-full px-4 py-2 text-left text-sm flex items-center gap-2 hover:bg-white/10 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
+                                className='w-full px-4 py-2 text-left text-sm flex items-center gap-2 hover:bg-muted transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
                             >
                                 <span className='text-emerald-400 font-mono text-xs'>
                                     XLSX
                                 </span>
-                                <span className='text-white/60'>Excel</span>
+                                <span className='text-muted-foreground'>Excel</span>
                             </button>
                             <button
                                 disabled={!timeframe}
-                                className='w-full px-4 py-2 text-left text-sm flex items-center gap-2 hover:bg-white/10 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
+                                className='w-full px-4 py-2 text-left text-sm flex items-center gap-2 hover:bg-muted transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
                             >
                                 <span className='text-red-400 font-mono text-xs'>
                                     PDF
                                 </span>
-                                <span className='text-white/60'>Report</span>
+                                <span className='text-muted-foreground'>Report</span>
                             </button>
                         </div>
                     )}
@@ -368,11 +368,11 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
 
             {/* Payment Method Filter */}
             <div className='flex items-center gap-3'>
-                <span className='text-sm text-white/60'>Filter:</span>
+                <span className='text-sm text-muted-foreground'>Filter:</span>
                 <select
                     value={paymentMethodFilter}
                     onChange={(e) => setPaymentMethodFilter(e.target.value as AccountingPaymentMethod | "")}
-                    className='bg-white/10 px-3 py-1.5 rounded text-sm border border-white/10'
+                    className='bg-card px-3 py-1.5 rounded text-sm border border-border'
                 >
                     <option value="">All Methods</option>
                     {ACCOUNTING_PAYMENT_METHODS.map(m => (
@@ -401,7 +401,7 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                         format='number'
                         icon={
                             <CalendarCheckIcon
-                                className='text-white/40'
+                                className='text-muted-foreground/70'
                                 size={20}
                             />
                         }
@@ -413,7 +413,7 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                         currencySymbol={currencySymbol}
                         icon={
                             <TrendingUpIcon
-                                className='text-white/40'
+                                className='text-muted-foreground/70'
                                 size={20}
                             />
                         }
@@ -421,8 +421,8 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                 </div>
 
                 {/* Revenue Chart */}
-                <div className='w-full h-60 sm:h-80 bg-white/5 border-2 border-white/5 rounded-xl p-4 flex flex-col gap-2'>
-                    <h3 className='font-semibold text-white/60 text-sm'>
+                <div className='w-full h-60 sm:h-80 bg-muted border-2 border-border rounded-xl p-4 flex flex-col gap-2'>
+                    <h3 className='font-semibold text-muted-foreground text-sm'>
                         Revenue Trend ({dateRangeStr})
                     </h3>
                     <ResponsiveContainer
@@ -579,8 +579,8 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                             icon={<UsersIcon className='text-purple-400' />}
                         />
                     </div>
-                    <div className='bg-white/5 border-2 border-white/5 rounded-xl p-4'>
-                        <h3 className='font-semibold text-white/60 text-sm mb-2'>
+                    <div className='bg-muted border-2 border-border rounded-xl p-4'>
+                        <h3 className='font-semibold text-muted-foreground text-sm mb-2'>
                             Client Type Distribution
                         </h3>
                         <ResponsiveContainer
@@ -622,7 +622,7 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                                 <Legend
                                     wrapperStyle={{ fontSize: "11px" }}
                                     formatter={(value) => (
-                                        <span className='text-white/60'>{value}</span>
+                                        <span className='text-muted-foreground'>{value}</span>
                                     )}
                                 />
                             </PieChart>
@@ -638,7 +638,7 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                     Leaderboard (Earnings)
                 </h2>
                 {staffLeaderboard.length === 0 ? (
-                    <div className='bg-white/5 rounded-xl p-6 text-center text-white/40'>
+                    <div className='bg-muted rounded-xl p-6 text-center text-muted-foreground/70'>
                         No staff data available for this period
                     </div>
                 ) : (
@@ -646,7 +646,7 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                         {(leaderboardExpanded ? staffLeaderboard : staffLeaderboard.slice(0, 5)).map((staff, index) => (
                             <div
                                 key={staff.staff_id}
-                                className={`bg-white/5 hover:bg-white/10 rounded-lg p-3 sm:p-4 flex items-center justify-between gap-2 transition-colors ${
+                                className={`bg-muted hover:bg-muted rounded-lg p-3 sm:p-4 flex items-center justify-between gap-2 transition-colors ${
                                     index === 0
                                         ? "border border-yellow-500/30 bg-yellow-500/10"
                                         : ""
@@ -656,12 +656,12 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                                     <span className={`shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold ${
                                         index === 0 ? "bg-yellow-500 text-black" :
                                         index === 1 ? "bg-gray-400 text-black" :
-                                        index === 2 ? "bg-orange-700 text-white" :
-                                        "bg-white/20 text-white"
+                                        index === 2 ? "bg-orange-700 text-foreground" :
+                                        "bg-muted text-foreground"
                                     }`}>
                                         {index + 1}
                                     </span>
-                                    <div className='shrink-0 w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-full flex items-center justify-center text-white font-bold overflow-hidden'>
+                                    <div className='shrink-0 w-8 h-8 sm:w-10 sm:h-10 bg-muted rounded-full flex items-center justify-center text-foreground font-bold overflow-hidden'>
                                         {staff.avatar_url ? (
                                             <NextImage
                                                 src={staff.avatar_url}
@@ -676,7 +676,7 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                                     </div>
                                     <div className='flex flex-col min-w-0'>
                                         <span className='font-medium text-sm sm:text-base truncate'>{staff.full_name}</span>
-                                        <span className='text-xs text-white/40'>
+                                        <span className='text-xs text-muted-foreground/70'>
                                             {staff.appointment_count} appts
                                         </span>
                                     </div>
@@ -685,7 +685,7 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                                     <span className='text-sm sm:text-lg font-bold text-green-400'>
                                         {currencySymbol}{staff.total_staff_cut.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                     </span>
-                                    <span className='text-xs text-white/40 hidden sm:block'>
+                                    <span className='text-xs text-muted-foreground/70 hidden sm:block'>
                                         of {currencySymbol}{staff.total_gross.toLocaleString(undefined, { minimumFractionDigits: 2 })} total
                                     </span>
                                 </div>
@@ -694,7 +694,7 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                         {staffLeaderboard.length > 5 && (
                             <button
                                 onClick={() => setLeaderboardExpanded(!leaderboardExpanded)}
-                                className='w-full py-2 text-sm text-white/40 hover:text-white/60 transition-colors cursor-pointer'
+                                className='w-full py-2 text-sm text-muted-foreground/70 hover:text-foreground transition-colors cursor-pointer'
                             >
                                 {leaderboardExpanded ? 'Show Less' : `Show ${staffLeaderboard.length - 5} More`}
                             </button>
@@ -716,7 +716,7 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                         icon={
                             <CalendarCheckIcon
                                 size={20}
-                                className='text-white/40'
+                                className='text-muted-foreground/70'
                             />
                         }
                     />
@@ -788,8 +788,8 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                                 />
                             }
                         />
-                        <div className='bg-white/5 border-2 border-white/5 rounded-xl p-4 flex flex-col gap-2'>
-                            <span className='text-white/60 font-medium text-sm'>
+                        <div className='bg-muted border-2 border-border rounded-xl p-4 flex flex-col gap-2'>
+                            <span className='text-muted-foreground font-medium text-sm'>
                                 By Type
                             </span>
                             <div className='h-[120px] sm:h-[150px]'>
@@ -845,7 +845,7 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                                         <Legend
                                             wrapperStyle={{ fontSize: "10px" }}
                                             formatter={(value) => (
-                                                <span className='capitalize text-white/60'>
+                                                <span className='capitalize text-muted-foreground'>
                                                     {value}
                                                 </span>
                                             )}
@@ -916,8 +916,8 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                     </div>
 
                     {/* Payroll Status Breakdown Pie Chart */}
-                    <div className='bg-white/5 border-2 border-white/5 rounded-xl p-4 flex flex-col gap-4'>
-                        <h3 className='font-semibold text-white/60 text-sm'>
+                    <div className='bg-muted border-2 border-border rounded-xl p-4 flex flex-col gap-4'>
+                        <h3 className='font-semibold text-muted-foreground text-sm'>
                             Payroll Status Breakdown
                         </h3>
                         <div className='h-48 sm:h-64'>
@@ -980,7 +980,7 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                                     <Legend
                                         wrapperStyle={{ fontSize: "10px" }}
                                         formatter={(value) => (
-                                            <span className='capitalize text-white/60'>
+                                            <span className='capitalize text-muted-foreground'>
                                                 {value}
                                             </span>
                                         )}
@@ -992,21 +992,21 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
 
                     {/* Artist Earnings Breakdown */}
                     {artistEarnings.length > 0 && (
-                        <div className='bg-white/5 border-2 border-white/5 rounded-xl p-4 flex flex-col gap-4'>
-                            <h3 className='font-semibold text-white/60 text-sm'>
+                        <div className='bg-muted border-2 border-border rounded-xl p-4 flex flex-col gap-4'>
+                            <h3 className='font-semibold text-muted-foreground text-sm'>
                                 Artist Pending Earnings
                             </h3>
                             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                                 {artistEarnings.map((artist) => (
                                     <div
                                         key={artist.staff_id}
-                                        className='flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/5'
+                                        className='flex items-center justify-between p-3 bg-muted rounded-lg border border-border'
                                     >
                                         <div className='flex flex-col'>
                                             <span className='font-medium'>
                                                 {artist.full_name}
                                             </span>
-                                            <span className='text-xs text-white/40'>
+                                            <span className='text-xs text-muted-foreground/70'>
                                                 {artist.pending_count} pending
                                                 entries
                                             </span>
@@ -1040,26 +1040,26 @@ export default function BusinessInsights({ branchId, currencySymbol: propCurrenc
                             currencySymbol={currencySymbol}
                         />
                     </div>
-                    <div className='lg:col-span-2 bg-white/5 border-2 border-white/5 rounded-xl p-4 flex flex-col gap-4'>
-                        <h3 className='font-semibold text-white/60 text-sm'>
+                    <div className='lg:col-span-2 bg-muted border-2 border-border rounded-xl p-4 flex flex-col gap-4'>
+                        <h3 className='font-semibold text-muted-foreground text-sm'>
                             Top Inventory by Value
                         </h3>
                         <div className='flex flex-col gap-2'>
                             {inventory?.topSelling.length === 0 ? (
-                                <p className='text-white/40 text-sm italic'>
+                                <p className='text-muted-foreground/70 text-sm italic'>
                                     No sales data yet.
                                 </p>
                             ) : (
                                 inventory?.topSelling.map((item, idx) => (
                                     <div
                                         key={idx}
-                                        className='flex justify-between items-center p-2 hover:bg-white/5 rounded-lg transition-colors'
+                                        className='flex justify-between items-center p-2 hover:bg-muted rounded-lg transition-colors'
                                     >
                                         <div className='flex flex-col'>
                                             <span className='font-medium'>
                                                 {item.name}
                                             </span>
-                                            <span className='text-xs text-white/40'>
+                                            <span className='text-xs text-muted-foreground/70'>
                                                 {item.quantity} units in stock
                                             </span>
                                         </div>

@@ -22,7 +22,7 @@ export interface ReservationItem {
  */
 export async function reserveStock(
     inventoryId: string,
-    appointmentId: string,
+    
     quantity: number,
     expiresAt?: Date
 ): Promise<ActionResponse<{ reservationId: string }>> {
@@ -66,7 +66,7 @@ export async function reserveStock(
             .insert(stockReservations)
             .values({
                 inventoryId,
-                appointmentId,
+                
                 quantity,
                 status: 'PENDING',
                 expiresAt: expiresAt || new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours default
@@ -77,7 +77,7 @@ export async function reserveStock(
             logs: [{
                 level: 'INFO',
                 type: 'INVENTORY',
-                message: `Stock reserved: ${quantity} ${item.name} for appointment ${appointmentId}`,
+                message: `Stock reserved: ${quantity} ${item.name}`,
                 user_id: user.id,
             }]
         })
@@ -213,110 +213,4 @@ export async function convertReservation(reservationId: string): Promise<ActionR
     }
 }
 
-/**
- * Get all reservations for an appointment with inventory details
- */
-export async function getReservationsForAppointment(appointmentId: string): Promise<ActionResponse<Array<{
-    reservation: typeof stockReservations.$inferSelect
-    item: typeof inventory.$inferSelect
-}>>> {
-    const user = await getCurrentUser()
-    if (!user) {
-        return failure("Unauthorized: Not authenticated")
-    }
-
-    try {
-        const results = await db
-            .select({
-                reservation: stockReservations,
-                item: inventory,
-            })
-            .from(stockReservations)
-            .innerJoin(inventory, eq(stockReservations.inventoryId, inventory.id))
-            .where(eq(stockReservations.appointmentId, appointmentId))
-            .orderBy(stockReservations.createdAt)
-
-        return success(results)
-    } catch (error) {
-        await logError({
-            type: 'INVENTORY',
-            message: `Error fetching reservations: ${error instanceof Error ? error.message : String(error)}`,
-            userId: user.id,
-        })
-        return failure(error instanceof Error ? error.message : 'Failed to fetch reservations')
-    }
-}
-
-/**
- * Get all pending reservations that have expired
- * Useful for cleanup jobs
- */
-export async function getExpiredReservations(): Promise<ActionResponse<typeof stockReservations.$inferSelect[]>> {
-    const user = await getCurrentUser()
-    if (!user) {
-        return failure("Unauthorized: Not authenticated")
-    }
-
-    try {
-        const results = await db
-            .select()
-            .from(stockReservations)
-            .where(and(
-                eq(stockReservations.status, 'PENDING'),
-                sql`${stockReservations.expiresAt} < NOW()`
-            ))
-            .orderBy(stockReservations.expiresAt)
-
-        return success(results)
-    } catch (error) {
-        await logError({
-            type: 'INVENTORY',
-            message: `Error fetching expired reservations: ${error instanceof Error ? error.message : String(error)}`,
-            userId: user.id,
-        })
-        return failure(error instanceof Error ? error.message : 'Failed to fetch expired reservations')
-    }
-}
-
-/**
- * Release all reservations for an appointment (bulk operation)
- */
-export async function releaseAllReservationsForAppointment(appointmentId: string): Promise<ActionResponse<{ releasedCount: number }>> {
-    const user = await getCurrentUser()
-    if (!user) {
-        return failure("Unauthorized: Not authenticated")
-    }
-
-    try {
-        const result = await db
-            .update(stockReservations)
-            .set({ status: 'RELEASED', releasedAt: new Date() })
-            .where(and(
-                eq(stockReservations.appointmentId, appointmentId),
-                eq(stockReservations.status, 'PENDING')
-            ))
-            .returning({ id: stockReservations.id })
-
-        const releasedCount = result.length
-
-        if (releasedCount > 0) {
-            await createLogs({
-                logs: [{
-                    level: 'INFO',
-                    type: 'INVENTORY',
-                    message: `Released ${releasedCount} reservations for appointment ${appointmentId}`,
-                    user_id: user.id,
-                }]
-            })
-        }
-
-        return success({ releasedCount })
-    } catch (error) {
-        await logError({
-            type: 'INVENTORY',
-            message: `Error releasing reservations: ${error instanceof Error ? error.message : String(error)}`,
-            userId: user.id,
-        })
-        return failure(error instanceof Error ? error.message : 'Failed to release reservations')
-    }
-}
+// End of file

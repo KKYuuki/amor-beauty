@@ -80,13 +80,13 @@ export function CompletePaymentModal({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className='bg-zinc-900 rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-white/10'
+                className='bg-card rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-border'
             >
-                <div className='p-6 border-b border-white/10 flex justify-between items-center'>
+                <div className='p-6 border-b border-border flex justify-between items-center'>
                     <h3 className='text-xl font-bold'>
                         {step === 'confirm' ? 'Confirm Payment' : 'Disbursement Details'}
                     </h3>
-                    <button onClick={onClose} className='text-white/60 hover:text-white'>
+                    <button onClick={onClose} className='text-muted-foreground hover:text-foreground'>
                         <XIcon className='w-5 h-5' />
                     </button>
                 </div>
@@ -94,11 +94,11 @@ export function CompletePaymentModal({
                 <div className='p-6'>
                     {/* Amount display — always visible */}
                     <div className='text-center mb-6'>
-                        <p className='text-white/60 text-sm'>Amount to pay</p>
+                        <p className='text-muted-foreground text-sm'>Amount to pay</p>
                         <p className='text-3xl font-bold text-green-300'>
                             {currencySymbol}{Number(request.total_staff_cut).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                         </p>
-                        <p className='text-sm text-white/60 mt-1'>
+                        <p className='text-sm text-muted-foreground mt-1'>
                             to {(request.staff as { full_name?: string })?.full_name || 'Staff'}
                         </p>
                     </div>
@@ -106,11 +106,11 @@ export function CompletePaymentModal({
                     {step === 'confirm' ? (
                         /* Step 1: Confirm details */
                         <div>
-                            <div className='bg-white/5 rounded-lg p-3 mb-4 text-sm space-y-1'>
-                                <p><span className='text-white/60'>Period:</span> {new Date(request.period_start).toLocaleDateString()} - {new Date(request.period_end).toLocaleDateString()}</p>
-                                <p><span className='text-white/60'>Gross:</span> {currencySymbol}{Number(request.total_gross).toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
-                                <p><span className='text-white/60'>Shop Cut:</span> {currencySymbol}{Number(request.total_shop_cut).toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
-                                <p><span className='text-white/60'>Staff Cut:</span> {currencySymbol}{Number(request.total_staff_cut).toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                            <div className='bg-muted rounded-lg p-3 mb-4 text-sm space-y-1'>
+                                <p><span className='text-muted-foreground'>Period:</span> {new Date(request.period_start).toLocaleDateString()} - {new Date(request.period_end).toLocaleDateString()}</p>
+                                <p><span className='text-muted-foreground'>Gross:</span> {currencySymbol}{Number(request.total_gross).toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                                <p><span className='text-muted-foreground'>Shop Cut:</span> {currencySymbol}{Number(request.total_shop_cut).toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                                <p><span className='text-muted-foreground'>Staff Cut:</span> {currencySymbol}{Number(request.total_staff_cut).toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
                             </div>
                             <button
                                 onClick={() => setStep('pay')}
@@ -132,7 +132,7 @@ export function CompletePaymentModal({
                                         className={`w-full p-4 rounded-lg transition-colors text-left border-2 ${
                                             selectedMethod === primaryMethod
                                                 ? 'bg-green-500/20 border-green-500/50 text-green-300'
-                                                : 'bg-white/5 border-white/10 hover:bg-white/10'
+                                                : 'bg-muted border-border hover:bg-muted'
                                         }`}
                                     >
                                         <div className='flex items-center justify-between'>
@@ -154,7 +154,7 @@ export function CompletePaymentModal({
                                             </div>
                                         </div>
                                         {methodBreakdown.length > 0 && (
-                                            <p className='text-xs text-white/50 mt-2 ml-11'>
+                                            <p className='text-xs text-muted-foreground mt-2 ml-11'>
                                                 {methodBreakdown.find(b => normalizePayrollMethod(b.method) === primaryMethod)?.count || 0} service(s)
                                                 &nbsp;·&nbsp;
                                                 {currencySymbol}{(methodBreakdown.find(b => normalizePayrollMethod(b.method) === primaryMethod)?.total || 0).toFixed(2)}
@@ -168,10 +168,10 @@ export function CompletePaymentModal({
                             {primaryMethod && (
                                 <div className='relative'>
                                     <div className='absolute inset-0 flex items-center'>
-                                        <div className='w-full border-t border-white/10' />
+                                        <div className='w-full border-t border-border' />
                                     </div>
                                     <div className='relative flex justify-center text-xs'>
-                                        <span className='px-2 bg-zinc-900 text-amber-400 flex items-center gap-1'>
+                                        <span className='px-2 bg-card text-amber-400 flex items-center gap-1'>
                                             <span>⚠</span> Select Alternative Method
                                         </span>
                                     </div>
@@ -204,7 +204,7 @@ export function CompletePaymentModal({
                                 <div className='space-y-3'>
                                     {getAlternativeMethodGroups(primaryMethod).map(group => (
                                         <div key={group.label}>
-                                            <p className='text-xs text-white/40 mb-1 uppercase tracking-wider'>
+                                            <p className='text-xs text-muted-foreground/70 mb-1 uppercase tracking-wider'>
                                                 {group.label}
                                             </p>
                                             <div className={`grid ${
@@ -217,7 +217,7 @@ export function CompletePaymentModal({
                                                         className={`p-3 rounded-lg transition-colors text-center text-sm border ${
                                                             selectedMethod === method.key
                                                                 ? 'bg-green-500/20 border-green-500/40 text-green-300'
-                                                                : 'bg-white/5 border-white/5 hover:bg-white/10 text-white/60'
+                                                                : 'bg-muted border-border hover:bg-muted text-muted-foreground'
                                                         }`}
                                                     >
                                                         {method.label}
@@ -238,7 +238,7 @@ export function CompletePaymentModal({
                                                 className={`p-3 rounded-lg transition-colors text-center text-sm border ${
                                                     selectedMethod === method.key
                                                         ? 'bg-green-500/20 border-green-500/40 text-green-300'
-                                                        : 'bg-white/5 border-white/10 hover:bg-white/10'
+                                                        : 'bg-muted border-border hover:bg-muted'
                                                 }`}
                                             >
                                                 {method.label}
@@ -256,7 +256,7 @@ export function CompletePaymentModal({
                                     value={referenceNumber}
                                     onChange={(e) => setReferenceNumber(e.target.value)}
                                     placeholder='e.g. TRX-12345, OR #1234...'
-                                    className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none text-sm'
+                                    className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none text-sm'
                                 />
                             </div>
                             <div>
@@ -265,13 +265,13 @@ export function CompletePaymentModal({
                                     type='file'
                                     accept='image/*,application/pdf'
                                     onChange={(e) => setProofFile(e.target.files?.[0] || null)}
-                                    className='w-full text-sm text-white/60 file:mr-2 file:py-1 file:px-3 file:rounded file:border-0 file:bg-white/10 file:text-white/80 hover:file:bg-white/20'
+                                    className='w-full text-sm text-muted-foreground file:mr-2 file:py-1 file:px-3 file:rounded file:border-0 file:bg-card file:text-foreground hover:file:bg-muted'
                                 />
                             </div>
                             <div className='flex gap-2 pt-2'>
                                 <button
                                     onClick={() => setStep('confirm')}
-                                    className='flex-1 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors text-sm'
+                                    className='flex-1 px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors text-sm'
                                 >
                                     Back
                                 </button>

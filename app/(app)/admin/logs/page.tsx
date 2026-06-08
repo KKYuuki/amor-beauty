@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "motion/react"
 import PageWrapper from "@/components/page-wrapper"
 import { SideBarContext } from "@/components/sidebar"
 import { NotificationContext } from "@/components/notifications"
-import { BranchSelector } from "@/components/ui/branch-selector"
+
 import { getLogs, GetLogsResult } from "@/server/actions/logs"
 import { LogEntry, LogLevel, LogType } from "@/utils/types/logs"
 import { canAccessLogs } from "@/utils/auth/permissions"
@@ -223,7 +223,7 @@ export default function AdminLogsPage() {
         return (
             <PageWrapper>
                 <div className="flex items-center justify-center h-full">
-                    <div className="animate-pulse text-white/40">Checking permissions...</div>
+                    <div className="animate-pulse text-muted-foreground/70">Checking permissions...</div>
                 </div>
             </PageWrapper>
         )
@@ -237,8 +237,8 @@ export default function AdminLogsPage() {
                         <ShieldAlert className="w-16 h-16 text-red-400" />
                     </div>
                     <div className="text-center">
-                        <h1 className="text-2xl font-bold text-white mb-2">Access Denied</h1>
-                        <p className="text-white/60 max-w-md">
+                        <h1 className="text-2xl font-bold text-foreground mb-2">Access Denied</h1>
+                        <p className="text-muted-foreground max-w-md">
                             You do not have permission to access the System Logs page. Please contact an administrator if
                             you need access.
                         </p>
@@ -258,7 +258,7 @@ export default function AdminLogsPage() {
                     </div>
                     <div>
                         <h1 className="text-2xl font-bold">System Logs</h1>
-                        <p className="text-white/60 text-sm">View and manage system activity logs</p>
+                        <p className="text-muted-foreground text-sm">View and manage system activity logs</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -274,7 +274,7 @@ export default function AdminLogsPage() {
                     <button
                         onClick={handleExportCSV}
                         disabled={logs.length === 0 || loading}
-                        className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 bg-card hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors"
                         title="Export current page only"
                     >
                         <Download className="w-4 h-4" />
@@ -283,7 +283,7 @@ export default function AdminLogsPage() {
                     <button
                         onClick={fetchLogs}
                         disabled={loading}
-                        className="p-2 bg-white/10 hover:bg-white/20 disabled:opacity-50 rounded-md transition-colors"
+                        className="p-2 bg-card hover:bg-muted disabled:opacity-50 rounded-md transition-colors"
                         title="Refresh"
                     >
                         <RefreshCw className={`w-5 h-5 ${loading ? "animate-spin" : ""}`} />
@@ -292,17 +292,17 @@ export default function AdminLogsPage() {
             </div>
 
             {/* Filters */}
-            <div className="flex flex-col gap-4 p-4 bg-white/5 rounded-lg border border-white/10">
+            <div className="flex flex-col gap-4 p-4 bg-muted rounded-lg border border-border">
                 <div className="flex flex-col lg:flex-row gap-4">
                     {/* Search */}
                     <div className="flex-1 relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/70" />
                         <input
                             type="text"
                             placeholder="Search messages..."
                             value={filters.search}
                             onChange={(e) => setFilters((f) => ({ ...f, search: e.target.value }))}
-                            className="w-full pl-10 pr-4 py-2 bg-black/30 border border-white/20 rounded-md text-white placeholder:text-white/40 focus:outline-none focus:border-blue-500"
+                            className="w-full pl-10 pr-4 py-2 bg-black/30 border border-border rounded-md text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:border-blue-500"
                         />
                     </div>
 
@@ -310,7 +310,7 @@ export default function AdminLogsPage() {
                     <select
                         value={filters.level}
                         onChange={(e) => setFilters((f) => ({ ...f, level: e.target.value as LogLevel | "" }))}
-                        className="px-4 py-2 bg-black/30 border border-white/20 rounded-md text-white focus:outline-none focus:border-blue-500"
+                        className="px-4 py-2 bg-black/30 border border-border rounded-md text-foreground focus:outline-none focus:border-blue-500"
                     >
                         <option value="">All Levels</option>
                         {LOG_LEVELS.map((level) => (
@@ -324,7 +324,7 @@ export default function AdminLogsPage() {
                     <select
                         value={filters.type}
                         onChange={(e) => setFilters((f) => ({ ...f, type: e.target.value as LogType | "" }))}
-                        className="px-4 py-2 bg-black/30 border border-white/20 rounded-md text-white focus:outline-none focus:border-blue-500"
+                        className="px-4 py-2 bg-black/30 border border-border rounded-md text-foreground focus:outline-none focus:border-blue-500"
                     >
                         <option value="">All Types</option>
                         {LOG_TYPES.map((type) => (
@@ -334,14 +334,7 @@ export default function AdminLogsPage() {
                         ))}
                     </select>
 
-                    {/* Branch Filter */}
-                    <div className="w-64">
-                        <BranchSelector
-                            value={filters.branchId}
-                            onChange={(branchId) => setFilters((f) => ({ ...f, branchId }))}
-                            placeholder="All Branches"
-                        />
-                    </div>
+                    {/* Branch Filter Removed */}
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
@@ -351,14 +344,14 @@ export default function AdminLogsPage() {
                             type="date"
                             value={filters.startDate}
                             onChange={(e) => setFilters((f) => ({ ...f, startDate: e.target.value }))}
-                            className="px-4 py-2 bg-black/30 border border-white/20 rounded-md text-white focus:outline-none focus:border-blue-500"
+                            className="px-4 py-2 bg-black/30 border border-border rounded-md text-foreground focus:outline-none focus:border-blue-500"
                         />
-                        <span className="text-white/60">to</span>
+                        <span className="text-muted-foreground">to</span>
                         <input
                             type="date"
                             value={filters.endDate}
                             onChange={(e) => setFilters((f) => ({ ...f, endDate: e.target.value }))}
-                            className="px-4 py-2 bg-black/30 border border-white/20 rounded-md text-white focus:outline-none focus:border-blue-500"
+                            className="px-4 py-2 bg-black/30 border border-border rounded-md text-foreground focus:outline-none focus:border-blue-500"
                         />
                     </div>
 
@@ -366,7 +359,7 @@ export default function AdminLogsPage() {
                     {hasActiveFilters && (
                         <button
                             onClick={handleClearFilters}
-                            className="flex items-center gap-2 px-4 py-2 text-white/60 hover:text-white hover:bg-white/10 rounded-md transition-colors"
+                            className="flex items-center gap-2 px-4 py-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
                         >
                             <X className="w-4 h-4" />
                             Clear Filters
@@ -376,7 +369,7 @@ export default function AdminLogsPage() {
             </div>
 
             {/* Results Info */}
-            <div className="flex items-center justify-between text-sm text-white/60">
+            <div className="flex items-center justify-between text-sm text-muted-foreground">
                 <span>
                     Showing {logs.length} of {total} logs
                 </span>
@@ -384,16 +377,16 @@ export default function AdminLogsPage() {
             </div>
 
             {/* Logs Table */}
-            <div className="overflow-x-auto flex-1 rounded-lg border border-white/10">
+            <div className="overflow-x-auto flex-1 rounded-lg border border-border">
                 <table className="w-full">
-                    <thead className="bg-white/5">
+                    <thead className="bg-muted">
                         <tr>
-                            <th className="px-4 py-3 text-left text-sm font-medium text-white/60">Timestamp</th>
-                            <th className="px-4 py-3 text-left text-sm font-medium text-white/60">Level</th>
-                            <th className="px-4 py-3 text-left text-sm font-medium text-white/60">Type</th>
-                            <th className="px-4 py-3 text-left text-sm font-medium text-white/60">User</th>
-                            <th className="px-4 py-3 text-left text-sm font-medium text-white/60">Branch</th>
-                            <th className="px-4 py-3 text-left text-sm font-medium text-white/60">Message</th>
+                            <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Timestamp</th>
+                            <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Level</th>
+                            <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Type</th>
+                            <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">User</th>
+                            <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Branch</th>
+                            <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Message</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-white/10">
@@ -405,9 +398,9 @@ export default function AdminLogsPage() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.2, delay: index * 0.02 }}
-                                    className="hover:bg-white/5"
+                                    className="hover:bg-muted"
                                 >
-                                    <td className="px-4 py-3 text-sm text-white/80 whitespace-nowrap">
+                                    <td className="px-4 py-3 text-sm text-foreground whitespace-nowrap">
                                         {formatDate(log.date)}
                                     </td>
                                     <td className="px-4 py-3">
@@ -417,14 +410,14 @@ export default function AdminLogsPage() {
                                             {log.level}
                                         </span>
                                     </td>
-                                    <td className="px-4 py-3 text-sm text-white/80">{log.type}</td>
-                                    <td className="px-4 py-3 text-sm text-white/80">
+                                    <td className="px-4 py-3 text-sm text-foreground">{log.type}</td>
+                                    <td className="px-4 py-3 text-sm text-foreground">
                                         {log.user_name || log.user_id || "System"}
                                     </td>
-                                    <td className="px-4 py-3 text-sm text-white/80">
+                                    <td className="px-4 py-3 text-sm text-foreground">
                                         {log.branch_name || log.branch_id || "-"}
                                     </td>
-                                    <td className="px-4 py-3 text-sm text-white/60 max-w-md truncate" title={log.message}>
+                                    <td className="px-4 py-3 text-sm text-muted-foreground max-w-md truncate" title={log.message}>
                                         {log.message || "-"}
                                     </td>
                                 </motion.tr>
@@ -434,7 +427,7 @@ export default function AdminLogsPage() {
                 </table>
 
                 {logs.length === 0 && !loading && (
-                    <div className="flex flex-col items-center justify-center py-12 text-white/40">
+                    <div className="flex flex-col items-center justify-center py-12 text-muted-foreground/70">
                         <FileText className="w-12 h-12 mb-4 opacity-30" />
                         <p>No logs found</p>
                         {hasActiveFilters && <p className="text-sm mt-1">Try adjusting your filters</p>}
@@ -443,7 +436,7 @@ export default function AdminLogsPage() {
 
                 {loading && (
                     <div className="flex items-center justify-center py-12">
-                        <RefreshCw className="w-8 h-8 animate-spin text-white/40" />
+                        <RefreshCw className="w-8 h-8 animate-spin text-muted-foreground/70" />
                     </div>
                 )}
             </div>
@@ -454,17 +447,17 @@ export default function AdminLogsPage() {
                     <button
                         onClick={() => setPage((p) => Math.max(1, p - 1))}
                         disabled={page === 1 || loading}
-                        className="px-4 py-2 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors"
+                        className="px-4 py-2 bg-card hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors"
                     >
                         Previous
                     </button>
-                    <span className="text-sm text-white/60">
+                    <span className="text-sm text-muted-foreground">
                         Page {page} of {Math.ceil(total / LOGS_PAGE_SIZE)}
                     </span>
                     <button
                         onClick={() => setPage((p) => p + 1)}
                         disabled={!hasMore || loading}
-                        className="px-4 py-2 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors"
+                        className="px-4 py-2 bg-card hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors"
                     >
                         Next
                     </button>

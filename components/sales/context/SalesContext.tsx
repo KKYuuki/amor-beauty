@@ -9,7 +9,7 @@ import React, {
     createContext,
 } from "react"
 import { NotificationContext } from "@/components/notifications"
-import { useBranchContext } from "@/components/branch-context"
+
 import { InventoryItem } from "@/utils/types/inventory"
 import { ServiceWithItems } from "@/server/actions/services"
 import {
@@ -38,6 +38,8 @@ import { NotificationType } from "@/utils/types/notifications"
 import { SplitPayment } from "@/utils/types/transactions"
 import { ServiceType } from "@/utils/types/payroll"
 import { calculateDownpaymentAmount } from "@/components/sales/utils/downpayment"
+
+const currentBranch: any = null;
 
 export interface CartItem {
     id: string
@@ -214,7 +216,7 @@ interface SalesProviderProps {
 
 export function SalesProvider({ children, userInfo }: SalesProviderProps) {
     const { addNotification } = useContext(NotificationContext)
-    const { currentBranch } = useBranchContext()
+    
 
     const [inventory, setInventory] = useState<InventoryItem[]>([])
     const [services, setServices] = useState<ServiceWithItems[]>([])

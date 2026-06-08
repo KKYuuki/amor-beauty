@@ -14,7 +14,6 @@ interface RecentTransactionsProps {
     transactions: Transaction[]
     loading: boolean
     taxSettings: CurrencyTaxValue
-    branches: Branch[]
     handleVoid: (txnId: string) => void
     setSelectedTransactionForPayment: (txn: Transaction | null) => void
     setIsAddPaymentModalOpen: (open: boolean) => void
@@ -33,7 +32,6 @@ export default function RecentTransactions({
     transactions,
     loading,
     taxSettings,
-    branches,
     handleVoid,
     setSelectedTransactionForPayment,
     setIsAddPaymentModalOpen,
@@ -49,13 +47,7 @@ export default function RecentTransactions({
 }: RecentTransactionsProps) {
     const [generatingReceipts, setGeneratingReceipts] = useState<Set<string>>(new Set())
 
-    const branchNameMap = useMemo(() => {
-        const map: Record<string, string> = {}
-        for (const b of branches) {
-            map[b.id] = b.name
-        }
-        return map
-    }, [branches])
+
 
     const handleDownloadReceipt = async (transactionId: string) => {
         if (generatingReceipts.has(transactionId)) return
@@ -99,17 +91,17 @@ export default function RecentTransactions({
     }, [txnPage, txnPageSize, refreshTransactions])
 
     return (
-        <div className='absolute bottom-0 left-0 right-0 flex flex-col bg-black/95 border-t border-white/10 z-20'>
+        <div className='absolute bottom-0 left-0 right-0 flex flex-col bg-black/95 border-t border-border z-20'>
             {/* Header - Always visible, clickable to toggle */}
             <button
                 onClick={() => setIsTransactionsOpen(!isTransactionsOpen)}
-                className='p-3 flex justify-between items-center bg-black/60 hover:bg-black/80 transition-colors cursor-pointer border-b border-white/10'
+                className='p-3 flex justify-between items-center bg-black/60 hover:bg-black/80 transition-colors cursor-pointer border-b border-border'
             >
                 <h2 className='font-bold flex items-center gap-2 text-sm'>
                     <HistoryIcon className='w-4 h-4' />
                     Recent Transactions
                     {transactions.length > 0 && (
-                        <span className='ml-2 px-2 py-0.5 bg-white/10 rounded-full text-xs'>
+                        <span className='ml-2 px-2 py-0.5 bg-card rounded-full text-xs'>
                             {transactions.length}
                         </span>
                     )}
@@ -139,34 +131,34 @@ export default function RecentTransactions({
                     <table className='min-w-max w-full h-max table-auto border-collapse relative'>
                         <thead className='sticky top-0 bg-black/80'>
                             <tr className='text-nowrap select-none'>
-                                <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                                <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                     Time
                                 </th>
-                                <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                                <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                     Transaction #
                                 </th>
-                                <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                                <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                     Branch
                                 </th>
-                                <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                                <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                     Items
                                 </th>
-                                <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                                <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                     Details
                                 </th>
-                                <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                                <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                     Total
                                 </th>
-                                <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                                <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                     Payment
                                 </th>
-                                <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                                <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                     Balance
                                 </th>
-                                <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                                <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                     Status
                                 </th>
-                                <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                                <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                     Action
                                 </th>
                             </tr>
@@ -176,15 +168,15 @@ export default function RecentTransactions({
                                 <SkeletonRow count={5} />
                             ) : transactions.length === 0 ? (
                                 <tr>
-                                        <td colSpan={10} className='px-4 py-8 text-center text-white/40'>
+                                        <td colSpan={10} className='px-4 py-8 text-center text-muted-foreground/70'>
                                         No recent transactions
                                     </td>
                                 </tr>
                             ) : (
                                 transactions.map((txn) => (
-                                    <tr key={txn.id} className='hover:bg-white/5 transition-colors text-nowrap'>
+                                    <tr key={txn.id} className='hover:bg-muted transition-colors text-nowrap'>
                                         <td 
-                                            className='px-3 py-1 text-sm font-medium w-max text-white/60'
+                                            className='px-3 py-1 text-sm font-medium w-max text-muted-foreground'
                                             title={formatManilaTime(txn.created_at, 'datetime')}
                                         >
                                             {formatManilaTime(txn.created_at, 'time')}
@@ -195,16 +187,16 @@ export default function RecentTransactions({
                                         <td className='px-3 py-1 text-sm font-medium w-max'>
                                             {txn.branch_id ? (
                                                 <span className='text-xs px-1.5 py-0.5 bg-blue-400/20 text-blue-300 rounded'>
-                                                    {branchNameMap[txn.branch_id] || 'Unknown'}
+                                                    {txn.branch_id}
                                                 </span>
                                             ) : (
-                                                <span className='text-xs px-1.5 py-0.5 bg-white/10 rounded'>
+                                                <span className='text-xs px-1.5 py-0.5 bg-card rounded'>
                                                     Shared
                                                 </span>
                                             )}
                                         </td>
                                         <td className='px-3 py-1 text-sm font-medium w-max'>
-                                            <span className='px-2 py-0.5 bg-white/10 rounded text-xs border border-white/5'>
+                                            <span className='px-2 py-0.5 bg-card rounded text-xs border border-border'>
                                                 {txn.items?.length || 0} items
                                             </span>
                                         </td>
@@ -212,7 +204,7 @@ export default function RecentTransactions({
                                             <div className='flex flex-col gap-1'>
                                                 {txn.client_type && (
                                                     <span
-                                                        className={`px-1.5 py-0.5 rounded-xs text-xs font-semibold border border-white/5 w-fit ${
+                                                        className={`px-1.5 py-0.5 rounded-xs text-xs font-semibold border border-border w-fit ${
                                                             txn.client_type === 'PERSONAL'
                                                                 ? 'bg-purple-400/20 text-purple-300'
                                                                 : 'bg-cyan-400/20 text-cyan-300'
@@ -222,7 +214,7 @@ export default function RecentTransactions({
                                                     </span>
                                                 )}
                                                 {txn.sales_description && (
-                                                    <span className='text-xs text-white/50 whitespace-pre-line leading-snug'>
+                                                    <span className='text-xs text-muted-foreground whitespace-pre-line leading-snug'>
                                                         {txn.sales_description}
                                                     </span>
                                                 )}
@@ -233,7 +225,7 @@ export default function RecentTransactions({
                                             {txn.total.toFixed(2)}
                                         </td>
                                         <td className='px-3 py-1 text-sm font-medium w-max'>
-                                            <span className='px-2 py-0.5 bg-white/10 rounded text-xs border border-white/5'>
+                                            <span className='px-2 py-0.5 bg-card rounded text-xs border border-border'>
                                                 {txn.payment_method}
                                             </span>
                                         </td>
@@ -249,7 +241,7 @@ export default function RecentTransactions({
                                         </td>
                                         <td className='px-3 py-1 text-sm font-medium w-max'>
                                             <span
-                                                className={`px-2 py-0.5 rounded-sm text-xs font-semibold border-2 border-white/5 ${
+                                                className={`px-2 py-0.5 rounded-sm text-xs font-semibold border-2 border-border ${
                                                     txn.status === "COMPLETED"
                                                         ? "bg-green-400/20 text-green-300"
                                                         : txn.status === "PARTIAL"
@@ -262,7 +254,7 @@ export default function RecentTransactions({
                                                                 ? "bg-indigo-400/20 text-indigo-300"
                                                                 : txn.status === "REFUNDED"
                                                                   ? "bg-orange-400/20 text-orange-300"
-                                                                  : "bg-white/10 text-white/80"
+                                                                  : "bg-card text-foreground"
                                                 }`}
                                             >
                                                 {txn.status}
@@ -274,7 +266,7 @@ export default function RecentTransactions({
                                                     <button
                                                         onClick={() => handleDownloadReceipt(txn.id)}
                                                         disabled={generatingReceipts.has(txn.id)}
-                                                        className='flex items-center gap-1 px-2 py-0.5 bg-amber-400/20 hover:bg-amber-400/40 text-amber-300 text-xs font-semibold rounded-sm border-2 border-white/5 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
+                                                        className='flex items-center gap-1 px-2 py-0.5 bg-amber-400/20 hover:bg-amber-400/40 text-amber-300 text-xs font-semibold rounded-sm border-2 border-border transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
                                                         title='Download Receipt'
                                                     >
                                                         {generatingReceipts.has(txn.id) ? (
@@ -288,7 +280,7 @@ export default function RecentTransactions({
                                                 {(txn.status === "COMPLETED" || txn.status === "PARTIAL" || txn.status === "DOWNPAYMENT_PENDING" || txn.status === "DOWNPAYMENT_ASSIGNED") && (
                                                     <button
                                                         onClick={() => handleVoid(txn.id)}
-                                                        className='px-2 py-0.5 bg-red-400/20 hover:bg-red-400/40 text-red-300 text-xs font-semibold rounded-sm border-2 border-white/5 transition-colors cursor-pointer'
+                                                        className='px-2 py-0.5 bg-red-400/20 hover:bg-red-400/40 text-red-300 text-xs font-semibold rounded-sm border-2 border-border transition-colors cursor-pointer'
                                                     >
                                                         Void
                                                     </button>
@@ -299,7 +291,7 @@ export default function RecentTransactions({
                                                             setSelectedTransactionForPayment(txn)
                                                             setIsAddPaymentModalOpen(true)
                                                         }}
-                                                        className='px-2 py-0.5 bg-blue-400/20 hover:bg-blue-400/40 text-blue-300 text-xs font-semibold rounded-sm border-2 border-white/5 transition-colors cursor-pointer'
+                                                        className='px-2 py-0.5 bg-blue-400/20 hover:bg-blue-400/40 text-blue-300 text-xs font-semibold rounded-sm border-2 border-border transition-colors cursor-pointer'
                                                     >
                                                         Add Payment
                                                     </button>
@@ -316,7 +308,7 @@ export default function RecentTransactions({
                 {/* Pagination Controls */}
                 <div className='flex items-center justify-between mt-4 px-2'>
                     <div className='flex items-center gap-2'>
-                        <span className='text-sm text-white/60'>
+                        <span className='text-sm text-muted-foreground'>
                             Rows per page:
                         </span>
                         <select
@@ -325,7 +317,7 @@ export default function RecentTransactions({
                                 setTxnPageSize(Number(e.target.value))
                                 setTxnPage(1)
                             }}
-                            className='bg-white/10 border border-white/20 rounded px-2 py-1 text-sm cursor-pointer'
+                            className='bg-card border border-border rounded px-2 py-1 text-sm cursor-pointer'
                         >
                             <option value={10}>10</option>
                             <option value={25}>25</option>
@@ -334,27 +326,27 @@ export default function RecentTransactions({
                         </select>
                     </div>
                     <div className='flex items-center gap-2'>
-                        <span className='text-sm text-white/60'>
+                        <span className='text-sm text-muted-foreground'>
                             Page {txnPage}
                         </span>
                         <div className='flex gap-1'>
                             <button
                                 onClick={() => setTxnPage(txnPage - 1)}
                                 disabled={txnPage === 1 || txnLoading}
-                                className='p-1.5 rounded bg-white/10 hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer'
+                                className='p-1.5 rounded bg-card hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer'
                             >
                                 <ChevronLeftIcon size={16} />
                             </button>
                             <button
                                 onClick={() => setTxnPage(txnPage + 1)}
                                 disabled={!txnHasMore || txnLoading}
-                                className='p-1.5 rounded bg-white/10 hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer'
+                                className='p-1.5 rounded bg-card hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer'
                             >
                                 <ChevronRightIcon size={16} />
                             </button>
                         </div>
                         {txnLoading && (
-                            <LoaderCircleIcon size={16} className='animate-spin text-white/40' />
+                            <LoaderCircleIcon size={16} className='animate-spin text-muted-foreground/70' />
                         )}
                     </div>
                 </div>

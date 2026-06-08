@@ -25,7 +25,9 @@ import {
 import { getSetting } from "@/server/actions/settings"
 import { ExportFormat } from "@/utils/export-utils"
 import { getDateRangeFromPreset, DateRangePreset } from "@/utils/date-utils"
-import { useBranchContext } from "@/components/branch-context"
+
+const currentBranch: any = null;
+
 
 const PAGE_SIZE = 30
 
@@ -66,7 +68,7 @@ export default function TransactionsPageClient() {
     const [statusFilter, setStatusFilter] = useState<TransactionFilters['status'] | ''>('')
 
     // Branch Context
-    const { currentBranch } = useBranchContext()
+    
 
     // Refs
     const scrollContainerRef = useRef<HTMLDivElement>(null)
@@ -230,27 +232,27 @@ export default function TransactionsPageClient() {
                                 <ChevronDownIcon className='w-4 h-4' />
                             </button>
                             {showExportMenu && (
-                                <div className='absolute right-0 top-full mt-1 w-40 bg-zinc-900 border border-white/10 rounded-md shadow-lg z-50 overflow-hidden'>
+                                <div className='absolute right-0 top-full mt-1 w-40 bg-card border border-border rounded-md shadow-lg z-50 overflow-hidden'>
                                     <button
                                         onClick={() => handleExport("csv")}
-                                        className='w-full px-4 py-2 text-left text-sm hover:bg-white/10 transition-colors cursor-pointer flex items-center gap-2'
+                                        className='w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors cursor-pointer flex items-center gap-2'
                                     >
                                         <span className='text-green-400 font-mono text-xs'>CSV</span>
-                                        <span className='text-white/60'>Spreadsheet</span>
+                                        <span className='text-muted-foreground'>Spreadsheet</span>
                                     </button>
                                     <button
                                         onClick={() => handleExport("excel")}
-                                        className='w-full px-4 py-2 text-left text-sm hover:bg-white/10 transition-colors cursor-pointer flex items-center gap-2'
+                                        className='w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors cursor-pointer flex items-center gap-2'
                                     >
                                         <span className='text-emerald-400 font-mono text-xs'>XLSX</span>
-                                        <span className='text-white/60'>Excel</span>
+                                        <span className='text-muted-foreground'>Excel</span>
                                     </button>
                                     <button
                                         onClick={() => handleExport("pdf")}
-                                        className='w-full px-4 py-2 text-left text-sm hover:bg-white/10 transition-colors cursor-pointer flex items-center gap-2'
+                                        className='w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors cursor-pointer flex items-center gap-2'
                                     >
                                         <span className='text-red-400 font-mono text-xs'>PDF</span>
-                                        <span className='text-white/60'>Report</span>
+                                        <span className='text-muted-foreground'>Report</span>
                                     </button>
                                 </div>
                             )}
@@ -258,7 +260,7 @@ export default function TransactionsPageClient() {
                         <button
                             onClick={fetchData}
                             disabled={loading}
-                            className='p-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors disabled:opacity-50 border-2 border-white/5 cursor-pointer'
+                            className='p-2 bg-card hover:bg-muted rounded-md transition-colors disabled:opacity-50 border-2 border-border cursor-pointer'
                             title='Refresh'
                         >
                             <RefreshCwIcon
@@ -272,11 +274,11 @@ export default function TransactionsPageClient() {
             <div className='mb-4 mt-4'>
                 {/* Search Bar */}
                 <div className='relative w-full'>
-                    <SearchIcon className='absolute left-3 top-1/2 -translate-y-1/2 text-white/40 w-5 h-5' />
+                    <SearchIcon className='absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/70 w-5 h-5' />
                     <input
                         type='text'
                         placeholder='Filter by number, staff, or buyer...'
-                        className='w-full pl-10 pr-4 py-2 bg-white/10 rounded-md border-2 border-white/5 focus:border-white/20 outline-none transition-all text-white placeholder:text-white/40'
+                        className='w-full pl-10 pr-4 py-2 bg-card rounded-md border-2 border-border focus:border-border outline-none transition-all text-foreground placeholder:text-muted-foreground/70'
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
@@ -287,7 +289,7 @@ export default function TransactionsPageClient() {
                     <select
                         value={statusFilter}
                         onChange={(e) => setStatusFilter(e.target.value as TransactionFilters['status'] | '')}
-                        className='bg-white/10 hover:bg-white/20 transition-colors px-3 py-1 rounded-md text-sm cursor-pointer border-2 border-white/5'
+                        className='bg-card hover:bg-muted transition-colors px-3 py-1 rounded-md text-sm cursor-pointer border-2 border-border'
                     >
                         <option value=''>All Statuses</option>
                         <option value='COMPLETED'>Completed</option>
@@ -300,8 +302,8 @@ export default function TransactionsPageClient() {
                 {/* Date Filters */}
                 <FilterBar className='mt-4'>
                     <div className='flex items-center gap-2 flex-wrap'>
-                        <CalendarIcon className='w-4 h-4 text-white/60' />
-                        <span className='text-sm text-white/60 font-medium'>
+                        <CalendarIcon className='w-4 h-4 text-muted-foreground' />
+                        <span className='text-sm text-muted-foreground font-medium'>
                             Filter by date:
                         </span>
                         <select
@@ -311,7 +313,7 @@ export default function TransactionsPageClient() {
                                     e.target.value as DateFilterPreset
                                 )
                             }
-                            className='bg-white/10 hover:bg-white/20 transition-colors px-3 py-1 rounded-md text-sm cursor-pointer border-2 border-white/5'
+                            className='bg-card hover:bg-muted transition-colors px-3 py-1 rounded-md text-sm cursor-pointer border-2 border-border'
                         >
                             {(
                                 [
@@ -353,7 +355,7 @@ export default function TransactionsPageClient() {
                     {datePreset === "custom" && (
                         <div className='flex items-center gap-3 flex-wrap'>
                             <div className='flex items-center gap-2'>
-                                <label className='text-sm text-white/60'>
+                                <label className='text-sm text-muted-foreground'>
                                     From:
                                 </label>
                                 <input
@@ -362,11 +364,11 @@ export default function TransactionsPageClient() {
                                     onChange={(e) =>
                                         setCustomStartDate(e.target.value)
                                     }
-                                    className='px-3 py-1 bg-white/10 border-2 border-white/5 rounded-md text-sm focus:border-white/20 outline-none'
+                                    className='px-3 py-1 bg-card border-2 border-border rounded-md text-sm focus:border-border outline-none'
                                 />
                             </div>
                             <div className='flex items-center gap-2'>
-                                <label className='text-sm text-white/60'>
+                                <label className='text-sm text-muted-foreground'>
                                     To:
                                 </label>
                                 <input
@@ -375,13 +377,13 @@ export default function TransactionsPageClient() {
                                     onChange={(e) =>
                                         setCustomEndDate(e.target.value)
                                     }
-                                    className='px-3 py-1 bg-white/10 border-2 border-white/5 rounded-md text-sm focus:border-white/20 outline-none'
+                                    className='px-3 py-1 bg-card border-2 border-border rounded-md text-sm focus:border-border outline-none'
                                 />
                             </div>
                             <button
                                 onClick={fetchData}
                                 disabled={!customStartDate || !customEndDate}
-                                className='px-4 py-1 bg-blue-300/30 hover:bg-blue-300/50 text-white text-sm font-bold rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors border-2 border-white/5 cursor-pointer'
+                                className='px-4 py-1 bg-blue-300/30 hover:bg-blue-300/50 text-foreground text-sm font-bold rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors border-2 border-border cursor-pointer'
                             >
                                 Apply
                             </button>
@@ -398,34 +400,34 @@ export default function TransactionsPageClient() {
                 <table className='min-w-max w-full h-max table-auto border-collapse relative'>
                     <thead className='sticky top-0 bg-black/80'>
                         <tr className='text-nowrap select-none'>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Date & Time
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Transaction #
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Staff
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Customer
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Items
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Total
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Payment
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Reference #
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Type
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Status
                             </th>
                         </tr>
@@ -435,7 +437,7 @@ export default function TransactionsPageClient() {
                             <tr>
                                 <td
                                     colSpan={10}
-                                    className='px-4 py-12 text-center text-white/60'
+                                    className='px-4 py-12 text-center text-muted-foreground'
                                 >
                                     <div className='flex flex-col items-center justify-center gap-2'>
                                         <LoaderCircleIcon className='w-8 h-8 animate-spin' />
@@ -447,12 +449,12 @@ export default function TransactionsPageClient() {
                             <tr>
                                 <td
                                     colSpan={10}
-                                    className='px-4 py-12 text-center text-white/60'
+                                    className='px-4 py-12 text-center text-muted-foreground'
                                 >
                                     <div className='flex flex-col items-center justify-center gap-2'>
                                         <ReceiptIcon className='w-8 h-8 opacity-20' />
                                         <p className='text-sm'>No transactions found</p>
-                                        <p className='text-xs text-white/40'>Sales processed in the Sales page will appear here</p>
+                                        <p className='text-xs text-muted-foreground/70'>Sales processed in the Sales page will appear here</p>
                                     </div>
                                 </td>
                             </tr>
@@ -461,15 +463,15 @@ export default function TransactionsPageClient() {
                                 <tr
                                     key={txn.id}
                                     onClick={() => router.push(`/transactions/${txn.id}`)}
-                                    className='hover:bg-white/5 transition-colors text-nowrap cursor-pointer'
+                                    className='hover:bg-muted transition-colors text-nowrap cursor-pointer'
                                 >
                                     <td className='px-3 py-1 text-sm font-medium w-max'>
-                                        <div className='text-white'>
+                                        <div className='text-foreground'>
                                             {new Date(
                                                 txn.created_at
                                             ).toLocaleDateString()}
                                         </div>
-                                        <div className='text-xs text-white/60'>
+                                        <div className='text-xs text-muted-foreground'>
                                             {new Date(
                                                 txn.created_at
                                             ).toLocaleTimeString([], {
@@ -490,7 +492,7 @@ export default function TransactionsPageClient() {
                                             "Walk-in"}
                                     </td>
                                     <td className='px-3 py-1 text-sm font-medium w-max text-center'>
-                                        <span className='px-2 py-0.5 bg-white/10 rounded text-xs border border-white/5'>
+                                        <span className='px-2 py-0.5 bg-card rounded text-xs border border-border'>
                                             {txn.items?.length || 0} items
                                         </span>
                                     </td>
@@ -499,17 +501,17 @@ export default function TransactionsPageClient() {
                                         {txn.total.toFixed(2)}
                                     </td>
                                     <td className='px-3 py-1 text-sm font-medium w-max'>
-                                        <span className='px-2 py-0.5 bg-white/10 rounded text-xs border border-white/5'>
+                                        <span className='px-2 py-0.5 bg-card rounded text-xs border border-border'>
                                             {txn.payment_method}
                                         </span>
                                     </td>
-                                    <td className='px-3 py-1 text-sm font-medium w-max font-mono text-white/60'>
+                                    <td className='px-3 py-1 text-sm font-medium w-max font-mono text-muted-foreground'>
                                         {txn.reference_number || "-"}
                                     </td>
                                     <td className='px-3 py-1 text-sm font-medium w-max'>
                                         {txn.client_type ? (
                                             <span
-                                                className={`px-2 py-0.5 rounded-xs text-xs font-semibold border-2 border-white/5 ${
+                                                className={`px-2 py-0.5 rounded-xs text-xs font-semibold border-2 border-border ${
                                                     txn.client_type === 'PERSONAL'
                                                         ? 'bg-purple-400/20 text-purple-300'
                                                         : 'bg-cyan-400/20 text-cyan-300'
@@ -518,17 +520,17 @@ export default function TransactionsPageClient() {
                                                 {txn.client_type === 'PERSONAL' ? 'Personal' : 'Walk-in'}
                                             </span>
                                         ) : (
-                                            <span className='text-white/40 text-xs'>—</span>
+                                            <span className='text-muted-foreground/70 text-xs'>—</span>
                                         )}
                                     </td>
                                     <td className='px-3 py-1 text-sm font-medium w-max'>
                                         <span
-                                            className={`px-2 py-0.5 rounded-sm text-xs font-semibold border-2 border-white/5 ${
+                                            className={`px-2 py-0.5 rounded-sm text-xs font-semibold border-2 border-border ${
                                                 txn.status === "COMPLETED"
                                                     ? "bg-green-400/20 text-green-300"
                                                     : txn.status === "VOIDED"
                                                       ? "bg-red-400/20 text-red-300"
-                                                      : "bg-white/10 text-white/80"
+                                                      : "bg-card text-foreground"
                                             }`}
                                         >
                                             {txn.status}
@@ -543,8 +545,8 @@ export default function TransactionsPageClient() {
 
             {/* Pagination */}
             {totalPages > 1 && (
-                <div className='flex items-center justify-between py-4 border-t border-white/10'>
-                    <p className='text-sm text-white/60'>
+                <div className='flex items-center justify-between py-4 border-t border-border'>
+                    <p className='text-sm text-muted-foreground'>
                         Showing {(page - 1) * PAGE_SIZE + 1} -{" "}
                         {Math.min(page * PAGE_SIZE, total)} of {total}
                     </p>
@@ -552,11 +554,11 @@ export default function TransactionsPageClient() {
                         <button
                             onClick={() => setPage((p) => Math.max(1, p - 1))}
                             disabled={page === 1}
-                            className='px-3 py-1 bg-white/10 hover:bg-white/20 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer'
+                            className='px-3 py-1 bg-card hover:bg-muted rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer'
                         >
                             Previous
                         </button>
-                        <span className='text-sm text-white/60'>
+                        <span className='text-sm text-muted-foreground'>
                             Page {page} of {totalPages}
                         </span>
                         <button
@@ -564,7 +566,7 @@ export default function TransactionsPageClient() {
                                 setPage((p) => Math.min(totalPages, p + 1))
                             }
                             disabled={page === totalPages}
-                            className='px-3 py-1 bg-white/10 hover:bg-white/20 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer'
+                            className='px-3 py-1 bg-card hover:bg-muted rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer'
                         >
                             Next
                         </button>

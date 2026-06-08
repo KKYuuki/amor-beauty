@@ -191,16 +191,16 @@ export default function CheckoutModal({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className='bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-md max-h-[90svh] lg:max-h-[80svh] overflow-hidden flex flex-col'
+                className='bg-white dark:bg-card rounded-2xl shadow-2xl w-full max-w-md max-h-[90svh] lg:max-h-[80svh] overflow-hidden flex flex-col'
             >
-                <div className='p-6 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center'>
+                <div className='p-6 border-b border-zinc-200 dark:border-border flex justify-between items-center'>
                     <h3 className='text-xl font-bold flex items-center gap-2'>
                         <CreditCardIcon className='w-5 h-5 text-blue-600 dark:text-blue-400' />
                         Checkout
                     </h3>
                     <button
                         onClick={onClose}
-                        className='text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
+                        className='text-muted-foreground hover:text-foreground'
                     >
                         <XCircleIcon className='w-6 h-6' />
                     </button>
@@ -218,18 +218,18 @@ export default function CheckoutModal({
                         setWalkinEmail={setWalkinEmail}
                     />
 
-                    <div className='border-t border-zinc-200 dark:border-zinc-700'></div>
+                    <div className='border-t border-zinc-200 dark:border-border'></div>
 
                     <div className='space-y-4'>
                         <div>
-                            <label className='block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300 flex items-center gap-2'>
+                            <label className='block text-sm font-medium mb-2 text-muted-foreground dark:text-foreground flex items-center gap-2'>
                                 <UsersIcon className='w-4 h-4' />
                                 Staff Assignment
                             </label>
                             <select
                                 value={selectedStaffId}
                                 onChange={(e) => setSelectedStaffId(e.target.value)}
-                                className='w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                                className='w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-muted focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                             >
                                 <option value=''>Select Staff Member</option>
                                 <option value='SHOP_SALE'>Shop Sale (No Commission)</option>
@@ -243,11 +243,11 @@ export default function CheckoutModal({
 
                         {hasServices && (
                             <div>
-                                <label className='block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300 flex items-center gap-2'>
+                                <label className='block text-sm font-medium mb-2 text-muted-foreground dark:text-foreground flex items-center gap-2'>
                                     <UserIcon className='w-4 h-4' />
                                     Client Type
                                 </label>
-                                <p className='text-xs text-zinc-500 dark:text-zinc-400 mb-2'>For calculating staff rates</p>
+                                <p className='text-xs text-muted-foreground dark:text-muted-foreground mb-2'>For calculating staff rates</p>
                                 <div className='flex gap-2'>
                                     <button
                                         type='button'
@@ -255,7 +255,7 @@ export default function CheckoutModal({
                                         className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all border-2 ${
                                             clientType === 'WALKIN'
                                                 ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400'
-                                                : 'border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-600'
+                                                : 'border-zinc-200 dark:border-border bg-white dark:bg-muted hover:border-zinc-300 dark:hover:border-zinc-600'
                                         }`}
                                     >
                                         Walk-in
@@ -266,7 +266,7 @@ export default function CheckoutModal({
                                         className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all border-2 ${
                                             clientType === 'PERSONAL'
                                                 ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400'
-                                                : 'border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-600'
+                                                : 'border-zinc-200 dark:border-border bg-white dark:bg-muted hover:border-zinc-300 dark:hover:border-zinc-600'
                                         }`}
                                     >
                                         Personal
@@ -278,11 +278,11 @@ export default function CheckoutModal({
 
                     {/* Transaction Description */}
                     <div>
-                        <label className='block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300 flex items-center gap-2'>
+                        <label className='block text-sm font-medium mb-2 text-muted-foreground dark:text-foreground flex items-center gap-2'>
                             <FileTextIcon className='w-4 h-4' />
                             Transaction Description
                         </label>
-                        <p className='text-xs text-zinc-500 dark:text-zinc-400 mb-2'>
+                        <p className='text-xs text-muted-foreground dark:text-muted-foreground mb-2'>
                             This description will appear in the accounting ledger.
                         </p>
                         <textarea
@@ -291,14 +291,14 @@ export default function CheckoutModal({
                             placeholder='e.g. Custom portrait tattoo + aftercare products'
                             maxLength={500}
                             rows={3}
-                            className='w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm resize-none'
+                            className='w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-muted focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm resize-none'
                         />
-                        <p className='text-xs text-zinc-500 dark:text-zinc-400 mt-1 text-right'>
+                        <p className='text-xs text-muted-foreground dark:text-muted-foreground mt-1 text-right'>
                             {salesDescription.length}/500
                         </p>
                     </div>
 
-                    <div className='border-t border-zinc-200 dark:border-zinc-700'></div>
+                    <div className='border-t border-zinc-200 dark:border-border'></div>
 
                     {/* Downpayment Section */}
                     <div>
@@ -310,24 +310,24 @@ export default function CheckoutModal({
                                     setDownpaymentType(null)
                                 }
                             }}
-                            className='flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300'
+                            className='flex items-center gap-2 text-sm font-medium text-muted-foreground dark:text-foreground'
                         >
                             {showDownpayment ? (
                                 <ToggleRightIcon className='w-5 h-5 text-blue-600 dark:text-blue-400' />
                             ) : (
-                                <ToggleLeftIcon className='w-5 h-5 text-zinc-400 dark:text-zinc-500' />
+                                <ToggleLeftIcon className='w-5 h-5 text-muted-foreground dark:text-muted-foreground' />
                             )}
                             Add Downpayment
                         </button>
 
                         {showDownpayment && (
-                            <div className='mt-3 space-y-3 p-3 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg border border-zinc-200 dark:border-zinc-700'>
+                            <div className='mt-3 space-y-3 p-3 bg-zinc-50 dark:bg-muted/50 rounded-lg border border-zinc-200 dark:border-border'>
                                 <div>
-                                    <label className='block text-xs font-medium mb-1 text-zinc-600 dark:text-zinc-400'>Downpayment Type</label>
+                                    <label className='block text-xs font-medium mb-1 text-muted-foreground dark:text-muted-foreground'>Downpayment Type</label>
                                     <select
                                         value={downpaymentType || ''}
                                         onChange={(e) => setDownpaymentType(e.target.value as 'FLAT_FEE' | 'PERCENTAGE' | 'CUSTOM' | null)}
-                                        className='w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                                        className='w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-muted text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                                     >
                                         <option value=''>Select Type</option>
                                         <option value='FLAT_FEE'>Flat Fee</option>
@@ -338,28 +338,28 @@ export default function CheckoutModal({
 
                                 {downpaymentType === 'FLAT_FEE' && (
                                     <div>
-                                        <label className='block text-xs font-medium mb-1 text-zinc-600 dark:text-zinc-400'>Amount</label>
+                                        <label className='block text-xs font-medium mb-1 text-muted-foreground dark:text-muted-foreground'>Amount</label>
                                         <input
                                             type='number'
                                             min='0'
                                             step='0.01'
                                             value={downpaymentAmount}
                                             onChange={(e) => setDownpaymentAmount(Number(e.target.value))}
-                                            className='w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono'
+                                            className='w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-muted text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono'
                                         />
                                     </div>
                                 )}
 
                                 {downpaymentType === 'CUSTOM' && (
                                     <div>
-                                        <label className='block text-xs font-medium mb-1 text-zinc-600 dark:text-zinc-400'>Custom Amount</label>
+                                        <label className='block text-xs font-medium mb-1 text-muted-foreground dark:text-muted-foreground'>Custom Amount</label>
                                         <input
                                             type='number'
                                             min='0'
                                             step='0.01'
                                             value={downpaymentAmount}
                                             onChange={(e) => setDownpaymentAmount(Number(e.target.value))}
-                                            className='w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono'
+                                            className='w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-muted text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono'
                                         />
                                     </div>
                                 )}
@@ -367,7 +367,7 @@ export default function CheckoutModal({
                                 {downpaymentType === 'PERCENTAGE' && (
                                     <div className='space-y-3'>
                                         <div>
-                                            <label className='block text-xs font-medium mb-1 text-zinc-600 dark:text-zinc-400'>Percentage Rate (%)</label>
+                                            <label className='block text-xs font-medium mb-1 text-muted-foreground dark:text-muted-foreground'>Percentage Rate (%)</label>
                                             <input
                                                 type='number'
                                                 min='0'
@@ -375,22 +375,22 @@ export default function CheckoutModal({
                                                 step='0.01'
                                                 value={downpaymentPercentageRate}
                                                 onChange={(e) => setDownpaymentPercentageRate(Number(e.target.value))}
-                                                className='w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono'
+                                                className='w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-muted text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono'
                                             />
                                         </div>
                                         <div>
-                                            <label className='block text-xs font-medium mb-1 text-zinc-600 dark:text-zinc-400'>Estimated Total</label>
+                                            <label className='block text-xs font-medium mb-1 text-muted-foreground dark:text-muted-foreground'>Estimated Total</label>
                                             <input
                                                 type='number'
                                                 min='0'
                                                 step='0.01'
                                                 value={downpaymentEstimatedTotal}
                                                 onChange={(e) => setDownpaymentEstimatedTotal(Number(e.target.value))}
-                                                className='w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono'
+                                                className='w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-muted text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono'
                                             />
                                         </div>
                                         {downpaymentCalculatedAmount > 0 && (
-                                            <p className='text-xs text-zinc-500 dark:text-zinc-400'>
+                                            <p className='text-xs text-muted-foreground dark:text-muted-foreground'>
                                                 Downpayment: {taxSettings.currency_symbol}{downpaymentCalculatedAmount.toFixed(2)}
                                             </p>
                                         )}
@@ -399,11 +399,11 @@ export default function CheckoutModal({
 
                                 {downpaymentType && (
                                     <div>
-                                        <label className='block text-xs font-medium mb-1 text-zinc-600 dark:text-zinc-400'>Payroll Split Mode</label>
+                                        <label className='block text-xs font-medium mb-1 text-muted-foreground dark:text-muted-foreground'>Payroll Split Mode</label>
                                         <select
                                             value={payrollSplitMode}
                                             onChange={(e) => setPayrollSplitMode(e.target.value as 'PER_PAYMENT' | 'ON_COMPLETION')}
-                                            className='w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                                            className='w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-muted text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                                         >
                                             <option value='PER_PAYMENT'>Per Payment</option>
                                             <option value='ON_COMPLETION'>On Completion</option>
@@ -414,7 +414,7 @@ export default function CheckoutModal({
                         )}
                     </div>
 
-                    <div className='border-t border-zinc-200 dark:border-zinc-700'></div>
+                    <div className='border-t border-zinc-200 dark:border-border'></div>
 
                     {paymentMethod === 'SPLIT' ? (
                         <SplitPaymentBuilder
@@ -439,21 +439,21 @@ export default function CheckoutModal({
                         />
                     )}
 
-                    <div className='border-t border-zinc-200 dark:border-zinc-700'></div>
+                    <div className='border-t border-zinc-200 dark:border-border'></div>
 
-                    <div className='bg-zinc-50 dark:bg-zinc-800/50 rounded-xl p-4 space-y-2 border border-zinc-200 dark:border-zinc-700'>
+                    <div className='bg-zinc-50 dark:bg-muted/50 rounded-xl p-4 space-y-2 border border-zinc-200 dark:border-border'>
                         <div className='flex justify-between text-sm'>
-                            <span className='text-zinc-600 dark:text-zinc-400'>Net Subtotal:</span>
-                            <span className='text-zinc-900 dark:text-zinc-100'>
+                            <span className='text-muted-foreground dark:text-muted-foreground'>Net Subtotal:</span>
+                            <span className='text-foreground text-foreground'>
                                 {taxSettings.currency_symbol} {netSubtotal.toFixed(2)}
                             </span>
                         </div>
                         {taxSettings.tax_enabled && (
                             <div className='flex justify-between text-sm'>
-                                <span className='text-zinc-600 dark:text-zinc-400'>
+                                <span className='text-muted-foreground dark:text-muted-foreground'>
                                     VAT ({(taxSettings.tax_rate * 100).toFixed(0)}%):
                                 </span>
-                                <span className='text-zinc-900 dark:text-zinc-100'>
+                                <span className='text-foreground text-foreground'>
                                     {taxSettings.currency_symbol} {taxAmount.toFixed(2)}
                                 </span>
                             </div>
@@ -479,7 +479,7 @@ export default function CheckoutModal({
                         )}
                         <div className='border-t border-zinc-300 dark:border-zinc-600 pt-2 mt-2'>
                             {totalOverride !== null && (
-                                <div className='flex justify-between text-sm text-zinc-400'>
+                                <div className='flex justify-between text-sm text-muted-foreground'>
                                     <span>Calculated Total:</span>
                                     <span className='line-through'>
                                         {taxSettings.currency_symbol} {calculatedTotal.toFixed(2)}
@@ -487,7 +487,7 @@ export default function CheckoutModal({
                                 </div>
                             )}
                             <div className='flex justify-between font-bold text-lg'>
-                                <span className='text-zinc-900 dark:text-zinc-100'>
+                                <span className='text-foreground text-foreground'>
                                     {totalOverride !== null ? 'Adjusted Total:' : 'Total'}
                                 </span>
                                 <span className='text-blue-600 dark:text-blue-400'>
@@ -498,14 +498,14 @@ export default function CheckoutModal({
                     </div>
                 </div>
 
-                <div className='p-6 border-t border-zinc-200 dark:border-zinc-800 space-y-4'>
+                <div className='p-6 border-t border-zinc-200 dark:border-border space-y-4'>
                     {downpaymentCalculatedAmount > 0 && (
                         <div className='p-3 bg-purple-500/10 rounded-lg border border-purple-500/30'>
                             <p className='text-sm font-medium text-purple-700 dark:text-purple-300'>Downpayment Summary</p>
-                            <p className='text-xs text-zinc-600 dark:text-zinc-400 mt-1'>
+                            <p className='text-xs text-muted-foreground dark:text-muted-foreground mt-1'>
                                 Paying now: {taxSettings.currency_symbol}{downpaymentCalculatedAmount.toFixed(2)}
                             </p>
-                            <p className='text-xs text-zinc-600 dark:text-zinc-400'>
+                            <p className='text-xs text-muted-foreground dark:text-muted-foreground'>
                                 Balance due: {taxSettings.currency_symbol}{(total - downpaymentCalculatedAmount).toFixed(2)}
                             </p>
                         </div>
@@ -523,11 +523,11 @@ export default function CheckoutModal({
                             }
                         }}
                         disabled={processing || !isValid}
-                        className='w-full px-6 py-4 rounded-xl bg-blue-600 text-white font-semibold text-lg hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 shadow-lg hover:shadow-xl'
+                        className='w-full px-6 py-4 rounded-xl bg-blue-600 text-foreground font-semibold text-lg hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 shadow-lg hover:shadow-xl'
                     >
                         {processing ? (
                             <>
-                                <div className='w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin' />
+                                <div className='w-5 h-5 border-2 border-border border-t-primary rounded-full animate-spin' />
                                 Processing...
                             </>
                         ) : (

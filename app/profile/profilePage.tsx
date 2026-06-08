@@ -38,7 +38,7 @@ import { SideBarContext } from "@/components/sidebar"
 import { Image as ImageType } from "@/utils/types/storage"
 import { CheckIcon, XIcon } from "lucide-react"
 import PasskeyManager from "@/components/profile/PasskeyManager"
-import PushNotificationSettings from "@/components/push-notification-settings"
+
 interface ProfilePageClientProps {
     initialUserProfile: UserProfile
     initialArtistProfile: ArtistProfile | null
@@ -162,7 +162,7 @@ export default function ProfilePageClient({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className='fixed top-1/2 left-1/2 -translate-1/2 bg-white/10 backdrop-blur-lg border-2 border-white/5 rounded-md flex flex-col gap-2 p-4 w-full max-w-[calc(100svw-2rem)] md:max-w-2xl items-center'
+                        className='fixed top-1/2 left-1/2 -translate-1/2 bg-card backdrop-blur-lg border-2 border-border rounded-md flex flex-col gap-2 p-4 w-full max-w-[calc(100svw-2rem)] md:max-w-2xl items-center'
                     >
                         <h1 className='font-semibold text-2xl'>
                             Change Profile Image
@@ -185,7 +185,7 @@ export default function ProfilePageClient({
                         <div className='grid grid-cols-2 gap-2 w-full'>
                             <button
                                 type='button'
-                                className='w-full bg-white/10 rounded-md px-2 py-1 cursor-pointer transition-colors hover:bg-white/20 active:hover:bg-white/30 border-2 border-white/5 font-semibold'
+                                className='w-full bg-card rounded-md px-2 py-1 cursor-pointer transition-colors hover:bg-muted active:bg-muted border-2 border-border font-semibold'
                                 onClick={() => {
                                     setEditImageModal(false)
                                     setImageFile(null)
@@ -195,7 +195,7 @@ export default function ProfilePageClient({
                             </button>
                             <button
                                 type='button'
-                                className='w-full bg-white/10 rounded-md px-2 py-1 cursor-pointer transition-colors hover:bg-white/20 active:hover:bg-white/30 border-2 border-white/5 font-semibold'
+                                className='w-full bg-card rounded-md px-2 py-1 cursor-pointer transition-colors hover:bg-muted active:bg-muted border-2 border-border font-semibold'
                                 onClick={async () => {
                                     if (!imageFile) {
                                         addNotification(
@@ -242,16 +242,16 @@ export default function ProfilePageClient({
                         onClick={() => setIsPhotoModalOpen(false)}
                     >
                         <div
-                            className='bg-black/80 border-2 border-white/10 rounded-lg w-full max-w-4xl max-h-[80vh] flex flex-col overflow-hidden'
+                            className='bg-black/80 border-2 border-border rounded-lg w-full max-w-4xl max-h-[80vh] flex flex-col overflow-hidden'
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <div className='p-4 border-b border-white/10 flex justify-between items-center'>
+                            <div className='p-4 border-b border-border flex justify-between items-center'>
                                 <h2 className='text-xl font-semibold'>
                                     Select Photos
                                 </h2>
                                 <button
                                     onClick={() => setIsPhotoModalOpen(false)}
-                                    className='p-1 hover:bg-white/10 rounded-full transition-colors'
+                                    className='p-1 hover:bg-muted rounded-full transition-colors'
                                 >
                                     <XIcon size={24} />
                                 </button>
@@ -269,7 +269,7 @@ export default function ProfilePageClient({
                                         return (
                                             <div
                                                 key={img.id}
-                                                className={`relative aspect-square cursor-pointer group rounded-md overflow-hidden border-2 transition-all ${isSelected ? "border-green-500" : "border-transparent hover:border-white/50"}`}
+                                                className={`relative aspect-square cursor-pointer group rounded-md overflow-hidden border-2 transition-all ${isSelected ? "border-green-500" : "border-transparent hover:border-border0"}`}
                                                 onClick={() => {
                                                     setArtistProfile((prev) => {
                                                         if (!prev) return null
@@ -318,7 +318,7 @@ export default function ProfilePageClient({
                                                     <div className='absolute top-2 right-2 bg-green-500 rounded-full p-1'>
                                                         <CheckIcon
                                                             size={16}
-                                                            className='text-white'
+                                                            className='text-foreground'
                                                         />
                                                     </div>
                                                 )}
@@ -326,7 +326,7 @@ export default function ProfilePageClient({
                                         )
                                     })}
                             </div>
-                            <div className='p-4 border-t border-white/10 flex justify-end'>
+                            <div className='p-4 border-t border-border flex justify-end'>
                                 <button
                                     className='bg-white text-black font-semibold px-4 py-2 rounded-md hover:bg-white/90 transition-colors'
                                     onClick={() => setIsPhotoModalOpen(false)}
@@ -347,27 +347,27 @@ export default function ProfilePageClient({
                         onClick={() => setShowPaymentModal(false)}
                     >
                         <div
-                            className='bg-black/90 border-2 border-white/10 rounded-lg w-full max-w-md flex flex-col overflow-hidden'
+                            className='bg-black/90 border-2 border-border rounded-lg w-full max-w-md flex flex-col overflow-hidden'
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <div className='p-4 border-b border-white/10 flex justify-between items-center'>
+                            <div className='p-4 border-b border-border flex justify-between items-center'>
                                 <h2 className='text-xl font-semibold'>
                                     {editingPaymentMethod ? 'Edit Payment Method' : 'Add Payment Method'}
                                 </h2>
                                 <button
                                     onClick={() => setShowPaymentModal(false)}
-                                    className='p-1 hover:bg-white/10 rounded-full transition-colors'
+                                    className='p-1 hover:bg-muted rounded-full transition-colors'
                                 >
                                     <XIcon size={24} />
                                 </button>
                             </div>
                             <div className='p-4 flex flex-col gap-4'>
                                 <div className='flex flex-col gap-1'>
-                                    <label className='text-sm text-white/60'>Type</label>
+                                    <label className='text-sm text-muted-foreground'>Type</label>
                                     <select
                                         value={paymentFormData.type}
                                         onChange={(e) => setPaymentFormData({ ...paymentFormData, type: e.target.value as 'CASH' | 'GCASH' | 'MAYA' | 'PAYMAYA' | 'BANK_TRANSFER' })}
-                                        className='bg-white/10 border border-white/20 rounded-md px-3 py-2 text-white'
+                                        className='bg-card border border-border rounded-md px-3 py-2 text-foreground'
                                     >
                                         <option value='GCASH'>GCash</option>
                                         <option value='MAYA'>Maya</option>
@@ -377,33 +377,33 @@ export default function ProfilePageClient({
                                     </select>
                                 </div>
                                 <div className='flex flex-col gap-1'>
-                                    <label className='text-sm text-white/60'>Provider / Bank Name</label>
+                                    <label className='text-sm text-muted-foreground'>Provider / Bank Name</label>
                                     <input
                                         type='text'
                                         value={paymentFormData.provider}
                                         onChange={(e) => setPaymentFormData({ ...paymentFormData, provider: e.target.value })}
                                         placeholder='e.g., BDO, BPI, UnionBank'
-                                        className='bg-white/10 border border-white/20 rounded-md px-3 py-2 text-white placeholder:text-white/30'
+                                        className='bg-card border border-border rounded-md px-3 py-2 text-foreground placeholder:text-muted-foreground/70'
                                     />
                                 </div>
                                 <div className='flex flex-col gap-1'>
-                                    <label className='text-sm text-white/60'>Account Name</label>
+                                    <label className='text-sm text-muted-foreground'>Account Name</label>
                                     <input
                                         type='text'
                                         value={paymentFormData.account_name}
                                         onChange={(e) => setPaymentFormData({ ...paymentFormData, account_name: e.target.value })}
                                         placeholder='Full name on account'
-                                        className='bg-white/10 border border-white/20 rounded-md px-3 py-2 text-white placeholder:text-white/30'
+                                        className='bg-card border border-border rounded-md px-3 py-2 text-foreground placeholder:text-muted-foreground/70'
                                     />
                                 </div>
                                 <div className='flex flex-col gap-1'>
-                                    <label className='text-sm text-white/60'>Account Number</label>
+                                    <label className='text-sm text-muted-foreground'>Account Number</label>
                                     <input
                                         type='text'
                                         value={paymentFormData.account_number}
                                         onChange={(e) => setPaymentFormData({ ...paymentFormData, account_number: e.target.value })}
                                         placeholder='Account or mobile number'
-                                        className='bg-white/10 border border-white/20 rounded-md px-3 py-2 text-white placeholder:text-white/30'
+                                        className='bg-card border border-border rounded-md px-3 py-2 text-foreground placeholder:text-muted-foreground/70'
                                     />
                                 </div>
                                 <label className='flex items-center gap-2 cursor-pointer'>
@@ -411,15 +411,15 @@ export default function ProfilePageClient({
                                         type='checkbox'
                                         checked={paymentFormData.is_default}
                                         onChange={(e) => setPaymentFormData({ ...paymentFormData, is_default: e.target.checked })}
-                                        className='w-4 h-4 rounded border-white/20 bg-white/10 text-blue-500 focus:ring-blue-500'
+                                        className='w-4 h-4 rounded border-border bg-card text-blue-500 focus:ring-blue-500'
                                     />
                                     <span className='text-sm'>Set as default payment method</span>
                                 </label>
                             </div>
-                            <div className='p-4 border-t border-white/10 flex justify-end gap-2'>
+                            <div className='p-4 border-t border-border flex justify-end gap-2'>
                                 <button
                                     type='button'
-                                    className='px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors'
+                                    className='px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors'
                                     onClick={() => setShowPaymentModal(false)}
                                 >
                                     Cancel
@@ -470,7 +470,7 @@ export default function ProfilePageClient({
                 )}
             </AnimatePresence>
             <div className='w-full flex gap-2 flex-col md:flex-row md:gap-4 items-center'>
-                <div className='w-full max-w-1/2 md:max-w-48 h-auto aspect-square rounded-full flex items-center justify-center bg-white/10 border-2 border-white/5 overflow-clip'>
+                <div className='w-full max-w-1/2 md:max-w-48 h-auto aspect-square rounded-full flex items-center justify-center bg-card border-2 border-border overflow-clip'>
                     {userInfo.avatar_url ? (
                         <Image
                             src={`${userInfo.avatar_url}${userInfo.avatar_url.includes('?') ? '&' : '?'}v=${avatarVersion}`}
@@ -488,7 +488,7 @@ export default function ProfilePageClient({
                 <div className='w-full flex flex-col gap-2'>
                     <div className='flex flex-row gap-2'>
                         <button
-                            className='bg-white/10 border-2 border-white/5 rounded-md py-1 px-2 cursor-pointer transition-colors hover:bg-white/20 active:hover:bg-white/30 font-semibold'
+                            className='bg-card border-2 border-border rounded-md py-1 px-2 cursor-pointer transition-colors hover:bg-muted active:bg-muted font-semibold'
                             type='button'
                             onClick={() => setEditImageModal(true)}
                         >
@@ -496,7 +496,7 @@ export default function ProfilePageClient({
                         </button>
                         {userInfo.avatar_url && (
                             <button
-                                className='bg-red-300/30 hover:bg-red-300/50 active:hover:bg-red-300/80 cursor-pointer transition-colors border-2 border-white/5 rounded-md py-1 px-2 font-semibold'
+                                className='bg-red-300/30 hover:bg-red-300/50 active:hover:bg-red-300/80 cursor-pointer transition-colors border-2 border-border rounded-md py-1 px-2 font-semibold'
                                 type='button'
                                 onClick={async () => {
                                     // Extract image ID from URL
@@ -522,20 +522,20 @@ export default function ProfilePageClient({
                             </button>
                         )}
                     </div>
-                    <div className='text-white/60'>
+                    <div className='text-muted-foreground'>
                         At least a 1:1 ratio is recommended, preferably a
                         square. <br />
                         PNG or JPEG files are accepted.
                     </div>
                 </div>
             </div>
-            <div className='w-full bg-white/10 border-2 border-white/5 rounded-lg p-4 flex flex-col gap-2'>
+            <div className='w-full bg-card border-2 border-border rounded-lg p-4 flex flex-col gap-2'>
                 <div className='w-full flex flex-row gap-2 justify-between font-semibold text-lg md:text-xl items-start'>
                     Personal Information{" "}
                     {isEditProfile ? (
                         <button
                             type='button'
-                            className='flex flex-row gap-1 items-center border-2 border-white/5 px-3 py-1 font-semibold text-sm rounded-md cursor-pointer transition-colors w-max bg-green-300/30 hover:bg-green-300/50 active:hover:bg-green-300/80'
+                            className='flex flex-row gap-1 items-center border-2 border-border px-3 py-1 font-semibold text-sm rounded-md cursor-pointer transition-colors w-max bg-green-300/30 hover:bg-green-300/50 active:hover:bg-green-300/80'
                             onClick={editProfile}
                         >
                             <SaveIcon size={18} />
@@ -544,7 +544,7 @@ export default function ProfilePageClient({
                     ) : (
                         <button
                             type='button'
-                            className='flex flex-row gap-1 items-center border-2 border-white/5 px-3 py-1 font-semibold text-sm rounded-md cursor-pointer transition-colors bg-white/10 hover:bg-white/20 active:hover:bg-white/30'
+                            className='flex flex-row gap-1 items-center border-2 border-border px-3 py-1 font-semibold text-sm rounded-md cursor-pointer transition-colors bg-card hover:bg-muted active:bg-muted'
                             onClick={() => setIsEditProfile(!isEditProfile)}
                         >
                             <PencilLineIcon size={18} />
@@ -553,7 +553,7 @@ export default function ProfilePageClient({
                     )}
                 </div>
                 <div className='w-full gap-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4'>
-                    <div className='flex flex-col gap-1 text-left text-sm text-white/60 font-medium'>
+                    <div className='flex flex-col gap-1 text-left text-sm text-muted-foreground font-medium'>
                         Full Name
                         {isEditProfile ? (
                             <input
@@ -566,21 +566,21 @@ export default function ProfilePageClient({
                                         full_name: e.target.value,
                                     })
                                 }
-                                className='text-white text-base font-semibold bg-white/10 rounded-md py-1 px-2'
+                                className='text-foreground text-base font-semibold bg-card rounded-md py-1 px-2'
                             />
                         ) : (
-                            <span className='text-white text-base font-semibold py-1 px-2'>
+                            <span className='text-foreground text-base font-semibold py-1 px-2'>
                                 {userInfo.full_name}
                             </span>
                         )}
                     </div>
-                    <div className='flex flex-col gap-1 text-left text-sm text-white/60 font-medium'>
+                    <div className='flex flex-col gap-1 text-left text-sm text-muted-foreground font-medium'>
                         Email
-                        <span className='text-white text-base font-semibold py-1 px-2'>
+                        <span className='text-foreground text-base font-semibold py-1 px-2'>
                             {userInfo.email}
                         </span>
                     </div>
-                    <div className='flex flex-col gap-1 text-left text-sm text-white/60 font-medium'>
+                    <div className='flex flex-col gap-1 text-left text-sm text-muted-foreground font-medium'>
                         Phone Number
                         {isEditProfile ? (
                             <input
@@ -594,15 +594,15 @@ export default function ProfilePageClient({
                                         phone_number: e.target.value,
                                     })
                                 }
-                                className='text-white text-base font-semibold bg-white/10 rounded-md py-1 px-2'
+                                className='text-foreground text-base font-semibold bg-card rounded-md py-1 px-2'
                             />
                         ) : (
-                            <span className='text-white text-base font-semibold py-1 px-2'>
+                            <span className='text-foreground text-base font-semibold py-1 px-2'>
                                 {userInfo.phone_number || "-"}
                             </span>
                         )}
                     </div>
-                    <div className='flex flex-col gap-1 text-left text-sm text-white/60 font-medium'>
+                    <div className='flex flex-col gap-1 text-left text-sm text-muted-foreground font-medium'>
                         Instagram Handle
                         {isEditProfile ? (
                             <input
@@ -616,7 +616,7 @@ export default function ProfilePageClient({
                                         instagram_handle: e.target.value,
                                     })
                                 }
-                                className='text-white text-base font-semibold bg-white/10 rounded-md py-1 px-2'
+                                className='text-foreground text-base font-semibold bg-card rounded-md py-1 px-2'
                             />
                         ) : (
                             <a
@@ -624,7 +624,7 @@ export default function ProfilePageClient({
                                     "@",
                                     ""
                                 )}`}
-                                className='text-white text-base font-semibold py-1 px-2'
+                                className='text-foreground text-base font-semibold py-1 px-2'
                             >
                                 {userInfo.instagram_handle
                                     ? userInfo.instagram_handle?.includes("@")
@@ -640,12 +640,12 @@ export default function ProfilePageClient({
             <PasskeyManager />
 
             {/* Payment Methods Section */}
-            <div className='w-full bg-white/10 border-2 border-white/5 rounded-lg p-4 flex flex-col gap-2'>
+            <div className='w-full bg-card border-2 border-border rounded-lg p-4 flex flex-col gap-2'>
                 <div className='w-full flex flex-row gap-2 justify-between font-semibold text-lg md:text-xl items-start'>
                     Payment Methods
                     <button
                         type='button'
-                        className='flex flex-row gap-1 items-center border-2 border-white/5 px-3 py-1 font-semibold text-sm rounded-md cursor-pointer transition-colors bg-white/10 hover:bg-white/20 active:hover:bg-white/30'
+                        className='flex flex-row gap-1 items-center border-2 border-border px-3 py-1 font-semibold text-sm rounded-md cursor-pointer transition-colors bg-card hover:bg-muted active:bg-muted'
                         onClick={() => {
                             setEditingPaymentMethod(null)
                             setPaymentFormData({
@@ -664,7 +664,7 @@ export default function ProfilePageClient({
                 </div>
                 <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-2'>
                     {paymentMethods.length === 0 ? (
-                        <div className='col-span-full text-center py-8 text-white/60'>
+                        <div className='col-span-full text-center py-8 text-muted-foreground'>
                             <CreditCardIcon className='mx-auto mb-2' size={32} />
                             <p>No payment methods added yet</p>
                             <p className='text-sm'>Add a payment method to receive payouts</p>
@@ -673,7 +673,7 @@ export default function ProfilePageClient({
                         paymentMethods.map((method) => (
                             <div
                                 key={method.id}
-                                className={`relative bg-white/5 border-2 ${method.is_default ? 'border-yellow-500/50' : 'border-white/10'} rounded-lg p-4 flex flex-col gap-2`}
+                                className={`relative bg-muted border-2 ${method.is_default ? 'border-yellow-500/50' : 'border-border'} rounded-lg p-4 flex flex-col gap-2`}
                             >
                                 {method.is_default && (
                                     <div className='absolute top-2 right-2 text-yellow-500'>
@@ -681,22 +681,22 @@ export default function ProfilePageClient({
                                     </div>
                                 )}
                                 <div className='flex items-center gap-2'>
-                                    <CreditCardIcon size={20} className='text-white/60' />
+                                    <CreditCardIcon size={20} className='text-muted-foreground' />
                                     <span className='font-semibold'>{method.type}</span>
                                 </div>
                                 {method.provider && (
-                                    <div className='text-sm text-white/60'>
-                                        Provider: <span className='text-white'>{method.provider}</span>
+                                    <div className='text-sm text-muted-foreground'>
+                                        Provider: <span className='text-foreground'>{method.provider}</span>
                                     </div>
                                 )}
                                 {method.account_name && (
-                                    <div className='text-sm text-white/60'>
-                                        Name: <span className='text-white'>{method.account_name}</span>
+                                    <div className='text-sm text-muted-foreground'>
+                                        Name: <span className='text-foreground'>{method.account_name}</span>
                                     </div>
                                 )}
                                 {method.account_number && (
-                                    <div className='text-sm text-white/60'>
-                                        Account: <span className='text-white'>{method.account_number}</span>
+                                    <div className='text-sm text-muted-foreground'>
+                                        Account: <span className='text-foreground'>{method.account_number}</span>
                                     </div>
                                 )}
                                 <div className='flex flex-wrap gap-2 mt-2'>
@@ -723,7 +723,7 @@ export default function ProfilePageClient({
                                     )}
                                     <button
                                         type='button'
-                                        className='flex items-center gap-1 text-xs px-2 py-1 bg-white/10 hover:bg-white/20 rounded-md transition-colors'
+                                        className='flex items-center gap-1 text-xs px-2 py-1 bg-card hover:bg-muted rounded-md transition-colors'
                                         onClick={() => {
                                             setEditingPaymentMethod(method)
                                             setPaymentFormData({
@@ -769,12 +769,12 @@ export default function ProfilePageClient({
 
 
             {userInfo.access_flags?.includes("artist") && (
-                <div className='w-full bg-white/10 border-2 border-white/5 rounded-lg p-4 flex flex-col gap-2'>
+                <div className='w-full bg-card border-2 border-border rounded-lg p-4 flex flex-col gap-2'>
                     <div className='w-full flex flex-row gap-2 justify-between font-semibold text-lg md:text-xl items-start'>
                         Artist Profile
                     </div>
                     <div className='w-full gap-2 grid grid-cols-1'>
-                        <div className='flex flex-col gap-1 text-left text-sm text-white/60 font-medium'>
+                        <div className='flex flex-col gap-1 text-left text-sm text-muted-foreground font-medium'>
                             Bio
                             {isEditProfile ? (
                                 <textarea
@@ -794,15 +794,15 @@ export default function ProfilePageClient({
                                                   }
                                         )
                                     }
-                                    className='text-white text-base font-semibold bg-white/10 rounded-md py-1 px-2 min-h-[100px]'
+                                    className='text-foreground text-base font-semibold bg-card rounded-md py-1 px-2 min-h-[100px]'
                                 />
                             ) : (
-                                <span className='text-white text-base font-semibold py-1 px-2 whitespace-pre-wrap'>
+                                <span className='text-foreground text-base font-semibold py-1 px-2 whitespace-pre-wrap'>
                                     {artistProfile?.bio || "No bio set"}
                                 </span>
                             )}
                         </div>
-                        <div className='flex flex-col gap-1 text-left text-sm text-white/60 font-medium'>
+                        <div className='flex flex-col gap-1 text-left text-sm text-muted-foreground font-medium'>
                             Tags (comma separated)
                             {isEditProfile ? (
                                 <input
@@ -823,10 +823,10 @@ export default function ProfilePageClient({
                                                   }
                                         )
                                     }
-                                    className='text-white text-base font-semibold bg-white/10 rounded-md py-1 px-2'
+                                    className='text-foreground text-base font-semibold bg-card rounded-md py-1 px-2'
                                 />
                             ) : (
-                                <span className='text-white text-base font-semibold py-1 px-2 flex flex-row gap-2'>
+                                <span className='text-foreground text-base font-semibold py-1 px-2 flex flex-row gap-2'>
                                     {!artistProfile?.tags
                                         ? "No tags set"
                                         : renderTags({
@@ -835,7 +835,7 @@ export default function ProfilePageClient({
                                 </span>
                             )}
                         </div>
-                        <div className='flex flex-col gap-1 text-left text-sm text-white/60 font-medium'>
+                        <div className='flex flex-col gap-1 text-left text-sm text-muted-foreground font-medium'>
                             Photos
                             <div className='flex flex-wrap gap-2 mt-1'>
                                 {artistProfile?.photos?.map((photoId) => {
@@ -846,7 +846,7 @@ export default function ProfilePageClient({
                                     return (
                                         <div
                                             key={photoId}
-                                            className='relative w-20 h-20 rounded-md overflow-hidden border border-white/10 group'
+                                            className='relative w-20 h-20 rounded-md overflow-hidden border border-border group'
                                         >
                                             <Image
                                                 src={img.url}
@@ -878,7 +878,7 @@ export default function ProfilePageClient({
                                                 >
                                                     <XIcon
                                                         size={14}
-                                                        className='text-white'
+                                                        className='text-foreground'
                                                     />
                                                 </button>
                                             )}
@@ -891,7 +891,7 @@ export default function ProfilePageClient({
                                         onClick={() =>
                                             setIsPhotoModalOpen(true)
                                         }
-                                        className='w-20 h-20 rounded-md border-2 border-dashed border-white/20 flex items-center justify-center hover:bg-white/5 transition-colors text-white/40 hover:text-white/60'
+                                        className='w-20 h-20 rounded-md border-2 border-dashed border-border flex items-center justify-center hover:bg-muted transition-colors text-muted-foreground/70 hover:text-foreground'
                                     >
                                         + Add
                                     </button>
@@ -902,7 +902,7 @@ export default function ProfilePageClient({
                 </div>
             )}
 
-            <PushNotificationSettings />
+            
 
         </>
     )
@@ -913,7 +913,7 @@ function renderTags({ tags }: { tags: string }) {
     return tagsArray.map((tag, idx) => (
         <span
             key={`${tag}-${idx}`}
-            className='text-white text-base font-semibold px-3 bg-blue-400/20 rounded-full select-none'
+            className='text-foreground text-base font-semibold px-3 bg-blue-400/20 rounded-full select-none'
         >
             {tag}
         </span>

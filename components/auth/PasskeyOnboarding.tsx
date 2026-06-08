@@ -54,24 +54,24 @@ export default function PasskeyOnboarding({
                         <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-blue-500/20 flex items-center justify-center">
                             <Fingerprint className="w-8 h-8 text-blue-400" />
                         </div>
-                        <h2 id="passkey-onboarding-title" className="text-2xl font-bold text-white mb-2">
+                        <h2 id="passkey-onboarding-title" className="text-2xl font-bold text-foreground mb-2">
                             Secure Your Account
                         </h2>
-                        <p className="text-white/60 mb-6">
+                        <p className="text-muted-foreground mb-6">
                             Passkeys let you sign in quickly and securely using your device&apos;s biometric authentication.
                         </p>
                         <div className="text-left space-y-3 mb-8">
                             <div className="flex items-start gap-3">
                                 <Check className="w-5 h-5 text-green-400 mt-0.5" />
-                                <span className="text-white/80">Sign in with Face ID, Touch ID, or Windows Hello</span>
+                                <span className="text-foreground">Sign in with Face ID, Touch ID, or Windows Hello</span>
                             </div>
                             <div className="flex items-start gap-3">
                                 <Check className="w-5 h-5 text-green-400 mt-0.5" />
-                                <span className="text-white/80">No passwords to remember or type</span>
+                                <span className="text-foreground">No passwords to remember or type</span>
                             </div>
                             <div className="flex items-start gap-3">
                                 <Check className="w-5 h-5 text-green-400 mt-0.5" />
-                                <span className="text-white/80">Protection against phishing attacks</span>
+                                <span className="text-foreground">Protection against phishing attacks</span>
                             </div>
                         </div>
                     </motion.div>
@@ -84,10 +84,10 @@ export default function PasskeyOnboarding({
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -20 }}
                     >
-                        <h2 className="text-xl font-bold text-white mb-2">
+                        <h2 className="text-xl font-bold text-foreground mb-2">
                             Register Your Passkey
                         </h2>
-                        <div className="flex items-center gap-2 text-sm text-white/60 mb-6">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
                             {device.icon === 'laptop' && <Laptop className="w-4 h-4" />}
                             {device.icon === 'smartphone' && <Smartphone className="w-4 h-4" />}
                             {device.icon === 'tablet' && <Tablet className="w-4 h-4" />}
@@ -97,7 +97,7 @@ export default function PasskeyOnboarding({
                         <div className="mb-6">
                             <label 
                                 htmlFor="passkey-name"
-                                className="block text-sm font-medium text-white/70 mb-2"
+                                className="block text-sm font-medium text-foreground/90 mb-2"
                             >
                                 Passkey Name
                             </label>
@@ -106,11 +106,11 @@ export default function PasskeyOnboarding({
                                 type="text"
                                 value={passkeyName}
                                 onChange={(e) => setPasskeyName(e.target.value)}
-                                className="w-full bg-white/5 border border-white/10 rounded-md py-2.5 px-4 text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/50"
+                                className="w-full bg-muted border border-border rounded-md py-2.5 px-4 text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:border-blue-500/50"
                                 placeholder="e.g., MacBook Pro"
                             />
                         </div>
-                        <p className="text-xs text-white/40">
+                        <p className="text-xs text-muted-foreground/70">
                             Your device will prompt for Face ID, Touch ID, or PIN to register this passkey.
                         </p>
                     </motion.div>
@@ -126,15 +126,15 @@ export default function PasskeyOnboarding({
                         <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-green-500/20 flex items-center justify-center">
                             <Check className="w-8 h-8 text-green-400" />
                         </div>
-                        <h2 className="text-2xl font-bold text-white mb-2">
+                        <h2 className="text-2xl font-bold text-foreground mb-2">
                             Passkey Registered!
                         </h2>
-                        <p className="text-white/60 mb-6">
+                        <p className="text-muted-foreground mb-6">
                             You can now sign in without a password on this device.
                         </p>
-                        <div className="bg-white/5 rounded-lg p-4 text-left mb-6">
-                            <p className="text-sm font-medium text-white mb-2">Tips:</p>
-                            <ul className="text-sm text-white/60 space-y-1">
+                        <div className="bg-muted rounded-lg p-4 text-left mb-6">
+                            <p className="text-sm font-medium text-foreground mb-2">Tips:</p>
+                            <ul className="text-sm text-muted-foreground space-y-1">
                                 <li>• Add passkeys on other devices for backup access</li>
                                 <li>• Your passkey syncs via iCloud or Google Password Manager</li>
                             </ul>
@@ -199,15 +199,15 @@ export default function PasskeyOnboarding({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-zinc-900 border border-white/10 rounded-xl w-full max-w-md overflow-hidden shadow-2xl"
+                className="bg-card border border-border rounded-xl w-full max-w-md overflow-hidden shadow-2xl"
             >
                 <div className="flex justify-end p-4">
                     <button
                         onClick={onClose}
-                        className="p-2 hover:bg-white/10 rounded-full transition-colors"
+                        className="p-2 hover:bg-muted rounded-full transition-colors"
                         aria-label="Close"
                     >
-                        <X className="w-5 h-5 text-white/60" />
+                        <X className="w-5 h-5 text-muted-foreground" />
                     </button>
                 </div>
 
@@ -220,7 +220,7 @@ export default function PasskeyOnboarding({
                         {currentStep !== 'success' && showSkip && (
                             <button
                                 onClick={onClose}
-                                className="flex-1 py-2.5 text-sm text-white/60 hover:text-white transition-colors"
+                                className="flex-1 py-2.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
                                 aria-label="Skip for now"
                             >
                                 Skip for now
@@ -229,7 +229,7 @@ export default function PasskeyOnboarding({
                         {currentStep === 'register' && (
                             <button
                                 onClick={handleBack}
-                                className="py-2.5 px-4 text-white/60 hover:text-white transition-colors"
+                                className="py-2.5 px-4 text-muted-foreground hover:text-foreground transition-colors"
                             >
                                 <ChevronLeft className="w-5 h-5" />
                             </button>
@@ -237,13 +237,13 @@ export default function PasskeyOnboarding({
                         <button
                             onClick={handleNext}
                             disabled={isRegistering}
-                            className="flex-1 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-500/50 text-white font-medium py-2.5 rounded-md transition-colors flex items-center justify-center gap-2"
+                            className="flex-1 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-500/50 text-foreground font-medium py-2.5 rounded-md transition-colors flex items-center justify-center gap-2"
                         >
                             {isRegistering ? (
                                 <motion.div
                                     animate={{ rotate: 360 }}
                                     transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                                    className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                                    className="w-5 h-5 border-2 border-border border-t-primary rounded-full"
                                 />
                             ) : (
                                 <>

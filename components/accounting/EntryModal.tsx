@@ -16,8 +16,6 @@ import {
 } from "@/server/actions/accounting"
 import { withRetry } from "@/utils/retry"
 import { ACCOUNTING_PAYMENT_METHODS, AccountingPaymentMethod } from "@/utils/types/payment"
-import { useBranchContext } from "@/components/branch-context"
-import { BranchSelectorInline } from "@/components/ui/branch-selector-inline"
 import { safeToDate, safeToISOString } from "@/utils/date-utils"
 
 const ENTRY_TYPES: LedgerEntryType[] = [
@@ -61,7 +59,6 @@ export default function EntryModal({
     isAdmin,
     viewOnly = false,
 }: EntryModalProps) {
-    const { currentBranch } = useBranchContext()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [selectedBranchId, setSelectedBranchId] = useState<string | null>(null)
@@ -79,14 +76,6 @@ export default function EntryModal({
     })
     const [proofFile, setProofFile] = useState<File | null>(null)
     const [categorySource, setCategorySource] = useState<"dropdown" | "custom">("dropdown")
-
-    useEffect(() => {
-        if (!entry) {
-            setSelectedBranchId(currentBranch?.id ?? null)
-        } else {
-            setSelectedBranchId(entry.branch_id ?? null)
-        }
-    }, [entry, currentBranch])
 
     const categoriesByType = useMemo(() => {
         const grouped: Record<LedgerEntryType, AccountingCategory[]> = {
@@ -277,16 +266,16 @@ export default function EntryModal({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className='bg-zinc-900 rounded-xl shadow-2xl max-h-[80svh] w-full max-w-lg border border-white/10 flex flex-col'
+                className='bg-card rounded-xl shadow-2xl max-h-[80svh] w-full max-w-lg border border-border flex flex-col'
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className='p-6 border-b border-white/10 flex justify-between items-center'>
+                <div className='p-6 border-b border-border flex justify-between items-center'>
                     <h3 className='text-xl font-bold'>
                         {viewOnly ? "View Entry" : entry ? "Edit Entry" : "Add Entry"}
                     </h3>
                     <button
                         onClick={onClose}
-                        className='text-white/60 hover:text-white transition-colors'
+                        className='text-muted-foreground hover:text-foreground transition-colors'
                     >
                         <XIcon className='w-5 h-5' />
                     </button>
@@ -304,7 +293,7 @@ export default function EntryModal({
                     )}
 
                     <div className='space-y-4'>
-                        <h4 className='text-sm font-semibold text-zinc-400 uppercase tracking-wider'>Entry Details</h4>
+                        <h4 className='text-sm font-semibold text-muted-foreground uppercase tracking-wider'>Entry Details</h4>
 
                         <div className='grid grid-cols-2 gap-4'>
                             <div>
@@ -340,10 +329,10 @@ export default function EntryModal({
                                     value={categorySource === "custom" ? "__CUSTOM__" : (formData.category || "")}
                                     onChange={(e) => handleCategoryChange(e.target.value)}
                                     disabled={viewOnly}
-                                    className={`w-full px-3 py-2 bg-white/10 border rounded-md focus:border-white/30 outline-none transition-colors ${viewOnly ? 'opacity-75 cursor-default' : ''} ${
+                                    className={`w-full px-3 py-2 bg-card border rounded-md focus:border-primary outline-none transition-colors ${viewOnly ? 'opacity-75 cursor-default' : ''} ${
                                         categorySource === "dropdown" && formData.category
-                                            ? "border-white/30"
-                                            : "border-white/10"
+                                            ? "border-border"
+                                            : "border-border"
                                     }`}
                                 >
                                     <option value="">-- Select Category --</option>
@@ -367,10 +356,10 @@ export default function EntryModal({
                                         onChange={(e) => handleCustomCategoryChange(e.target.value)}
                                         disabled={viewOnly}
                                         placeholder={categorySource === "dropdown" ? "Select from dropdown or choose Custom..." : "Enter custom category..."}
-                                        className={`w-full px-3 py-2 bg-white/10 border rounded-md focus:border-white/30 outline-none transition-colors text-sm ${viewOnly ? 'opacity-75 cursor-default' : ''} ${
+                                        className={`w-full px-3 py-2 bg-card border rounded-md focus:border-primary outline-none transition-colors text-sm ${viewOnly ? 'opacity-75 cursor-default' : ''} ${
                                             categorySource === "custom"
                                                 ? "border-blue-500/50 bg-blue-500/5"
-                                                : "border-white/10"
+                                                : "border-border"
                                         }`}
                                     />
                                     {categorySource === "custom" && formData.category && (
@@ -380,7 +369,7 @@ export default function EntryModal({
                                     )}
                                 </div>
                                 {availableCategories.length === 0 && categorySource === "dropdown" && (
-                                    <p className='mt-1 text-xs text-white/40'>
+                                    <p className='mt-1 text-xs text-muted-foreground/70'>
                                         No categories for this type. Use custom input below.
                                     </p>
                                 )}
@@ -395,7 +384,7 @@ export default function EntryModal({
                                 value={selectedPaymentMethod}
                                 onChange={(e) => setSelectedPaymentMethod(e.target.value as AccountingPaymentMethod | "")}
                                 disabled={viewOnly}
-                                className={`w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none transition-colors ${viewOnly ? 'opacity-75 cursor-default' : ''}`}
+                                className={`w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none transition-colors ${viewOnly ? 'opacity-75 cursor-default' : ''}`}
                             >
                                 <option value="">-- Unspecified --</option>
                                 {ACCOUNTING_PAYMENT_METHODS.map((method) => (
@@ -405,7 +394,7 @@ export default function EntryModal({
                                 ))}
                             </select>
                             {selectedPaymentMethod && (
-                                <p className='text-xs text-white/40 mt-1'>
+                                <p className='text-xs text-muted-foreground/70 mt-1'>
                                     {ACCOUNTING_PAYMENT_METHODS.find(m => m.key === selectedPaymentMethod)?.description}
                                 </p>
                             )}
@@ -426,29 +415,18 @@ export default function EntryModal({
                                         })
                                     }
                                     disabled={viewOnly}
-                                    className={`w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none transition-colors ${viewOnly ? 'opacity-75 cursor-default' : ''}`}
+                                    className={`w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none transition-colors ${viewOnly ? 'opacity-75 cursor-default' : ''}`}
                                     required
                                 />
                             </div>
 
-                            <div>
-                                <label className='block text-sm font-medium mb-1'>
-                                    Branch
-                                </label>
-                                <BranchSelectorInline
-                                    value={selectedBranchId}
-                                    onChange={(id) => setSelectedBranchId(id)}
-                                    showAllOption={true}
-                                    disabled={viewOnly}
-                                />
-                            </div>
                         </div>
                     </div>
 
-                    <div className='border-t border-zinc-200 dark:border-zinc-700' />
+                    <div className='border-t border-zinc-200 dark:border-border' />
 
                     <div className='space-y-4'>
-                        <h4 className='text-sm font-semibold text-zinc-400 uppercase tracking-wider'>Amounts & Description</h4>
+                        <h4 className='text-sm font-semibold text-muted-foreground uppercase tracking-wider'>Amounts & Description</h4>
 
                         <div>
                             <label className='block text-sm font-medium mb-1'>
@@ -465,7 +443,7 @@ export default function EntryModal({
                                 disabled={viewOnly}
                                 placeholder='Enter description...'
                                 rows={2}
-                                className={`w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none resize-none transition-colors ${viewOnly ? 'opacity-75 cursor-default' : ''}`}
+                                className={`w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none resize-none transition-colors ${viewOnly ? 'opacity-75 cursor-default' : ''}`}
                                 required
                             />
                         </div>
@@ -485,7 +463,7 @@ export default function EntryModal({
                                 }
                                 disabled={viewOnly}
                                 placeholder='Invoice #, Receipt #, etc.'
-                                className={`w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none transition-colors ${viewOnly ? 'opacity-75 cursor-default' : ''}`}
+                                className={`w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none transition-colors ${viewOnly ? 'opacity-75 cursor-default' : ''}`}
                             />
                         </div>
 
@@ -545,10 +523,10 @@ export default function EntryModal({
                         </div>
                     </div>
 
-                    <div className='border-t border-zinc-200 dark:border-zinc-700' />
+                    <div className='border-t border-zinc-200 dark:border-border' />
 
                     <div className='space-y-4'>
-                        <h4 className='text-sm font-semibold text-zinc-400 uppercase tracking-wider'>Proof / Attachment</h4>
+                        <h4 className='text-sm font-semibold text-muted-foreground uppercase tracking-wider'>Proof / Attachment</h4>
 
                         <div>
                             <label className='block text-sm font-medium mb-1'>Attachment (Invoice/Receipt)</label>
@@ -558,13 +536,13 @@ export default function EntryModal({
                                         href={entry.proof_url}
                                         target='_blank'
                                         rel='noopener noreferrer'
-                                        className='flex items-center gap-2 px-3 py-2 bg-white/10 border border-white/10 rounded-md text-blue-400 hover:text-blue-300 transition-colors'
+                                        className='flex items-center gap-2 px-3 py-2 bg-card border border-border rounded-md text-blue-400 hover:text-blue-300 transition-colors'
                                     >
                                         <FileIcon className='w-5 h-5' />
                                         <span className='text-sm'>View Attachment</span>
                                     </a>
                                 ) : (
-                                    <p className='px-3 py-2 bg-white/5 border border-white/10 rounded-md text-white/40 text-sm'>
+                                    <p className='px-3 py-2 bg-muted border border-border rounded-md text-muted-foreground/70 text-sm'>
                                         No attachment
                                     </p>
                                 )
@@ -574,7 +552,7 @@ export default function EntryModal({
                                     className={`border-2 border-dashed rounded-md p-4 cursor-pointer transition-colors ${
                                         isDragActive
                                             ? 'border-blue-500 bg-blue-500/10'
-                                            : 'border-white/20 hover:border-white/40'
+                                            : 'border-border hover:border-border'
                                     }`}
                                 >
                                     <input {...getInputProps()} />
@@ -594,14 +572,14 @@ export default function EntryModal({
                                             </button>
                                         </div>
                                     ) : (
-                                        <div className='flex flex-col items-center gap-2 text-white/60'>
+                                        <div className='flex flex-col items-center gap-2 text-muted-foreground'>
                                             <UploadIcon className='w-8 h-8' />
                                             <p className='text-sm text-center'>
                                                 {isDragActive
                                                     ? 'Drop the file here'
                                                     : 'Drag & drop invoice/receipt, or click to select'}
                                             </p>
-                                            <p className='text-xs text-white/40'>PNG, JPG, or PDF up to 10MB</p>
+                                            <p className='text-xs text-muted-foreground/70'>PNG, JPG, or PDF up to 10MB</p>
                                         </div>
                                     )}
                                 </div>
@@ -614,7 +592,7 @@ export default function EntryModal({
                             <button
                                 type='button'
                                 onClick={onClose}
-                                className='px-6 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors font-medium'
+                                className='px-6 py-2 bg-card hover:bg-muted rounded-md transition-colors font-medium'
                             >
                                 Close
                             </button>
@@ -624,7 +602,7 @@ export default function EntryModal({
                                     type='button'
                                     onClick={onClose}
                                     disabled={loading}
-                                    className='px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors disabled:opacity-50'
+                                    className='px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors disabled:opacity-50'
                                 >
                                     Cancel
                                 </button>

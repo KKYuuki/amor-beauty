@@ -29,7 +29,6 @@ import { cache } from '@/utils/cache'
 import { createAutoLedgerEntry } from "./accounting"
 import { createLogs, logError } from "./logs"
 import { getSetting } from "./settings"
-import { sendPushToRole } from './push-trigger'
 import {
     ProcessPayrollSchema,
     PayrollFilterSchema,
@@ -1168,20 +1167,6 @@ export async function createPayrollRequest(
           .from(user)
           .where(eq(user.id, staff_id))
           .limit(1)
-          .then(([staffUser]) => {
-            const staffName = staffUser?.fullName || 'Staff Member'
-            sendPushToRole('admin', {
-              title: 'Payroll Request',
-              body: `Payroll request from ${staffName}`,
-              icon: '/icon-192.png',
-              badge: '/icon-192.png',
-              tag: `payroll-request-${result.request.id}`,
-              data: {
-                path: '/payroll',
-                requestId: result.request.id,
-              },
-            }, currentUser.id)
-          })
           .catch(() => {})
 
         return success(result.data, 'Payroll request created successfully')

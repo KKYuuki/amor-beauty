@@ -204,13 +204,13 @@ export default function AuthkeysList({
             >
                 {/* User Count */}
                 <span className='text-xl font-semibold flex flex-row gap-2 items-center select-none'>
-                    Auth Keys <div className='h-6 w-[1px] bg-white/40' />
+                    Auth Keys <div className='h-6 w-[1px] bg-border' />
                     {authkeys ? authkeys.length : 0}
                 </span>
                 <div className='flex flex-row gap-4 flex-wrap w-max'>
                     <select
                         title='Filter Auth Keys by type'
-                        className='min-w-max px-4 py-1 bg-white/5 border-2 border-white/10 rounded-md hover:bg-white/20 transition-colors cursor-pointer font-medium flex-1 md:flex-none'
+                        className='min-w-max px-4 py-1 bg-muted border-2 border-border rounded-md hover:bg-muted transition-colors cursor-pointer font-medium flex-1 md:flex-none'
                         value={filter}
                         onChange={(e) =>
                             setFilter(
@@ -225,7 +225,7 @@ export default function AuthkeysList({
                     <button
                         type='button'
                         title='Create new key'
-                        className='flex flex-row gap-2 font-semibold items-center bg-white/5 border-2 border-white/10 px-2 py-1 rounded-md cursor-pointer transition-colors hover:bg-white/20 active:hover:bg-white/30 flex-1 md:flex-none'
+                        className='flex flex-row gap-2 font-semibold items-center bg-muted border-2 border-border px-2 py-1 rounded-md cursor-pointer transition-colors hover:bg-muted active:bg-muted flex-1 md:flex-none'
                         onClick={() => setNewModal(true)}
                     >
                         <PlusIcon size={16} /> New Key
@@ -241,20 +241,20 @@ export default function AuthkeysList({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className='fixed top-1/2 left-1/2 -translate-1/2 bg-black/90 border-2 border-white/10 rounded-3xl px-4 py-5 flex flex-col gap-2 w-lg max-w-[calc(100%-1rem)] z-10'
+                        className='fixed top-1/2 left-1/2 -translate-1/2 bg-black/90 border-2 border-border rounded-3xl px-4 py-5 flex flex-col gap-2 w-lg max-w-[calc(100%-1rem)] z-10'
                     >
                         <div className='flex flex-row gap-4 items-top justify-between font-bold'>
                             Create Auth Key
                             <button
                                 title='Close'
                                 type='button'
-                                className='p-1 transition-colors rounded-md bg-transparent hover:bg-white/10 cursor-pointer'
+                                className='p-1 transition-colors rounded-md bg-transparent hover:bg-muted cursor-pointer'
                                 onClick={() => closeNewModal()}
                             >
                                 <XIcon size={18} />
                             </button>
                         </div>
-                        <label className='flex flex-col gap-1 font-semibold text-sm text-white/40 mt-2'>
+                        <label className='flex flex-col gap-1 font-semibold text-sm text-muted-foreground/70 mt-2'>
                             Auth Key Type
                             <select
                                 value={keyType}
@@ -263,26 +263,26 @@ export default function AuthkeysList({
                                         e.target.value as "pass" | "user_role"
                                     )
                                 }
-                                className='bg-white/5 border-2 border-white/10 rounded-lg px-2 py-1 text-white font-normal cursor-pointer transition-colors hover:bg-white/10'
+                                className='bg-muted border-2 border-border rounded-lg px-2 py-1 text-foreground font-normal cursor-pointer transition-colors hover:bg-muted'
                             >
                                 <option value='pass'>Password Reset</option>
                                 <option value='user_role'>User Role</option>
                             </select>
                         </label>
                         {keyType === "pass" && (
-                            <label className='flex flex-col gap-1 font-semibold text-sm text-white/40 mt-2'>
+                            <label className='flex flex-col gap-1 font-semibold text-sm text-muted-foreground/70 mt-2'>
                                 Email
                                 <input
                                     type='email'
                                     placeholder='email of user (non-existant emails will fail)'
                                     value={newKey}
                                     onChange={(e) => setNewKey(e.target.value)}
-                                    className='bg-white/5 border-2 border-white/10 rounded-lg px-2 py-1 text-white font-normal cursor-pointer transition-colors hover:bg-white/10'
+                                    className='bg-muted border-2 border-border rounded-lg px-2 py-1 text-foreground font-normal cursor-pointer transition-colors hover:bg-muted'
                                 />
                             </label>
                         )}
                         {keyType === "user_role" && (
-                            <label className='flex flex-col gap-1 font-semibold text-sm text-white/40 mt-2'>
+                            <label className='flex flex-col gap-1 font-semibold text-sm text-muted-foreground/70 mt-2'>
                                 Role
                                 <select
                                     value={newKey}
@@ -299,7 +299,7 @@ export default function AuthkeysList({
                                         }
                                         setNewKey(e.target.value)
                                     }}
-                                    className='bg-white/5 border-2 border-white/10 rounded-lg px-2 py-1 text-white font-normal cursor-pointer transition-colors hover:bg-white/10'
+                                    className='bg-muted border-2 border-border rounded-lg px-2 py-1 text-foreground font-normal cursor-pointer transition-colors hover:bg-muted'
                                 >
                                     <option
                                         value=''
@@ -321,7 +321,7 @@ export default function AuthkeysList({
                             <button
                                 title='Save Changes'
                                 type='button'
-                                className='bg-white/10 rounded-md mt-4 cursor-pointer transition-colors not-disabled:hover:bg-white/20 not-disabled:active:hover:bg-white/30 disabled:bg-white/5 disabled:cursor-not-allowed border-2 border-white/5 px-4 w-max'
+                                className='bg-card rounded-md mt-4 cursor-pointer transition-colors not-disabled:hover:bg-muted not-disabled:active:bg-muted disabled:bg-muted disabled:cursor-not-allowed border-2 border-border px-4 w-max'
                                 disabled={newStatus !== "Create"}
                                 onClick={() => {
                                     if (newKey === "") {
@@ -346,7 +346,7 @@ export default function AuthkeysList({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className='fixed top-1/2 left-1/2 -translate-1/2 bg-black/90 border-2 border-white/10 rounded-3xl px-4 py-5 flex flex-col w-max max-w-[calc(100%-1rem)] z-10 items-center'
+                        className='fixed top-1/2 left-1/2 -translate-1/2 bg-black/90 border-2 border-border rounded-3xl px-4 py-5 flex flex-col w-max max-w-[calc(100%-1rem)] z-10 items-center'
                     >
                         <div className='font-bold'>Delete Auth Key</div>
                         <p className='font-medium text-sm my-2'>
@@ -358,7 +358,7 @@ export default function AuthkeysList({
                             <button
                                 title='Cancel'
                                 type='button'
-                                className='bg-green-400/20 px-2 py-1 font-semibold border-2 border-white/10 rounded-lg cursor-pointer transition-colors hover:bg-green-400/30 active:hover:bg-green-400/40'
+                                className='bg-green-400/20 px-2 py-1 font-semibold border-2 border-border rounded-lg cursor-pointer transition-colors hover:bg-green-400/30 active:hover:bg-green-400/40'
                                 onClick={() => closeDelete()}
                             >
                                 Cancel
@@ -366,7 +366,7 @@ export default function AuthkeysList({
                             <button
                                 title='Are you sure?'
                                 type='button'
-                                className='bg-red-400/20 px-2 py-1 font-semibold border-2 border-white/10 rounded-lg cursor-pointer transition-colors hover:bg-red-400/30 active:hover:bg-red-400/40 text-nowrap'
+                                className='bg-red-400/20 px-2 py-1 font-semibold border-2 border-border rounded-lg cursor-pointer transition-colors hover:bg-red-400/30 active:hover:bg-red-400/40 text-nowrap'
                                 onClick={() => handleDelete()}
                             >
                                 Confirm Delete
@@ -381,33 +381,33 @@ export default function AuthkeysList({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className='fixed top-1/2 left-1/2 -translate-1/2 bg-black/90 border-2 border-white/10 rounded-3xl px-4 py-5 flex flex-col gap-2 w-lg max-w-[calc(100%-1rem)] z-10'
+                        className='fixed top-1/2 left-1/2 -translate-1/2 bg-black/90 border-2 border-border rounded-3xl px-4 py-5 flex flex-col gap-2 w-lg max-w-[calc(100%-1rem)] z-10'
                     >
                         <div className='flex flex-row gap-4 items-top justify-between font-bold'>
                             Send Invitation
                             <button
                                 title='Close'
                                 type='button'
-                                className='p-1 transition-colors rounded-md bg-transparent hover:bg-white/10 cursor-pointer'
+                                className='p-1 transition-colors rounded-md bg-transparent hover:bg-muted cursor-pointer'
                                 onClick={() => closeSendInvModal()}
                             >
                                 <XIcon size={18} />
                             </button>
                         </div>
-                        <label className='flex flex-col gap-1 font-semibold text-sm text-white/40 mt-2'>
+                        <label className='flex flex-col gap-1 font-semibold text-sm text-muted-foreground/70 mt-2'>
                             Email
                             <input
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 type='email'
-                                className='bg-white/5 border-2 border-white/10 rounded-lg px-2 py-1 text-white font-normal cursor-pointer transition-colors hover:bg-white/10'
+                                className='bg-muted border-2 border-border rounded-lg px-2 py-1 text-foreground font-normal cursor-pointer transition-colors hover:bg-muted'
                             />
                         </label>
                         <div className='flex justify-end'>
                             <button
                                 title='Send Invitation'
                                 type='button'
-                                className='bg-white/10 rounded-md mt-4 cursor-pointer transition-colors not-disabled:hover:bg-white/20 not-disabled:active:hover:bg-white/30 disabled:bg-white/5 disabled:cursor-not-allowed border-2 border-white/5 px-4 w-max'
+                                className='bg-card rounded-md mt-4 cursor-pointer transition-colors not-disabled:hover:bg-muted not-disabled:active:bg-muted disabled:bg-muted disabled:cursor-not-allowed border-2 border-border px-4 w-max'
                                 disabled={invStatus !== "Send"}
                                 onClick={() => {
                                     if (email === "") {
@@ -441,22 +441,22 @@ export default function AuthkeysList({
                 >
                     <thead className='sticky top-0 bg-black/80'>
                         <tr className='text-nowrap select-none'>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase w-max border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase w-max border-b border-white'>
                                 ID
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Type
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Email
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 User Role
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Created At
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Actions
                             </th>
                         </tr>
@@ -479,7 +479,7 @@ export default function AuthkeysList({
                                 })
                                 .map(({ id, email, user_type, created_at }) => (
                                     <motion.tr
-                                        className='hover:bg-white/5 transition-colors text-nowrap'
+                                        className='hover:bg-muted transition-colors text-nowrap'
                                         key={id}
                                         layout
                                         initial={{ opacity: 0 }}
@@ -491,7 +491,7 @@ export default function AuthkeysList({
                                         </td>
                                         <td className='px-3 py-1 text-sm font-medium w-max capitalize'>
                                             <div
-                                                className={`border-2 border-white/10 px-2 capitalize rounded-lg w-max ${email ? "bg-orange-400/20" : "bg-blue-400/20"}`}
+                                                className={`border-2 border-border px-2 capitalize rounded-lg w-max ${email ? "bg-orange-400/20" : "bg-blue-400/20"}`}
                                             >
                                                 {email
                                                     ? "Password Reset"
@@ -502,14 +502,14 @@ export default function AuthkeysList({
                                             <a
                                                 href={`mailto:${email}`}
                                                 title={`send an email`}
-                                                className='hover:underline hover:text-white/60 transition-colors'
+                                                className='hover:underline hover:text-foreground transition-colors'
                                             >
                                                 {email}
                                             </a>
                                         </td>
                                         <td className='px-3 py-1 text-sm font-medium w-max capitalize'>
                                             <div
-                                                className={`border-2 border-white/10 px-2 capitalize rounded-lg w-max ${
+                                                className={`border-2 border-border px-2 capitalize rounded-lg w-max ${
                                                     user_type === "ADMIN" &&
                                                     "bg-orange-400/20"
                                                 }

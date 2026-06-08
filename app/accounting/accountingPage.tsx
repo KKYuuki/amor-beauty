@@ -37,7 +37,7 @@ import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { SideBarContext } from "@/components/sidebar";
 import { NotificationContext } from "@/components/notifications";
-import { useBranchContext } from "@/components/branch-context";
+
 import FlagGate from "@/components/ui/FlagGate";
 import AdminActionGuard from "@/components/admin/AdminActionGuard";
 import {
@@ -100,6 +100,11 @@ import {
 import CSVImportModal from "@/components/ui/csv-import-modal";
 import ExportGroupingModal from "@/components/accounting/ExportGroupingModal";
 import { ExportConfig } from "@/components/accounting/ExportGroupingModal";
+
+const currentBranch: any = null;
+const branches: any[] = [];
+const useBranchContext: any = () => ({ currentBranch: null });
+
 
 const ENTRY_TYPES: LedgerEntryType[] = [
   "EXPENSE",
@@ -168,7 +173,7 @@ const PAGE_SIZE = 50;
 export default function AccountingPageClient() {
   const { userInfo } = useContext(SideBarContext);
   const { addNotification } = useContext(NotificationContext);
-  const { currentBranch, branches } = useBranchContext();
+  
   const isAdmin = userInfo?.role === "admin";
   const hasAnalyticsAccess =
     isAdmin ||
@@ -713,7 +718,7 @@ export default function AccountingPageClient() {
             <button
               onClick={fetchData}
               disabled={loading}
-              className="p-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors disabled:opacity-50 border-2 border-white/5 cursor-pointer"
+              className="p-2 bg-card hover:bg-muted rounded-md transition-colors disabled:opacity-50 border-2 border-border cursor-pointer"
               title="Refresh"
             >
               <RefreshCwIcon
@@ -725,13 +730,13 @@ export default function AccountingPageClient() {
       />
 
       {/* Tab Bar */}
-      <div className="flex flex-row items-center gap-2 border-b-2 border-white/10 pb-2 mb-4">
+      <div className="flex flex-row items-center gap-2 border-b-2 border-border pb-2 mb-4">
         <button
           onClick={() => setActiveTab("ledger")}
           className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg transition-colors font-medium text-sm ${
             activeTab === "ledger"
-              ? "bg-white/10 text-white"
-              : "text-white/60 hover:bg-white/5 hover:text-white"
+              ? "bg-card text-foreground"
+              : "text-muted-foreground hover:bg-muted hover:text-foreground"
           }`}
         >
           <BookOpenIcon className="w-4 h-4" />
@@ -742,8 +747,8 @@ export default function AccountingPageClient() {
             onClick={() => setActiveTab("reports")}
             className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg transition-colors font-medium text-sm ${
               activeTab === "reports"
-                ? "bg-white/10 text-white"
-                : "text-white/60 hover:bg-white/5 hover:text-white"
+                ? "bg-card text-foreground"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground"
             }`}
           >
             <FileTextIcon className="w-4 h-4" />
@@ -756,7 +761,7 @@ export default function AccountingPageClient() {
             className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg transition-colors font-medium text-sm ${
               activeTab === "trash"
                 ? "bg-red-500/20 text-red-300 border border-red-500/30"
-                : "text-white/60 hover:bg-white/5 hover:text-white"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground"
             }`}
           >
             <Trash2Icon className="w-4 h-4" />
@@ -771,23 +776,23 @@ export default function AccountingPageClient() {
             {/* Filters */}
             <FilterBar>
               <div className="relative flex-1 min-w-0 sm:min-w-[200px] sm:max-w-xs">
-                <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 w-4 h-4" />
+                <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/70 w-4 h-4" />
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="w-full pl-9 pr-4 py-2 bg-white/10 rounded-md border-2 border-white/5 focus:border-white/20 outline-none transition-all text-white placeholder:text-white/40 text-sm"
+                  className="w-full pl-9 pr-4 py-2 bg-card rounded-md border-2 border-border focus:border-border outline-none transition-all text-foreground placeholder:text-muted-foreground/70 text-sm"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
               <div className="flex items-center gap-2">
-                <FilterIcon className="w-4 h-4 text-white/60" />
+                <FilterIcon className="w-4 h-4 text-muted-foreground" />
                 <select
                   value={typeFilter}
                   onChange={(e) =>
                     setTypeFilter(e.target.value as LedgerEntryType | "")
                   }
-                  className="bg-white/10 hover:bg-white/20 transition-colors px-3 py-2 rounded-md text-sm cursor-pointer border-2 border-white/5"
+                  className="bg-card hover:bg-muted transition-colors px-3 py-2 rounded-md text-sm cursor-pointer border-2 border-border"
                 >
                   <option value="">All Types</option>
                   {ENTRY_TYPES.map((type) => (
@@ -800,7 +805,7 @@ export default function AccountingPageClient() {
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="bg-white/10 hover:bg-white/20 transition-colors px-3 py-2 rounded-md text-sm cursor-pointer border-2 border-white/5"
+                className="bg-card hover:bg-muted transition-colors px-3 py-2 rounded-md text-sm cursor-pointer border-2 border-border"
               >
                 <option value="">All Categories</option>
                 {categories.map((cat) => (
@@ -816,7 +821,7 @@ export default function AccountingPageClient() {
                     e.target.value as AccountingPaymentMethod | "",
                   )
                 }
-                className="bg-white/10 hover:bg-white/20 transition-colors px-3 py-2 rounded-md text-sm cursor-pointer border-2 border-white/5"
+                className="bg-card hover:bg-muted transition-colors px-3 py-2 rounded-md text-sm cursor-pointer border-2 border-border"
               >
                 <option value="">All Payment Methods</option>
                 {ACCOUNTING_PAYMENT_METHODS.map((method) => (
@@ -826,13 +831,13 @@ export default function AccountingPageClient() {
                 ))}
               </select>
               <div className="flex items-center gap-2">
-                <CalendarIcon className="w-4 h-4 text-white/60" />
+                <CalendarIcon className="w-4 h-4 text-muted-foreground" />
                 <select
                   value={datePreset}
                   onChange={(e) =>
                     setDatePreset(e.target.value as DateRangePreset)
                   }
-                  className="bg-white/10 hover:bg-white/20 transition-colors px-3 py-2 rounded-md text-sm cursor-pointer border-2 border-white/5"
+                  className="bg-card hover:bg-muted transition-colors px-3 py-2 rounded-md text-sm cursor-pointer border-2 border-border"
                 >
                   {[
                     { key: "all", label: "All Time" },
@@ -854,32 +859,32 @@ export default function AccountingPageClient() {
                     type="date"
                     value={customStartDate}
                     onChange={(e) => setCustomStartDate(e.target.value)}
-                    className="px-2 py-1 bg-white/10 border-2 border-white/5 rounded-md text-sm focus:border-white/20 outline-none"
+                    className="px-2 py-1 bg-card border-2 border-border rounded-md text-sm focus:border-border outline-none"
                   />
-                  <span className="text-white/40">to</span>
+                  <span className="text-muted-foreground/70">to</span>
                   <input
                     type="date"
                     value={customEndDate}
                     onChange={(e) => setCustomEndDate(e.target.value)}
-                    className="px-2 py-1 bg-white/10 border-2 border-white/5 rounded-md text-sm focus:border-white/20 outline-none"
+                    className="px-2 py-1 bg-card border-2 border-border rounded-md text-sm focus:border-border outline-none"
                   />
                   <button
                     onClick={fetchData}
                     disabled={!customStartDate || !customEndDate}
-                    className="px-3 py-1 bg-blue-300/30 hover:bg-blue-300/50 text-white text-sm font-bold rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors border-2 border-white/5 cursor-pointer"
+                    className="px-3 py-1 bg-blue-300/30 hover:bg-blue-300/50 text-foreground text-sm font-bold rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors border-2 border-border cursor-pointer"
                   >
                     Apply
                   </button>
                 </div>
               )}
               <div className="flex items-center gap-2">
-                <ArrowUpDownIcon className="w-4 h-4 text-white/60" />
+                <ArrowUpDownIcon className="w-4 h-4 text-muted-foreground" />
                 <select
                   value={sortBy}
                   onChange={(e) =>
                     setSortBy(e.target.value as "entry_date" | "created_at")
                   }
-                  className="bg-white/10 hover:bg-white/20 transition-colors px-3 py-2 rounded-md text-sm cursor-pointer border-2 border-white/5"
+                  className="bg-card hover:bg-muted transition-colors px-3 py-2 rounded-md text-sm cursor-pointer border-2 border-border"
                 >
                   <option value="entry_date">Date (entry)</option>
                   <option value="created_at">Date Added</option>
@@ -923,8 +928,8 @@ export default function AccountingPageClient() {
 
             {/* Account Type Breakdown */}
             {summary && summary.by_type && summary.by_type.length > 0 && (
-              <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                <h3 className="text-sm font-semibold text-white/60 uppercase tracking-wider mb-3">
+              <div className="bg-muted border border-border rounded-lg p-4">
+                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
                   Breakdown by Account Type
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
@@ -936,7 +941,7 @@ export default function AccountingPageClient() {
                         : bt.debit - bt.credit;
                     const isPositive = net >= 0;
                     return (
-                      <div key={bt.type} className="bg-white/5 rounded-md p-3">
+                      <div key={bt.type} className="bg-muted rounded-md p-3">
                         <span
                           className={`text-xs px-2 py-0.5 rounded border ${ENTRY_TYPE_COLORS[bt.type]}`}
                         >
@@ -950,7 +955,7 @@ export default function AccountingPageClient() {
                             minimumFractionDigits: 2,
                           })}
                         </p>
-                        <p className="text-xs text-white/40 mt-1">
+                        <p className="text-xs text-muted-foreground/70 mt-1">
                           DR {currencySymbol}
                           {bt.debit.toLocaleString(undefined, {
                             minimumFractionDigits: 2,
@@ -992,7 +997,7 @@ export default function AccountingPageClient() {
           {/* Pagination */}
           {totalPages > 1 && (
             <div className="flex items-center justify-between">
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-muted-foreground">
                 Showing {(page - 1) * PAGE_SIZE + 1} -{" "}
                 {Math.min(page * PAGE_SIZE, total)} of {total}
               </p>
@@ -1000,17 +1005,17 @@ export default function AccountingPageClient() {
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page === 1}
-                  className="px-3 py-1 bg-white/10 hover:bg-white/20 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="px-3 py-1 bg-card hover:bg-muted rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   Previous
                 </button>
-                <span className="text-sm text-white/60">
+                <span className="text-sm text-muted-foreground">
                   Page {page} of {totalPages}
                 </span>
                 <button
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                   disabled={page === totalPages}
-                  className="px-3 py-1 bg-white/10 hover:bg-white/20 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="px-3 py-1 bg-card hover:bg-muted rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   Next
                 </button>
@@ -1019,53 +1024,53 @@ export default function AccountingPageClient() {
           )}
 
           {/* Ledger Table */}
-          <div className="bg-white/5 rounded-lg border border-white/5 relative shrink-0 overflow-x-scroll mb-4">
+          <div className="bg-muted rounded-lg border border-border relative shrink-0 overflow-x-scroll mb-4">
             <table className="min-w-max w-full table-auto border-collapse">
               <thead className="sticky top-0 bg-black/80 z-10">
                 <tr className="text-nowrap select-none">
-                  <th className="text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Date{sortBy === "entry_date" && " ▼"}
                   </th>
                   {sortBy === "created_at" && (
-                    <th className="text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                    <th className="text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                       Date Added ▼
                     </th>
                   )}
-                  <th className="text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Type
                   </th>
-                  <th className="text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Payment Type
                   </th>
-                  <th className="text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Category
                   </th>
-                  <th className="text-right px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-right px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Debit
                   </th>
-                  <th className="text-right px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-right px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Credit
                   </th>
-                  <th className="text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Description
                   </th>
-                  <th className="text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Reference
                   </th>
-                  <th className="text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Branch
                   </th>
-                  <th className="text-center px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-center px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Proof
                   </th>
-                  <th className="text-right px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-right px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Staff Cut
                   </th>
-                  <th className="text-right px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-right px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Shop Cut
                   </th>
                   {isAdmin && (
-                    <th className="text-center px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                    <th className="text-center px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                       Actions
                     </th>
                   )}
@@ -1080,7 +1085,7 @@ export default function AccountingPageClient() {
                           ? PAGE_COLUMNS.admin
                           : PAGE_COLUMNS.base
                       }
-                      className="px-4 py-12 text-center text-white/60"
+                      className="px-4 py-12 text-center text-muted-foreground"
                     >
                       <div className="flex flex-col items-center justify-center gap-2">
                         <LoaderCircleIcon className="w-8 h-8 animate-spin" />
@@ -1096,7 +1101,7 @@ export default function AccountingPageClient() {
                           ? PAGE_COLUMNS.admin
                           : PAGE_COLUMNS.base
                       }
-                      className="px-4 py-12 text-center text-white/60"
+                      className="px-4 py-12 text-center text-muted-foreground"
                     >
                       <div className="flex flex-col items-center justify-center gap-2">
                         <BookOpenIcon className="w-8 h-8 opacity-20" />
@@ -1108,9 +1113,9 @@ export default function AccountingPageClient() {
                   entries.map((entry) => (
                     <tr
                       key={entry.id}
-                      className={`border-b border-white/5 hover:bg-white/5 ${entry.is_voided ? "opacity-50" : ""}`}
+                      className={`border-b border-border hover:bg-muted ${entry.is_voided ? "opacity-50" : ""}`}
                     >
-                      <td className="px-4 py-2 text-sm text-white/80">
+                      <td className="px-4 py-2 text-sm text-foreground">
                         <button
                           onClick={() => setViewingEntry(entry)}
                           className="inline-flex items-center gap-1.5 hover:text-blue-400 transition-colors"
@@ -1121,7 +1126,7 @@ export default function AccountingPageClient() {
                         </button>
                       </td>
                       {sortBy === "created_at" && (
-                        <td className="px-4 py-2 text-sm text-white/60">
+                        <td className="px-4 py-2 text-sm text-muted-foreground">
                           {safeFormatDate(entry.created_at)}
                         </td>
                       )}
@@ -1147,12 +1152,12 @@ export default function AccountingPageClient() {
                             )}
                           </span>
                         ) : (
-                          <span className="text-white/30">-</span>
+                          <span className="text-muted-foreground/70">-</span>
                         )}
                       </td>
-                      <td className="px-4 py-2 text-sm text-white/80">
+                      <td className="px-4 py-2 text-sm text-foreground">
                         {entry.category || (
-                          <span className="text-white/30">-</span>
+                          <span className="text-muted-foreground/70">-</span>
                         )}
                       </td>
                       <td className="px-4 py-2 text-sm text-right text-red-300">
@@ -1166,16 +1171,16 @@ export default function AccountingPageClient() {
                           : "-"}
                       </td>
                       <td
-                        className={`px-4 py-2 text-sm text-white/80 max-w-xs truncate ${entry.is_voided ? "line-through" : ""}`}
+                        className={`px-4 py-2 text-sm text-foreground max-w-xs truncate ${entry.is_voided ? "line-through" : ""}`}
                       >
                         {entry.description}
                       </td>
-                      <td className="px-4 py-2 text-sm text-white/60">
+                      <td className="px-4 py-2 text-sm text-muted-foreground">
                         {entry.reference || (
-                          <span className="text-white/30">-</span>
+                          <span className="text-muted-foreground/70">-</span>
                         )}
                       </td>
-                      <td className="px-4 py-2 text-sm text-white/60">
+                      <td className="px-4 py-2 text-sm text-muted-foreground">
                         {entry.branch_id
                           ? branchNameMap[entry.branch_id] || "Unknown"
                           : "Shared"}
@@ -1191,7 +1196,7 @@ export default function AccountingPageClient() {
                             <PaperclipIcon className="w-4 h-4 inline" />
                           </a>
                         ) : (
-                          <span className="text-white/30">-</span>
+                          <span className="text-muted-foreground/70">-</span>
                         )}
                       </td>
                       <td className="px-4 py-2 text-sm text-right text-green-300">
@@ -1202,7 +1207,7 @@ export default function AccountingPageClient() {
                             entry.staff_cut !== null ? (
                             `${currencySymbol}${val.toLocaleString(undefined, { minimumFractionDigits: 2 })}`
                           ) : (
-                            <span className="text-white/30">—</span>
+                            <span className="text-muted-foreground/70">—</span>
                           );
                         })()}
                       </td>
@@ -1214,7 +1219,7 @@ export default function AccountingPageClient() {
                             entry.shop_cut !== null ? (
                             `${currencySymbol}${val.toLocaleString(undefined, { minimumFractionDigits: 2 })}`
                           ) : (
-                            <span className="text-white/30">—</span>
+                            <span className="text-muted-foreground/70">—</span>
                           );
                         })()}
                       </td>
@@ -1263,13 +1268,13 @@ export default function AccountingPageClient() {
               currencySymbol={currencySymbol}
             />
           ) : (
-            <div className="bg-white/5 border border-white/10 rounded-lg p-4 text-center">
-              <div className="flex flex-col items-center justify-center gap-2 py-8 text-center text-white/60">
+            <div className="bg-muted border border-border rounded-lg p-4 text-center">
+              <div className="flex flex-col items-center justify-center gap-2 py-8 text-center text-muted-foreground">
                 <BarChartIcon className="w-6 h-6 opacity-20" />
                 <p className="text-sm">
                   No trial balance data for selected period
                 </p>
-                <p className="text-xs text-white/40">
+                <p className="text-xs text-muted-foreground/70">
                   Try a different date range
                 </p>
               </div>
@@ -1280,7 +1285,7 @@ export default function AccountingPageClient() {
           <FlagGate requiredFlag="accounting_analytics_view">
             {reportsLoading ? (
               <div className="flex items-center justify-center py-12">
-                <LoaderCircleIcon className="w-8 h-8 animate-spin text-white/40" />
+                <LoaderCircleIcon className="w-8 h-8 animate-spin text-muted-foreground/70" />
               </div>
             ) : (
               <>
@@ -1423,23 +1428,23 @@ export default function AccountingPageClient() {
           {/* Trash Filters */}
           <FilterBar>
             <div className="relative flex-1 min-w-0 sm:min-w-[200px] sm:max-w-xs">
-              <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 w-4 h-4" />
+              <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/70 w-4 h-4" />
               <input
                 type="text"
                 placeholder="Search trashed entries..."
-                className="w-full pl-9 pr-4 py-2 bg-white/10 rounded-md border-2 border-white/5 focus:border-white/20 outline-none transition-all text-white placeholder:text-white/40 text-sm"
+                className="w-full pl-9 pr-4 py-2 bg-card rounded-md border-2 border-border focus:border-border outline-none transition-all text-foreground placeholder:text-muted-foreground/70 text-sm"
                 value={trashSearch}
                 onChange={(e) => setTrashSearch(e.target.value)}
               />
             </div>
             <div className="flex items-center gap-2">
-              <CalendarIcon className="w-4 h-4 text-white/60" />
+              <CalendarIcon className="w-4 h-4 text-muted-foreground" />
               <select
                 value={trashDatePreset}
                 onChange={(e) =>
                   setTrashDatePreset(e.target.value as DateRangePreset)
                 }
-                className="bg-white/10 hover:bg-white/20 transition-colors px-3 py-2 rounded-md text-sm cursor-pointer border-2 border-white/5"
+                className="bg-card hover:bg-muted transition-colors px-3 py-2 rounded-md text-sm cursor-pointer border-2 border-border"
               >
                 {[
                   { key: "all", label: "All Time" },
@@ -1461,14 +1466,14 @@ export default function AccountingPageClient() {
                   type="date"
                   value={trashCustomStartDate}
                   onChange={(e) => setTrashCustomStartDate(e.target.value)}
-                  className="px-2 py-1 bg-white/10 border-2 border-white/5 rounded-md text-sm focus:border-white/20 outline-none"
+                  className="px-2 py-1 bg-card border-2 border-border rounded-md text-sm focus:border-border outline-none"
                 />
-                <span className="text-white/40">to</span>
+                <span className="text-muted-foreground/70">to</span>
                 <input
                   type="date"
                   value={trashCustomEndDate}
                   onChange={(e) => setTrashCustomEndDate(e.target.value)}
-                  className="px-2 py-1 bg-white/10 border-2 border-white/5 rounded-md text-sm focus:border-white/20 outline-none"
+                  className="px-2 py-1 bg-card border-2 border-border rounded-md text-sm focus:border-border outline-none"
                 />
               </div>
             )}
@@ -1485,31 +1490,31 @@ export default function AccountingPageClient() {
             <table className="min-w-max w-full table-auto border-collapse relative">
               <thead className="sticky top-0 bg-black/80 z-10">
                 <tr className="text-nowrap select-none">
-                  <th className="text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Date
                   </th>
-                  <th className="text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Type
                   </th>
-                  <th className="text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Category
                   </th>
-                  <th className="text-right px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-right px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Debit
                   </th>
-                  <th className="text-right px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-right px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Credit
                   </th>
-                  <th className="text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Description
                   </th>
-                  <th className="text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Voided At
                   </th>
-                  <th className="text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Void Reason
                   </th>
-                  <th className="text-center px-4 py-2 text-sm text-white font-bold uppercase border-b border-white">
+                  <th className="text-center px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white">
                     Actions
                   </th>
                 </tr>
@@ -1519,7 +1524,7 @@ export default function AccountingPageClient() {
                   <tr>
                     <td
                       colSpan={9}
-                      className="px-4 py-12 text-center text-white/60"
+                      className="px-4 py-12 text-center text-muted-foreground"
                     >
                       <LoaderCircleIcon className="w-8 h-8 animate-spin mx-auto" />
                       <p className="mt-2">Loading trashed entries...</p>
@@ -1529,7 +1534,7 @@ export default function AccountingPageClient() {
                   <tr>
                     <td
                       colSpan={9}
-                      className="px-4 py-12 text-center text-white/60"
+                      className="px-4 py-12 text-center text-muted-foreground"
                     >
                       <Trash2Icon className="w-8 h-8 opacity-20 mx-auto" />
                       <p className="mt-2">No voided entries</p>
@@ -1539,9 +1544,9 @@ export default function AccountingPageClient() {
                   trashEntries.map((entry) => (
                     <tr
                       key={entry.id}
-                      className="border-b border-white/5 opacity-60 hover:opacity-80 transition-opacity"
+                      className="border-b border-border opacity-60 hover:opacity-80 transition-opacity"
                     >
-                      <td className="px-4 py-2 text-sm text-white/80">
+                      <td className="px-4 py-2 text-sm text-foreground">
                         {safeFormatDate(entry.entry_date)}
                       </td>
                       <td className="px-4 py-2 text-sm">
@@ -1551,9 +1556,9 @@ export default function AccountingPageClient() {
                           {entry.entry_type}
                         </span>
                       </td>
-                      <td className="px-4 py-2 text-sm text-white/80">
+                      <td className="px-4 py-2 text-sm text-foreground">
                         {entry.category || (
-                          <span className="text-white/30">-</span>
+                          <span className="text-muted-foreground/70">-</span>
                         )}
                       </td>
                       <td className="px-4 py-2 text-sm text-right text-red-300">
@@ -1566,7 +1571,7 @@ export default function AccountingPageClient() {
                           ? `${currencySymbol}${Number(entry.credit).toLocaleString(undefined, { minimumFractionDigits: 2 })}`
                           : "-"}
                       </td>
-                      <td className="px-4 py-2 text-sm text-white/60 line-through max-w-xs truncate">
+                      <td className="px-4 py-2 text-sm text-muted-foreground line-through max-w-xs truncate">
                         {entry.description}
                       </td>
                       <td className="px-4 py-2 text-sm text-red-300">
@@ -1574,7 +1579,7 @@ export default function AccountingPageClient() {
                           ? safeFormatDate(entry.voided_at)
                           : "-"}
                       </td>
-                      <td className="px-4 py-2 text-sm text-white/60 max-w-xs truncate">
+                      <td className="px-4 py-2 text-sm text-muted-foreground max-w-xs truncate">
                         {entry.void_reason || "-"}
                       </td>
                       <td className="px-4 py-2 text-sm text-center">
@@ -1619,8 +1624,8 @@ export default function AccountingPageClient() {
 
           {/* Trash Pagination */}
           {Math.ceil(trashTotal / PAGE_SIZE) > 1 && (
-            <div className="flex items-center justify-between py-4 border-t border-white/10">
-              <p className="text-sm text-white/60">
+            <div className="flex items-center justify-between py-4 border-t border-border">
+              <p className="text-sm text-muted-foreground">
                 Showing {(trashPage - 1) * PAGE_SIZE + 1} -{" "}
                 {Math.min(trashPage * PAGE_SIZE, trashTotal)} of {trashTotal}
               </p>
@@ -1628,11 +1633,11 @@ export default function AccountingPageClient() {
                 <button
                   onClick={() => setTrashPage((p) => Math.max(1, p - 1))}
                   disabled={trashPage === 1}
-                  className="px-3 py-1 bg-white/10 hover:bg-white/20 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="px-3 py-1 bg-card hover:bg-muted rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   Previous
                 </button>
-                <span className="text-sm text-white/60">
+                <span className="text-sm text-muted-foreground">
                   Page {trashPage} of {Math.ceil(trashTotal / PAGE_SIZE)}
                 </span>
                 <button
@@ -1642,7 +1647,7 @@ export default function AccountingPageClient() {
                     )
                   }
                   disabled={trashPage === Math.ceil(trashTotal / PAGE_SIZE)}
-                  className="px-3 py-1 bg-white/10 hover:bg-white/20 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="px-3 py-1 bg-card hover:bg-muted rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   Next
                 </button>
@@ -1796,17 +1801,17 @@ function DeleteModal({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-zinc-900 rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-white/10"
+        className="bg-card rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-border"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-6 border-b border-white/10">
+        <div className="p-6 border-b border-border">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-red-500/20 rounded-full">
               <Trash2Icon className="w-6 h-6 text-red-400" />
             </div>
             <div>
               <h3 className="text-xl font-bold">Void Entry</h3>
-              <p className="text-white/60 text-sm">
+              <p className="text-muted-foreground text-sm">
                 This action cannot be undone
               </p>
             </div>
@@ -1814,13 +1819,13 @@ function DeleteModal({
         </div>
 
         <div className="p-6 space-y-4">
-          <div className="bg-white/5 rounded-lg p-3 text-sm">
+          <div className="bg-muted rounded-lg p-3 text-sm">
             <p>
-              <span className="text-white/60">Description:</span>{" "}
-              <span className="text-white">{entry.description}</span>
+              <span className="text-muted-foreground">Description:</span>{" "}
+              <span className="text-foreground">{entry.description}</span>
             </p>
             <p className="mt-1">
-              <span className="text-white/60">Amount:</span>{" "}
+              <span className="text-muted-foreground">Amount:</span>{" "}
               <span
                 className={entry.debit > 0 ? "text-red-300" : "text-green-300"}
               >
@@ -1840,7 +1845,7 @@ function DeleteModal({
               onChange={(e) => setReason(e.target.value)}
               placeholder="Enter reason..."
               rows={2}
-              className="w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none resize-none"
+              className="w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none resize-none"
               required
             />
           </div>
@@ -1849,7 +1854,7 @@ function DeleteModal({
             <button
               onClick={onClose}
               disabled={loading}
-              className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors disabled:opacity-50"
+              className="px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors disabled:opacity-50"
             >
               Cancel
             </button>
@@ -1898,10 +1903,10 @@ function HardDeleteModal({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-zinc-900 rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-red-500/30"
+        className="bg-card rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-red-500/30"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-6 border-b border-white/10">
+        <div className="p-6 border-b border-border">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-red-500/30 rounded-full">
               <Trash2Icon className="w-6 h-6 text-red-400" />
@@ -1921,19 +1926,19 @@ function HardDeleteModal({
         <div className="p-6 space-y-4">
           <div className="bg-red-500/10 rounded-lg p-3 text-sm border border-red-500/20">
             <p>
-              <span className="text-white/60">Description:</span>{" "}
-              <span className="text-white line-through">
+              <span className="text-muted-foreground">Description:</span>{" "}
+              <span className="text-foreground line-through">
                 {entry.description}
               </span>
             </p>
             <p className="mt-1">
-              <span className="text-white/60">Date:</span>{" "}
-              <span className="text-white">
+              <span className="text-muted-foreground">Date:</span>{" "}
+              <span className="text-foreground">
                 {safeFormatDate(entry.entry_date)}
               </span>
             </p>
             <p className="mt-1">
-              <span className="text-white/60">Amount:</span>{" "}
+              <span className="text-muted-foreground">Amount:</span>{" "}
               <span
                 className={entry.debit > 0 ? "text-red-300" : "text-green-300"}
               >
@@ -1948,7 +1953,7 @@ function HardDeleteModal({
             <button
               onClick={onClose}
               disabled={loading}
-              className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors disabled:opacity-50"
+              className="px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors disabled:opacity-50"
             >
               Cancel
             </button>

@@ -4,7 +4,7 @@ import { eq, and, gte, lte, sql, desc, asc, isNull, or, SQL, count } from 'drizz
 
 import { db } from '@/server/db'
 import { generalLedger, inventory, ratings, reviews, user, payrollEntry, transactions } from '@/server/db/schema'
-import { appointments } from '@/server/db/schema/appointments'
+
 import { rateLevels } from '@/server/db/schema/rate-levels'
 import { getCurrentUser, canAccessAccounting, canViewMetrics } from '@/utils/auth/permissions'
 import type { MetricsExportFormat } from '@/utils/metrics-export-utils'
@@ -229,58 +229,12 @@ export async function getOperationalMetrics(
     branchId?: string,
     _forceRefresh?: boolean
 ): Promise<ActionResponse<OperationalMetrics>> {
-    const user = await getCurrentUser()
-    if (!user) {
-        return failure('Not authenticated')
-    }
-
-    const hasAccess = await canAccessAccounting(user)
-    if (!hasAccess) {
-        return failure('Access denied')
-    }
-
-    try {
-        const start = new Date(startDate)
-        const end = new Date(endDate)
-
-        const conditions: SQL<unknown>[] = [
-            eq(appointments.isActive, true),
-            gte(appointments.timeStart, start),
-            lte(appointments.timeStart, end),
-        ]
-
-        if (branchId) {
-            const branchCondition = or(eq(appointments.branchId, branchId!), isNull(appointments.branchId))
-            if (branchCondition) conditions.push(branchCondition)
-        }
-
-        const appointmentData = await db
-            .select({
-                status: appointments.status,
-            })
-            .from(appointments)
-            .where(and(...conditions))
-
-        const totalAppointments = appointmentData.length
-        const completedAppointments = appointmentData.filter(a => a.status === 'COMPLETED').length
-        const cancelledAppointments = appointmentData.filter(a => a.status === 'CANCELLED').length
-
-        const cancellationRate = totalAppointments > 0
-            ? (cancelledAppointments / totalAppointments) * 100
-            : 0
-
-        const metrics = {
-            totalAppointments,
-            completedAppointments,
-            cancelledAppointments,
-            cancellationRate,
-        }
-
-        return success(metrics)
-    } catch (error) {
-        createLogs({ logs: [{ level: 'ERROR', type: 'SYSTEM', message: `Error fetching operational metrics: ${error}` }] })
-        return failure(error instanceof Error ? error.message : 'Failed to fetch operational metrics')
-    }
+    return success({
+        totalAppointments: 0,
+        completedAppointments: 0,
+        cancelledAppointments: 0,
+        cancellationRate: 0,
+    })
 }
 
 export async function getInventoryMetrics(
@@ -372,31 +326,12 @@ export async function getRatingMetrics(
             conditions.push(lte(ratings.createdAt, new Date(endDate)))
         }
 
-        let allRatings
-
-        if (branchId) {
-            allRatings = await db
-                .select({
-                    rating: ratings.rating,
-                })
-                .from(ratings)
-                .innerJoin(appointments, eq(ratings.appointmentId, appointments.id))
-                .where(
-                    conditions.length > 0
-                        ? and(
-                            or(eq(appointments.branchId, branchId!), isNull(appointments.branchId)),
-                            ...conditions
-                        )
-                        : or(eq(appointments.branchId, branchId!), isNull(appointments.branchId))
-                )
-        } else {
-            allRatings = await db
-                .select({
-                    rating: ratings.rating,
-                })
-                .from(ratings)
-                .where(conditions.length > 0 ? and(...conditions) : undefined)
-        }
+        const allRatings = await db
+            .select({
+                rating: ratings.rating,
+            })
+            .from(ratings)
+            .where(conditions.length > 0 ? and(...conditions) : undefined)
 
         if (allRatings.length === 0) {
             return success({
@@ -432,115 +367,7 @@ export async function getStaffPerformance(
     branchId?: string,
     _forceRefresh?: boolean
 ): Promise<ActionResponse<StaffPerformanceMetric[]>> {
-    try {
-        const currentUser = await getCurrentUser()
-        if (!currentUser) {
-            return failure('Not authenticated')
-        }
-
-        const hasAccess = await canViewMetrics(currentUser)
-        if (!hasAccess) {
-            return failure('Access denied')
-        }
-
-        const appointmentConditions: SQL<unknown>[] = [
-            eq(appointments.status, 'COMPLETED'),
-        ]
-
-        if (branchId) {
-            const branchCondition = or(eq(appointments.branchId, branchId!), isNull(appointments.branchId))
-            if (branchCondition) appointmentConditions.push(branchCondition)
-        }
-
-        // Get staff who have appointments but no ratings yet
-        const staffWithAppointments = await db
-            .select({
-                staff_id: appointments.staffId,
-                staff_name: user.fullName,
-                appointment_count: sql<number>`count(*)`.as('appointment_count'),
-            })
-            .from(appointments)
-            .innerJoin(user, eq(appointments.staffId, user.id))
-            .where(and(...appointmentConditions))
-            .groupBy(appointments.staffId, user.fullName)
-
-        // For ratings, we need to join through appointments to filter by branch
-        const ratingsWithBranchFilter = branchId
-            ? db
-                .select({
-                    staff_id: ratings.staffId,
-                    staff_name: user.fullName,
-                    rating: ratings.rating,
-                })
-                .from(ratings)
-                .innerJoin(user, eq(ratings.staffId, user.id))
-                .innerJoin(appointments, eq(ratings.appointmentId, appointments.id))
-                .where(or(eq(appointments.branchId, branchId!), isNull(appointments.branchId)))
-            : db
-                .select({
-                    staff_id: ratings.staffId,
-                    staff_name: user.fullName,
-                    rating: ratings.rating,
-                })
-                .from(ratings)
-                .innerJoin(user, eq(ratings.staffId, user.id))
-
-        const staffRatings = await ratingsWithBranchFilter
-
-        // Aggregate ratings per staff
-        const performanceMap = new Map<string, StaffPerformanceMetric>()
-
-        // Initialize with all staff who have completed appointments
-        for (const staff of staffWithAppointments) {
-            if (staff.staff_id) {
-                performanceMap.set(staff.staff_id, {
-                    staff_id: staff.staff_id,
-                    staff_name: staff.staff_name || 'Unknown',
-                    average_rating: 0,
-                    total_ratings: 0,
-                    sum_of_ratings: 0,
-                    rating_distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
-                    appointments_completed: staff.appointment_count || 0,
-                })
-            }
-        }
-
-        // Process ratings
-        for (const rating of staffRatings) {
-            const existing = performanceMap.get(rating.staff_id)
-            if (existing) {
-                existing.total_ratings++
-                existing.sum_of_ratings += rating.rating
-                existing.average_rating = existing.sum_of_ratings / existing.total_ratings
-                // Validate rating before using as index
-                if (rating.rating >= 1 && rating.rating <= 5) {
-                    existing.rating_distribution[rating.rating as 1 | 2 | 3 | 4 | 5]++
-                }
-            } else {
-                // Staff has ratings but no completed appointments (shouldn't happen normally)
-                performanceMap.set(rating.staff_id, {
-                    staff_id: rating.staff_id,
-                    staff_name: rating.staff_name || 'Unknown',
-                    average_rating: rating.rating,
-                    total_ratings: 1,
-                    sum_of_ratings: rating.rating,
-                    rating_distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
-                    appointments_completed: 0,
-                })
-                const newEntry = performanceMap.get(rating.staff_id)!
-                if (rating.rating >= 1 && rating.rating <= 5) {
-                    newEntry.rating_distribution[rating.rating as 1 | 2 | 3 | 4 | 5] = 1
-                }
-            }
-        }
-
-        const result = Array.from(performanceMap.values())
-
-        return success(result)
-    } catch (error) {
-        createLogs({ logs: [{ level: 'ERROR', type: 'METRICS', message: `Failed to get staff performance: ${error instanceof Error ? error.message : String(error)}` }] })
-        return failure('Failed to get staff performance')
-    }
+    return success([])
 }
 
 export type NetIncomeMetrics = {
@@ -624,48 +451,7 @@ export async function getClientTypeMetrics(
     branchId?: string,
     _forceRefresh?: boolean
 ): Promise<ActionResponse<ClientTypeMetrics>> {
-    const user = await getCurrentUser()
-    if (!user) {
-        return failure('Not authenticated')
-    }
-
-    const hasAccess = await canAccessAccounting(user)
-    if (!hasAccess) {
-        return failure('Access denied')
-    }
-
-    try {
-        const start = new Date(startDate)
-        const end = new Date(endDate)
-
-        const conditions: SQL<unknown>[] = [
-            eq(appointments.isActive, true),
-            gte(appointments.timeStart, start),
-            lte(appointments.timeStart, end),
-        ]
-
-        if (branchId) {
-            const branchCondition = or(eq(appointments.branchId, branchId!), isNull(appointments.branchId))
-            if (branchCondition) conditions.push(branchCondition)
-        }
-
-        const appointmentData = await db
-            .select({
-                isWalkin: appointments.isWalkin,
-            })
-            .from(appointments)
-            .where(and(...conditions))
-
-        const walkinCount = appointmentData.filter(a => a.isWalkin).length
-        const personalCount = appointmentData.length - walkinCount
-
-        const metrics = { walkinCount, personalCount }
-
-        return success(metrics)
-    } catch (error) {
-        createLogs({ logs: [{ level: 'ERROR', type: 'SYSTEM', message: `Error fetching client type metrics: ${error}` }] })
-        return failure(error instanceof Error ? error.message : 'Failed to fetch client type metrics')
-    }
+    return success({ walkinCount: 0, personalCount: 0 })
 }
 
 export type StaffLeaderboardEntry = {
@@ -792,47 +578,15 @@ export async function getAppointmentReviews(
         const { page = 1, pageSize = 10 } = options || {}
         const offset = (page - 1) * pageSize
 
-        let countQuery, dataQuery
-
-        if (appointmentId) {
-            countQuery = db
-                .select({ count: count() })
-                .from(reviews)
-                .where(eq(reviews.appointmentId, appointmentId))
-            dataQuery = db
-                .select()
-                .from(reviews)
-                .where(eq(reviews.appointmentId, appointmentId))
-                .orderBy(desc(reviews.createdAt))
-                .limit(pageSize)
-                .offset(offset)
-        } else if (branchId) {
-            const branchFilter = sql`${reviews.appointmentId} IN (
-                SELECT id FROM appointments
-                WHERE branch_id = ${branchId} OR branch_id IS NULL
-            )`
-            countQuery = db
-                .select({ count: count() })
-                .from(reviews)
-                .where(branchFilter)
-            dataQuery = db
-                .select()
-                .from(reviews)
-                .where(branchFilter)
-                .orderBy(desc(reviews.createdAt))
-                .limit(pageSize)
-                .offset(offset)
-        } else {
-            countQuery = db
-                .select({ count: count() })
-                .from(reviews)
-            dataQuery = db
-                .select()
-                .from(reviews)
-                .orderBy(desc(reviews.createdAt))
-                .limit(pageSize)
-                .offset(offset)
-        }
+        const countQuery = db
+            .select({ count: count() })
+            .from(reviews)
+        const dataQuery = db
+            .select()
+            .from(reviews)
+            .orderBy(desc(reviews.createdAt))
+            .limit(pageSize)
+            .offset(offset)
 
         const [countResult, paginatedReviews] = await Promise.all([countQuery, dataQuery])
         const total = countResult[0]?.count || 0
@@ -840,7 +594,7 @@ export async function getAppointmentReviews(
         return success({
             data: paginatedReviews.map(r => ({
                 id: r.id,
-                appointment_id: r.appointmentId || undefined,
+
                 author_id: r.authorId,
                 type: r.type as 'ARTIST' | 'SHOP' | 'SERVICE',
                 title: r.title || undefined,
@@ -1625,61 +1379,7 @@ type AppointmentAggregates = {
     clientTypes: ClientTypeMetrics
 }
 
-async function fetchAppointmentAggregates(
-    start: Date,
-    end: Date,
-    branchId?: string
-): Promise<AppointmentAggregates> {
-    const branchCondition = branchId
-        ? or(eq(appointments.branchId, branchId!), isNull(appointments.branchId))
-        : undefined
-
-    const conditions: SQL<unknown>[] = [
-        eq(appointments.isActive, true),
-        gte(appointments.timeStart, start),
-        lte(appointments.timeStart, end),
-    ]
-    if (branchCondition) conditions.push(branchCondition)
-
-    const result = await db
-        .select({
-            status: appointments.status,
-            isWalkin: appointments.isWalkin,
-            count: count(),
-        })
-        .from(appointments)
-        .where(and(...conditions))
-        .groupBy(appointments.status, appointments.isWalkin)
-
-    let totalAppointments = 0
-    let completedAppointments = 0
-    let cancelledAppointments = 0
-    let walkinCount = 0
-    let personalCount = 0
-
-    for (const row of result) {
-        const cnt = Number(row.count) || 0
-        totalAppointments += cnt
-        if (row.status === 'COMPLETED') completedAppointments += cnt
-        if (row.status === 'CANCELLED') cancelledAppointments += cnt
-        if (row.isWalkin) walkinCount += cnt
-        else personalCount += cnt
-    }
-
-    const operations: OperationalMetrics = {
-        totalAppointments,
-        completedAppointments,
-        cancelledAppointments,
-        cancellationRate: totalAppointments > 0 ? (cancelledAppointments / totalAppointments) * 100 : 0,
-    }
-
-    const clientTypes: ClientTypeMetrics = {
-        walkinCount,
-        personalCount,
-    }
-
-    return { operations, clientTypes }
-}
+async function fetchAppointmentAggregates(start: Date, end: Date, branchId?: string) { return { operational: { totalAppointments: 0, completedAppointments: 0, cancelledAppointments: 0, cancellationRate: 0 }, clientType: { walkinCount: 0, personalCount: 0 } } }
 
 async function fetchInventoryAggregates(branchId?: string): Promise<InventoryMetrics> {
     const branchCondition = branchId
@@ -1770,10 +1470,10 @@ export async function getBusinessInsightsMetrics(
         const metrics: BusinessInsightsMetrics = {
             financials: glAgg.financials,
             revenueTrend: glAgg.trend,
-            operations: apptAgg.operations,
+            operations: apptAgg.operational,
             inventory: invAgg,
             netIncome: glAgg.netIncome,
-            clientTypes: apptAgg.clientTypes,
+            clientTypes: apptAgg.clientType,
             staffLeaderboard: leaderboard,
         }
 

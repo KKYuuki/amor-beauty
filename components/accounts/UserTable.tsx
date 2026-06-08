@@ -35,22 +35,22 @@ export default function UserTable({
             >
                 <thead className='sticky top-0 bg-black/80 z-5'>
                     <tr className='text-nowrap select-none'>
-                        <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase w-max border-b border-white'>
+                        <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase w-max border-b border-white'>
                             Role
                         </th>
-                        <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                        <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                             Name
                         </th>
-                        <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                        <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                             Email
                         </th>
-                        <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                        <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                             Rate Level
                         </th>
-                        <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                        <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                             Payout Period
                         </th>
-                        <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                        <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                             Actions
                         </th>
                     </tr>

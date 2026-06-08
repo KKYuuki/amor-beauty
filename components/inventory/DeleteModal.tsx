@@ -57,7 +57,7 @@ export default function DeleteModal({
                 type="button"
                 onClick={onClose}
                 disabled={loading}
-                className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors disabled:opacity-50"
+                className="px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors disabled:opacity-50"
             >
                 Cancel
             </button>
@@ -97,7 +97,7 @@ export default function DeleteModal({
                 </div>
 
                 <div className="text-center">
-                    <p className="text-white/60">
+                    <p className="text-muted-foreground">
                         Are you sure you want to delete
                     </p>
                     <p className="text-lg font-semibold mt-1">

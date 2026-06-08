@@ -7,7 +7,7 @@ export function ExecutiveAccountingSkeleton() {
         <div className='w-full flex flex-col gap-6 pb-10'>
             <div className='flex flex-col gap-4'>
                 <div className='flex items-center justify-between flex-wrap gap-4'>
-                    <div className='flex gap-2 p-1 bg-white/5 w-fit rounded-lg border border-white/5'>
+                    <div className='flex gap-2 p-1 bg-muted w-fit rounded-lg border border-border'>
                         {Array.from({ length: 4 }).map((_, i) => (
                             <Skeleton key={i} className='h-8 w-20 rounded-md' />
                         ))}
@@ -35,11 +35,11 @@ export function ExecutiveAccountingSkeleton() {
                 <Skeleton className='h-6 w-44' />
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
                     <PieChartSkeleton showLegend={false} />
-                    <div className='bg-white/5 border-2 border-white/5 rounded-xl p-4 flex flex-col gap-4'>
+                    <div className='bg-muted border-2 border-border rounded-xl p-4 flex flex-col gap-4'>
                         <Skeleton className='h-4 w-32' />
                         <div className='space-y-3'>
                             {Array.from({ length: 4 }).map((_, i) => (
-                                <div key={i} className='flex items-center justify-between p-3 bg-white/5 rounded-lg'>
+                                <div key={i} className='flex items-center justify-between p-3 bg-muted rounded-lg'>
                                     <div className='flex items-center gap-3'>
                                         <Skeleton className='w-3 h-3 rounded-full' />
                                         <Skeleton className='h-4 w-20' />

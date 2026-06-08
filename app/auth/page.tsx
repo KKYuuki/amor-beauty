@@ -32,11 +32,11 @@ export default async function AuthPage() {
                 loading="eager" 
                 className="absolute bottom-4 right-4 w-auto h-12" 
             />
-            <div className='absolute w-full h-full top-1/2 left-1/2 -translate-1/2 -z-[1] bg-gradient-to-tr from-black to-black/30 from-40%'></div>
+            <div className='absolute w-full h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-[1] bg-background/40 backdrop-blur-sm'></div>
             <Image
                 src={authBg}
                 alt=''
-                className='absolute w-full h-full -z-[2] top-1/2 left-1/2 -translate-1/2 rounded-md object-cover object-center'
+                className='absolute w-full h-full -z-[2] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 object-cover object-center'
                 loading={"eager"}
             />
         </div>

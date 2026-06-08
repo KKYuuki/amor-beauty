@@ -58,9 +58,9 @@ export default function SplitPaymentBuilder({
     const isWarning = totalEntered > 0 && totalEntered < total
 
     return (
-        <div className='space-y-4 bg-white/5 backdrop-blur-lg rounded-xl p-4 border border-white/10'>
+        <div className='space-y-4 bg-muted backdrop-blur-lg rounded-xl p-4 border border-border'>
             <div className='flex items-center justify-between'>
-                <h3 className='text-sm font-semibold text-zinc-900 dark:text-zinc-100'>
+                <h3 className='text-sm font-semibold text-foreground text-foreground'>
                     Split Payments
                 </h3>
                 <label className='flex items-center gap-2 text-sm'>
@@ -70,7 +70,7 @@ export default function SplitPaymentBuilder({
                         onChange={(e) => setAllowPartial(e.target.checked)}
                         className='w-4 h-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-500'
                     />
-                    <span className='text-zinc-700 dark:text-zinc-300'>Allow Partial Payment</span>
+                    <span className='text-muted-foreground dark:text-foreground'>Allow Partial Payment</span>
                 </label>
             </div>
 
@@ -81,14 +81,14 @@ export default function SplitPaymentBuilder({
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className='flex flex-wrap gap-2 items-center p-3 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg'
+                        className='flex flex-wrap gap-2 items-center p-3 bg-zinc-50 dark:bg-muted/50 rounded-lg'
                     >
                         <select
                             value={payment.payment_method}
                             onChange={(e) =>
                                 updatePayment(payment.id, 'payment_method', e.target.value)
                             }
-                            className='px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:ring-2 focus:ring-blue-500'
+                            className='px-3 py-2 rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-muted text-sm focus:ring-2 focus:ring-blue-500'
                         >
                             {splitMethods.map((method) => (
                                 <option key={method.key} value={method.key}>{method.label}</option>
@@ -96,7 +96,7 @@ export default function SplitPaymentBuilder({
                         </select>
 
                         <div className='relative flex-1 min-w-[120px]'>
-                            <span className='absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-sm'>
+                            <span className='absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm'>
                                 {taxSettings.currency_symbol}
                             </span>
                             <input
@@ -106,7 +106,7 @@ export default function SplitPaymentBuilder({
                                     updatePayment(payment.id, 'amount', parseFloat(e.target.value) || 0)
                                 }
                                 placeholder='0.00'
-                                className='w-full pl-8 pr-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:ring-2 focus:ring-blue-500'
+                                className='w-full pl-8 pr-4 py-2 rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-muted text-sm focus:ring-2 focus:ring-blue-500'
                             />
                         </div>
 
@@ -122,7 +122,7 @@ export default function SplitPaymentBuilder({
                                     className={`w-24 px-3 py-2 rounded-lg border text-sm focus:ring-2 focus:ring-blue-500 ${
                                         !payment.reference_number?.trim()
                                             ? 'border-amber-400 bg-amber-50 dark:bg-amber-950/20'
-                                            : 'border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800'
+                                            : 'border-zinc-200 dark:border-border bg-white dark:bg-muted'
                                     }`}
                                 />
                                 {!payment.reference_number?.trim() && (
@@ -145,22 +145,22 @@ export default function SplitPaymentBuilder({
             <button
                 type='button'
                 onClick={addPayment}
-                className='w-full px-4 py-2 rounded-lg border-2 border-dashed border-zinc-300 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center justify-center gap-2'
+                className='w-full px-4 py-2 rounded-lg border-2 border-dashed border-zinc-300 dark:border-border text-muted-foreground dark:text-muted-foreground hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center justify-center gap-2'
             >
                 <PlusIcon className='w-4 h-4' />
                 Add Payment Method
             </button>
 
-            <div className='space-y-2 pt-2 border-t border-zinc-200 dark:border-zinc-700'>
+            <div className='space-y-2 pt-2 border-t border-zinc-200 dark:border-border'>
                 <div className='flex justify-between text-sm'>
-                    <span className='text-zinc-600 dark:text-zinc-400'>Total Due:</span>
-                    <span className='font-medium text-zinc-900 dark:text-zinc-100'>
+                    <span className='text-muted-foreground dark:text-muted-foreground'>Total Due:</span>
+                    <span className='font-medium text-foreground text-foreground'>
                         {taxSettings.currency_symbol} {total.toFixed(2)}
                     </span>
                 </div>
                 <div className='flex justify-between text-sm'>
-                    <span className='text-zinc-600 dark:text-zinc-400'>Total Entered:</span>
-                    <span className='font-medium text-zinc-900 dark:text-zinc-100'>
+                    <span className='text-muted-foreground dark:text-muted-foreground'>Total Entered:</span>
+                    <span className='font-medium text-foreground text-foreground'>
                         {taxSettings.currency_symbol} {totalEntered.toFixed(2)}
                     </span>
                 </div>

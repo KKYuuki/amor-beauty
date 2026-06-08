@@ -35,7 +35,6 @@ import { useSessionSSE } from "@/hooks/useSessionSSE"
 import PasskeyBanner from "@/components/auth/PasskeyBanner"
 import PasskeyFirstLoginModal from "@/components/auth/PasskeyFirstLoginModal"
 import { PasskeyStatusProvider } from "@/contexts/PasskeyStatusContext"
-import BranchSelector from "@/components/branch-selector"
 
 interface SideBarContextType {
     updateSidebar: () => Promise<void>
@@ -139,7 +138,7 @@ function RouteGroup({
                     aria-expanded={isOpen}
                     aria-controls={contentId}
                     aria-label={`Toggle ${title} section`}
-                    className='flex items-center justify-between px-2 py-1.5 text-xs font-medium text-sidebar-foreground/40 uppercase tracking-wider hover:text-sidebar-foreground/60 transition-colors'
+                    className='flex items-center justify-between px-2 py-1.5 text-xs font-medium text-black uppercase tracking-wider hover:text-black/80 transition-colors'
                 >
                     <span>{title}</span>
                     <motion.div
@@ -163,14 +162,14 @@ function RouteGroup({
                         {filteredRoutes.map((route) => (
                             <Link
                                 href={route.href}
-                                className={`flex items-center gap-3 font-medium text-sm rounded-md p-2 transition-colors relative ${
+                                className={`flex items-center gap-3 text-sm rounded-md p-2 transition-colors relative ${
                                     isRouteActive(
                                         pathname,
                                         route.href,
                                         route.exactMatch,
                                     )
-                                        ? "bg-sidebar-accent text-sidebar-foreground"
-                                        : "text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+                                        ? "bg-sidebar-accent text-sidebar-foreground font-semibold"
+                                        : "text-sidebar-foreground/70 font-medium hover:bg-sidebar-accent hover:text-sidebar-foreground"
                                 }`}
                                 key={route.title}
                                 title={route.title}
@@ -185,7 +184,7 @@ function RouteGroup({
                                 ) && (
                                     <motion.div
                                         layoutId='activeIndicator'
-                                        className='absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-6 bg-primary rounded-full'
+                                        className='absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-primary rounded-r-md'
                                         initial={false}
                                         transition={{
                                             type: "spring",
@@ -405,8 +404,10 @@ export default function Sidebar({ children, maintenanceMode }: SidebarProps) {
     }, [isMobile])
 
     const showLoading = useMemo(() => {
+        // Never show loading screen on auth page — it handles its own state
+        if (pathname === "/auth") return false
         if (isPending || isLoading) return true
-        if (!isLoggedIn && pathname !== "/auth") return true
+        if (!isLoggedIn) return true
         return false
     }, [isPending, isLoading, isLoggedIn, pathname])
 
@@ -583,19 +584,6 @@ export default function Sidebar({ children, maintenanceMode }: SidebarProps) {
                                         </button>
                                     </motion.div>
 
-                                    {/* Global Branch Selector */}
-                                    <div
-                                        className={`${isMobile && !isExpanded ? 'hidden' : ''} ${!isExpanded && !isMobile ? 'flex justify-center' : ''}`}
-                                    >
-                                        <BranchSelector
-                                            showAllOption={true}
-                                            className={
-                                                !isExpanded && !isMobile
-                                                    ? "w-10"
-                                                    : "w-full"
-                                            }
-                                        />
-                                    </div>
 
                                     {/* Mobile overlay background */}
                                     {isMobile && isExpanded && (

@@ -88,7 +88,7 @@ export default function CategoriesPageClient() {
                     <div className='flex items-center gap-3'>
                         <Link
                             href='/accounting'
-                            className='p-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors border-2 border-white/5'
+                            className='p-2 bg-card hover:bg-muted rounded-md transition-colors border-2 border-border'
                             title='Back to Accounting'
                         >
                             <ArrowLeftIcon className='w-5 h-5' />
@@ -98,7 +98,7 @@ export default function CategoriesPageClient() {
                                 <TagsIcon className='w-5 h-5 md:w-6 md:h-6' />
                                 Category Management
                             </h1>
-                            <p className='text-white/60 text-xs md:text-sm mt-1'>
+                            <p className='text-muted-foreground text-xs md:text-sm mt-1'>
                                 Manage accounting categories for ledger entries
                             </p>
                         </div>
@@ -106,12 +106,12 @@ export default function CategoriesPageClient() {
                     
                     <div className='flex items-center gap-2'>
                         {/* Show Inactive Toggle */}
-                        <label className='flex items-center gap-2 px-3 py-2 bg-white/10 rounded-md cursor-pointer hover:bg-white/20 transition-colors border-2 border-white/5'>
+                        <label className='flex items-center gap-2 px-3 py-2 bg-card rounded-md cursor-pointer hover:bg-muted transition-colors border-2 border-border'>
                             <input
                                 type='checkbox'
                                 checked={showInactive}
                                 onChange={(e) => setShowInactive(e.target.checked)}
-                                className='rounded border-white/30'
+                                className='rounded border-border'
                             />
                             <span className='text-sm'>Show Archived</span>
                         </label>
@@ -131,7 +131,7 @@ export default function CategoriesPageClient() {
                         <button
                             onClick={fetchCategories}
                             disabled={loading}
-                            className='p-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors disabled:opacity-50 border-2 border-white/5 cursor-pointer'
+                            className='p-2 bg-card hover:bg-muted rounded-md transition-colors disabled:opacity-50 border-2 border-border cursor-pointer'
                             title='Refresh'
                         >
                             <RefreshCwIcon
@@ -162,11 +162,11 @@ export default function CategoriesPageClient() {
             <div className='flex-1 overflow-auto'>
                 {loading ? (
                     <div className='flex flex-col items-center justify-center gap-2 py-12'>
-                        <LoaderCircleIcon className='w-8 h-8 animate-spin text-white/60' />
-                        <p className='text-white/60'>Loading categories...</p>
+                        <LoaderCircleIcon className='w-8 h-8 animate-spin text-muted-foreground' />
+                        <p className='text-muted-foreground'>Loading categories...</p>
                     </div>
                 ) : categories.length === 0 ? (
-                    <div className='flex flex-col items-center justify-center gap-2 py-12 text-white/60'>
+                    <div className='flex flex-col items-center justify-center gap-2 py-12 text-muted-foreground'>
                         <TagsIcon className='w-8 h-8 opacity-20' />
                         <p>No categories found</p>
                         {isAdmin && (
@@ -184,12 +184,12 @@ export default function CategoriesPageClient() {
                             <div key={group.value}>
                                 <h3 className={`text-sm font-bold uppercase mb-3 flex items-center gap-2 ${group.color.split(' ')[0]}`}>
                                     <span className={`px-2 py-0.5 rounded border ${group.color} text-xs`}>{group.label}</span>
-                                    <span className='text-white/40'>({group.categories.length})</span>
+                                    <span className='text-muted-foreground/70'>({group.categories.length})</span>
                                 </h3>
-                                <div className='bg-white/5 border border-white/10 rounded-lg overflow-hidden'>
+                                <div className='bg-muted border border-border rounded-lg overflow-hidden'>
                                     <table className='w-full'>
-                                        <thead className='bg-white/5'>
-                                            <tr className='text-left text-xs text-white/60'>
+                                        <thead className='bg-muted'>
+                                            <tr className='text-left text-xs text-muted-foreground'>
                                                 <th className='px-4 py-2'>Name</th>
                                                 <th className='px-4 py-2'>Status</th>
                                                 <th className='px-4 py-2'>Created</th>
@@ -200,7 +200,7 @@ export default function CategoriesPageClient() {
                                             {group.categories.map((category) => (
                                                 <tr
                                                     key={category.id}
-                                                    className={`border-t border-white/5 hover:bg-white/5 transition-colors ${!category.is_active ? 'opacity-50' : ''}`}
+                                                    className={`border-t border-border hover:bg-muted transition-colors ${!category.is_active ? 'opacity-50' : ''}`}
                                                 >
                                                     <td className='px-4 py-3'>{category.name}</td>
                                                     <td className='px-4 py-3'>
@@ -209,12 +209,12 @@ export default function CategoriesPageClient() {
                                                                 Active
                                                             </span>
                                                         ) : (
-                                                            <span className='px-2 py-0.5 rounded text-xs bg-white/10 text-white/60 border border-white/20'>
+                                                            <span className='px-2 py-0.5 rounded text-xs bg-card text-muted-foreground border border-border'>
                                                                 Archived
                                                             </span>
                                                         )}
                                                     </td>
-                                                    <td className='px-4 py-3 text-sm text-white/60'>
+                                                    <td className='px-4 py-3 text-sm text-muted-foreground'>
                                                         {safeFormatDate(category.created_at)}
                                                     </td>
                                                     {isAdmin && (
@@ -222,7 +222,7 @@ export default function CategoriesPageClient() {
                                                             <div className='flex items-center justify-end gap-2'>
                                                                 <button
                                                                     onClick={() => setEditingCategory(category)}
-                                                                    className='p-1.5 hover:bg-white/10 rounded transition-colors'
+                                                                    className='p-1.5 hover:bg-muted rounded transition-colors'
                                                                     title='Edit'
                                                                 >
                                                                     <PencilIcon className='w-4 h-4 text-blue-400' />
@@ -230,7 +230,7 @@ export default function CategoriesPageClient() {
                                                                 {category.is_active ? (
                                                                     <button
                                                                         onClick={() => setArchivingCategory(category)}
-                                                                        className='p-1.5 hover:bg-white/10 rounded transition-colors'
+                                                                        className='p-1.5 hover:bg-muted rounded transition-colors'
                                                                         title='Archive'
                                                                     >
                                                                         <ArchiveIcon className='w-4 h-4 text-orange-400' />
@@ -246,7 +246,7 @@ export default function CategoriesPageClient() {
                                                                                 addNotification(result.error || "Failed to restore", "ERROR")
                                                                             }
                                                                         }}
-                                                                        className='p-1.5 hover:bg-white/10 rounded transition-colors'
+                                                                        className='p-1.5 hover:bg-muted rounded transition-colors'
                                                                         title='Restore'
                                                                     >
                                                                         <RefreshCwIcon className='w-4 h-4 text-green-400' />
@@ -373,14 +373,14 @@ function CategoryModal({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className='bg-zinc-900 rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-white/10'
+                className='bg-card rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-border'
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className='p-6 border-b border-white/10 flex justify-between items-center'>
+                <div className='p-6 border-b border-border flex justify-between items-center'>
                     <h3 className='text-xl font-bold'>
                         {category ? "Edit Category" : "Add Category"}
                     </h3>
-                    <button onClick={onClose} className='text-white/60 hover:text-white transition-colors'>
+                    <button onClick={onClose} className='text-muted-foreground hover:text-foreground transition-colors'>
                         <XIcon className='w-5 h-5' />
                     </button>
                 </div>
@@ -400,7 +400,7 @@ function CategoryModal({
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             placeholder='e.g., Office Supplies'
-                            className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none transition-colors'
+                            className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none transition-colors'
                             required
                         />
                     </div>
@@ -410,7 +410,7 @@ function CategoryModal({
                         <select
                             value={formData.type}
                             onChange={(e) => setFormData({ ...formData, type: e.target.value as LedgerEntryType })}
-                            className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none transition-colors'
+                            className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none transition-colors'
                             disabled={!!category} // Can't change type when editing
                         >
                             {ENTRY_TYPES.map((type) => (
@@ -418,7 +418,7 @@ function CategoryModal({
                             ))}
                         </select>
                         {category && (
-                            <p className='text-xs text-white/40 mt-1'>Type cannot be changed after creation</p>
+                            <p className='text-xs text-muted-foreground/70 mt-1'>Type cannot be changed after creation</p>
                         )}
                     </div>
 
@@ -427,7 +427,7 @@ function CategoryModal({
                             type='button'
                             onClick={onClose}
                             disabled={loading}
-                            className='px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors disabled:opacity-50'
+                            className='px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors disabled:opacity-50'
                         >
                             Cancel
                         </button>
@@ -473,28 +473,28 @@ function ArchiveModal({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className='bg-zinc-900 rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-white/10'
+                className='bg-card rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-border'
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className='p-6 border-b border-white/10'>
+                <div className='p-6 border-b border-border'>
                     <div className='flex items-center gap-3'>
                         <div className='p-3 bg-orange-500/20 rounded-full'>
                             <ArchiveIcon className='w-6 h-6 text-orange-400' />
                         </div>
                         <div>
                             <h3 className='text-xl font-bold'>Archive Category</h3>
-                            <p className='text-white/60 text-sm'>This action can be undone later</p>
+                            <p className='text-muted-foreground text-sm'>This action can be undone later</p>
                         </div>
                     </div>
                 </div>
 
                 <div className='p-6'>
-                    <p className='text-white/80 mb-4'>
+                    <p className='text-foreground mb-4'>
                         Are you sure you want to archive the category
-                        <span className='font-semibold text-white'> &ldquo;{category.name}&rdquo;</span>?
+                        <span className='font-semibold text-foreground'> &ldquo;{category.name}&rdquo;</span>?
                     </p>
                     
-                    <p className='text-sm text-white/60'>
+                    <p className='text-sm text-muted-foreground'>
                         Archived categories will no longer appear in the dropdown when creating ledger entries.
                     </p>
 
@@ -502,7 +502,7 @@ function ArchiveModal({
                         <button
                             onClick={onClose}
                             disabled={loading}
-                            className='px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors disabled:opacity-50'
+                            className='px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors disabled:opacity-50'
                         >
                             Cancel
                         </button>

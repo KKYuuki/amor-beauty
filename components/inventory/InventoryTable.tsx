@@ -103,7 +103,7 @@ function ActionDropdown({ item, showInactiveItems, onAction, _onRefresh }: Dropd
         return (
             <button
                 type="button"
-                className="p-2 bg-white/10 hover:bg-green-500/20 transition-colors rounded-md border border-white/10"
+                className="p-2 bg-card hover:bg-green-500/20 transition-colors rounded-md border border-border"
                 title="Restore Item"
                 onClick={() => handleAction("restore")}
             >
@@ -116,7 +116,7 @@ function ActionDropdown({ item, showInactiveItems, onAction, _onRefresh }: Dropd
         <div className="relative" ref={dropdownRef}>
             <button
                 type="button"
-                className="p-2 bg-white/10 hover:bg-white/20 transition-colors rounded-md border border-white/10"
+                className="p-2 bg-card hover:bg-muted transition-colors rounded-md border border-border"
                 onClick={() => setIsOpen(!isOpen)}
             >
                 <MoreVerticalIcon className="w-4 h-4" />
@@ -129,12 +129,12 @@ function ActionDropdown({ item, showInactiveItems, onAction, _onRefresh }: Dropd
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -10, scale: 0.95 }}
                         transition={{ duration: 0.1 }}
-                        className="absolute right-0 top-full mt-1 w-48 bg-zinc-900 rounded-lg shadow-xl border border-white/10 z-50 overflow-hidden"
+                        className="absolute right-0 top-full mt-1 w-48 bg-card rounded-lg shadow-xl border border-border z-50 overflow-hidden"
                     >
                         <div className="py-1">
                             <button
                                 type="button"
-                                className="w-full px-4 py-2 text-left text-sm hover:bg-white/5 transition-colors flex items-center gap-2"
+                                className="w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors flex items-center gap-2"
                                 onClick={() => handleAction("edit")}
                             >
                                 <PenSquareIcon className="w-4 h-4 text-blue-400" />
@@ -142,7 +142,7 @@ function ActionDropdown({ item, showInactiveItems, onAction, _onRefresh }: Dropd
                             </button>
                             <button
                                 type="button"
-                                className="w-full px-4 py-2 text-left text-sm hover:bg-white/5 transition-colors flex items-center gap-2"
+                                className="w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors flex items-center gap-2"
                                 onClick={() => handleAction("adjust")}
                             >
                                 <PackageSearchIcon className="w-4 h-4 text-purple-400" />
@@ -150,7 +150,7 @@ function ActionDropdown({ item, showInactiveItems, onAction, _onRefresh }: Dropd
                             </button>
                             <button
                                 type="button"
-                                className="w-full px-4 py-2 text-left text-sm hover:bg-white/5 transition-colors flex items-center gap-2"
+                                className="w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors flex items-center gap-2"
                                 onClick={() => handleAction("restock")}
                             >
                                 <ShoppingCartIcon className="w-4 h-4 text-green-400" />
@@ -159,7 +159,7 @@ function ActionDropdown({ item, showInactiveItems, onAction, _onRefresh }: Dropd
                             <button
                                 type="button"
                                 disabled={isRequesting}
-                                className="w-full px-4 py-2 text-left text-sm hover:bg-white/5 transition-colors flex items-center gap-2 disabled:opacity-50"
+                                className="w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors flex items-center gap-2 disabled:opacity-50"
                                 onClick={handleRequestRestock}
                             >
                                 <BellIcon className={`w-4 h-4 text-yellow-400 ${isRequesting ? 'animate-pulse' : ''}`} />
@@ -167,7 +167,7 @@ function ActionDropdown({ item, showInactiveItems, onAction, _onRefresh }: Dropd
                             </button>
                             <button
                                 type="button"
-                                className="w-full px-4 py-2 text-left text-sm hover:bg-white/5 transition-colors flex items-center gap-2"
+                                className="w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors flex items-center gap-2"
                                 onClick={() => handleAction("duplicate")}
                             >
                                 <CopyIcon className="w-4 h-4 text-orange-400" />
@@ -175,16 +175,16 @@ function ActionDropdown({ item, showInactiveItems, onAction, _onRefresh }: Dropd
                             </button>
                             <button
                                 type="button"
-                                className="w-full px-4 py-2 text-left text-sm hover:bg-white/5 transition-colors flex items-center gap-2"
+                                className="w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors flex items-center gap-2"
                                 onClick={() => handleAction("history")}
                             >
                                 <HistoryIcon className="w-4 h-4 text-gray-400" />
                                 History
                             </button>
-                            <div className="border-t border-white/10 my-1"></div>
+                            <div className="border-t border-border my-1"></div>
                             <button
                                 type="button"
-                                className="w-full px-4 py-2 text-left text-sm hover:bg-white/5 transition-colors flex items-center gap-2 text-red-400"
+                                className="w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors flex items-center gap-2 text-red-400"
                                 onClick={() => handleAction("delete")}
                             >
                                 <TrashIcon className="w-4 h-4" />
@@ -300,9 +300,9 @@ export default function InventoryTable({
 
     return (
         <div className="flex flex-col h-full overflow-hidden">
-            <div className="flex-1 overflow-auto bg-white/5 rounded-lg border border-white/5 relative">
+            <div className="flex-1 overflow-auto bg-muted rounded-lg border border-border relative">
                 <table className="min-w-max w-full table-auto border-collapse">
-                    <thead className="bg-black/40 sticky top-0 z-10 backdrop-blur-sm">
+                    <thead className="bg-muted sticky top-0 z-10 backdrop-blur-sm">
                         <tr className="text-nowrap select-none">
                             {[
                                 { label: "Item Name", key: "name" },
@@ -340,9 +340,9 @@ export default function InventoryTable({
                             ].map((col, idx) => (
                                 <th
                                     key={idx}
-                                    className={`text-left px-4 py-3 text-sm text-white font-bold uppercase border-b border-white/10 ${
+                                    className={`text-left px-4 py-3 text-sm text-foreground font-bold uppercase border-b border-border ${
                                         col.key
-                                            ? "cursor-pointer hover:bg-white/5 transition-colors group"
+                                            ? "cursor-pointer hover:bg-muted transition-colors group"
                                             : ""
                                     }`}
                                     onClick={() =>
@@ -364,10 +364,10 @@ export default function InventoryTable({
                             <tr>
                                 <td
                                     colSpan={17}
-                                    className="p-8 text-center text-white/60"
+                                    className="p-8 text-center text-muted-foreground"
                                 >
                                     <div className="flex flex-col items-center gap-2">
-                                        <div className="w-8 h-8 border-2 border-white/20 border-t-white/80 rounded-full animate-spin"></div>
+                                        <div className="w-8 h-8 border-2 border-border border-t-white/80 rounded-full animate-spin"></div>
                                         Loading inventory...
                                     </div>
                                 </td>
@@ -376,7 +376,7 @@ export default function InventoryTable({
                             <tr>
                                 <td
                                     colSpan={17}
-                                    className="p-8 text-center text-white/60 italic"
+                                    className="p-8 text-center text-muted-foreground italic"
                                 >
                                     No items found.
                                 </td>
@@ -385,7 +385,7 @@ export default function InventoryTable({
                             <AnimatePresence mode="wait">
                                 {paginatedItems.map((item) => (
                                     <motion.tr
-                                        className={`hover:bg-white/5 transition-colors text-nowrap border-b border-white/5 ${
+                                        className={`hover:bg-muted transition-colors text-nowrap border-b border-border ${
                                             showInactiveItems
                                                 ? "opacity-60"
                                                 : ""
@@ -510,7 +510,7 @@ export default function InventoryTable({
                                                 className={`p-2 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
                                                     item.show_in_sales
                                                         ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
-                                                        : 'bg-white/10 text-white/40 hover:bg-white/20'
+                                                        : 'bg-card text-muted-foreground/70 hover:bg-muted'
                                                 }`}
                                                 title={item.show_in_sales ? 'Shown in sales' : 'Hidden from sales'}
                                             >
@@ -542,7 +542,7 @@ export default function InventoryTable({
             {/* Pagination Controls */}
             {!isLoading && totalPages > 1 && (
                 <div className="flex items-center justify-between mt-4 px-2">
-                    <span className="text-sm text-white/50">
+                    <span className="text-sm text-muted-foreground">
                         Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
                         {Math.min(
                             currentPage * itemsPerPage,
@@ -556,11 +556,11 @@ export default function InventoryTable({
                                 setCurrentPage((p) => Math.max(1, p - 1))
                             }
                             disabled={currentPage === 1}
-                            className="p-1 rounded-md bg-white/5 border border-white/5 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            className="p-1 rounded-md bg-muted border border-border hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
-                            <ChevronLeftIcon className="w-5 h-5 text-white/80" />
+                            <ChevronLeftIcon className="w-5 h-5 text-foreground" />
                         </button>
-                        <span className="text-sm text-white/80 px-2">
+                        <span className="text-sm text-foreground px-2">
                             Page {currentPage} of {totalPages}
                         </span>
                         <button
@@ -570,9 +570,9 @@ export default function InventoryTable({
                                 )
                             }
                             disabled={currentPage === totalPages}
-                            className="p-1 rounded-md bg-white/5 border border-white/5 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            className="p-1 rounded-md bg-muted border border-border hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
-                            <ChevronRightIcon className="w-5 h-5 text-white/80" />
+                            <ChevronRightIcon className="w-5 h-5 text-foreground" />
                         </button>
                     </div>
                 </div>

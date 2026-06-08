@@ -59,9 +59,9 @@ export default function TrialBalance({ data, currencySymbol }: TrialBalanceProps
     const isBalanced = Math.abs(totalDebits - totalCredits) < 0.01
 
     return (
-        <div className='bg-white/5 border border-white/10 rounded-lg overflow-hidden'>
-            <div className='px-4 py-3 bg-white/5 border-b border-white/10 flex items-center justify-between'>
-                <h3 className='text-sm font-semibold text-white/60 uppercase tracking-wider'>
+        <div className='bg-muted border border-border rounded-lg overflow-hidden'>
+            <div className='px-4 py-3 bg-muted border-b border-border flex items-center justify-between'>
+                <h3 className='text-sm font-semibold text-muted-foreground uppercase tracking-wider'>
                     Trial Balance
                 </h3>
                 <span className={`text-xs px-2 py-1 rounded ${isBalanced ? 'bg-green-400/20 text-green-300' : 'bg-red-400/20 text-red-300'}`}>
@@ -72,7 +72,7 @@ export default function TrialBalance({ data, currencySymbol }: TrialBalanceProps
             <div className='overflow-x-auto'>
                 <table className='w-full min-w-[600px]'>
                     <thead>
-                        <tr className='text-xs text-white/50 border-b border-white/10'>
+                        <tr className='text-xs text-muted-foreground border-b border-border'>
                             <th className='text-left px-4 py-2'>Account</th>
                             <th className='text-right px-4 py-2'>Debit</th>
                             <th className='text-right px-4 py-2'>Credit</th>
@@ -101,14 +101,14 @@ export default function TrialBalance({ data, currencySymbol }: TrialBalanceProps
                                                 toggleType(type)
                                             }
                                         }}
-                                        className='bg-white/5 cursor-pointer hover:bg-white/10 transition-colors'
+                                        className='bg-muted cursor-pointer hover:bg-muted transition-colors'
                                     >
                                         <td className='px-4 py-2'>
                                             <div className='flex items-center gap-2'>
                                                 {isExpanded ? (
-                                                    <ChevronDownIcon className='w-3 h-3 text-white/40' aria-hidden="true" />
+                                                    <ChevronDownIcon className='w-3 h-3 text-muted-foreground/70' aria-hidden="true" />
                                                 ) : (
-                                                    <ChevronRightIcon className='w-3 h-3 text-white/40' aria-hidden="true" />
+                                                    <ChevronRightIcon className='w-3 h-3 text-muted-foreground/70' aria-hidden="true" />
                                                 )}
                                                 <span className={`text-xs px-2 py-0.5 rounded border ${ENTRY_TYPE_COLORS[type]}`}>
                                                     {ENTRY_TYPE_LABELS[type]}
@@ -132,9 +132,9 @@ export default function TrialBalance({ data, currencySymbol }: TrialBalanceProps
                                                         initial={{ opacity: 0 }}
                                                         animate={{ opacity: 1 }}
                                                         exit={{ opacity: 0 }}
-                                                        className='border-b border-white/5 hover:bg-white/5'
+                                                        className='border-b border-border hover:bg-muted'
                                                     >
-                                                        <td className='px-4 py-1.5 pl-10 text-sm text-white/70'>
+                                                        <td className='px-4 py-1.5 pl-10 text-sm text-foreground/90'>
                                                             {row.category}
                                                         </td>
                                                         <td className='text-right px-4 py-1.5 text-sm font-mono text-red-300/70'>
@@ -152,7 +152,7 @@ export default function TrialBalance({ data, currencySymbol }: TrialBalanceProps
                         })}
                     </tbody>
                     <tfoot>
-                        <tr className='bg-white/10 border-t-2 border-white/20 font-bold'>
+                        <tr className='bg-card border-t-2 border-border font-bold'>
                             <td className='px-4 py-2 text-sm'>Total</td>
                             <td className='text-right px-4 py-2 text-sm font-mono text-red-300'>
                                 {currencySymbol}{totalDebits.toLocaleString(undefined, { minimumFractionDigits: 2 })}

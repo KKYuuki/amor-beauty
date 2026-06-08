@@ -173,7 +173,7 @@ export default function AdjustModal({
                 type="button"
                 onClick={onClose}
                 disabled={loading}
-                className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors disabled:opacity-50"
+                className="px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors disabled:opacity-50"
             >
                 Cancel
             </button>
@@ -207,14 +207,14 @@ export default function AdjustModal({
             <form id="adjust-form" onSubmit={handleSubmit} className="space-y-4">
                 {/* Fluid Toggle */}
                 {selectedItem.item_type === "FLUID" && (
-                    <div className="flex gap-2 p-1 bg-white/5 rounded-lg">
+                    <div className="flex gap-2 p-1 bg-muted rounded-lg">
                         <button
                             type="button"
                             onClick={() => setAdjustState("quantity")}
                             className={`flex-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                                 adjustState === "quantity"
-                                    ? "bg-white/10 text-white"
-                                    : "text-white/60 hover:text-white"
+                                    ? "bg-card text-foreground"
+                                    : "text-muted-foreground hover:text-foreground"
                             }`}
                         >
                             Quantity
@@ -224,8 +224,8 @@ export default function AdjustModal({
                             onClick={() => setAdjustState("fluid")}
                             className={`flex-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                                 adjustState === "fluid"
-                                    ? "bg-white/10 text-white"
-                                    : "text-white/60 hover:text-white"
+                                    ? "bg-card text-foreground"
+                                    : "text-muted-foreground hover:text-foreground"
                             }`}
                         >
                             Fluid
@@ -234,16 +234,16 @@ export default function AdjustModal({
                 )}
 
                 {/* Current Stock Display */}
-                <div className="p-3 bg-white/5 rounded-lg border border-white/10">
+                <div className="p-3 bg-muted rounded-lg border border-border">
                     <div className="flex justify-between items-center">
-                        <span className="text-sm text-white/60">Current Stock</span>
+                        <span className="text-sm text-muted-foreground">Current Stock</span>
                         <span className="text-lg font-bold">
                             {selectedItem.current_stock}
                         </span>
                     </div>
                     {adjustQuantity && (
-                        <div className="flex justify-between items-center mt-2 pt-2 border-t border-white/10">
-                            <span className="text-sm text-white/60">New Stock</span>
+                        <div className="flex justify-between items-center mt-2 pt-2 border-t border-border">
+                            <span className="text-sm text-muted-foreground">New Stock</span>
                             <span className={`text-lg font-bold ${
                                 newStock < 0 ? "text-red-400" : "text-green-400"
                             }`}>
@@ -254,14 +254,14 @@ export default function AdjustModal({
                 </div>
 
                 {/* Add/Subtract Toggle */}
-                <div className="flex gap-2 p-1 bg-white/5 rounded-lg">
+                <div className="flex gap-2 p-1 bg-muted rounded-lg">
                     <button
                         type="button"
                         onClick={() => setAdjustType("add")}
                         className={`flex-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                             adjustType === "add"
                                 ? "bg-green-500/20 text-green-400"
-                                : "text-white/60 hover:text-white"
+                                : "text-muted-foreground hover:text-foreground"
                         }`}
                     >
                         Add Stock
@@ -272,7 +272,7 @@ export default function AdjustModal({
                         className={`flex-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                             adjustType === "subtract"
                                 ? "bg-red-500/20 text-red-400"
-                                : "text-white/60 hover:text-white"
+                                : "text-muted-foreground hover:text-foreground"
                         }`}
                     >
                         Subtract Stock
@@ -291,7 +291,7 @@ export default function AdjustModal({
                         value={adjustQuantity}
                         onChange={(e) => setAdjustQuantity(e.target.value)}
                         placeholder="Enter quantity..."
-                        className="w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-purple-500/50 outline-none transition-colors"
+                        className="w-full px-3 py-2 bg-card border border-border rounded-md focus:border-purple-500/50 outline-none transition-colors"
                         required
                         disabled={loading}
                     />
@@ -311,7 +311,7 @@ export default function AdjustModal({
                                 value={unitCost}
                                 onChange={(e) => setUnitCost(e.target.value)}
                                 placeholder="Enter unit cost..."
-                                className="w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-purple-500/50 outline-none transition-colors"
+                                className="w-full px-3 py-2 bg-card border border-border rounded-md focus:border-purple-500/50 outline-none transition-colors"
                                 disabled={loading}
                             />
                         </div>
@@ -324,7 +324,7 @@ export default function AdjustModal({
                                 value={supplierName}
                                 onChange={(e) => setSupplierName(e.target.value)}
                                 placeholder="Enter supplier name..."
-                                className="w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-purple-500/50 outline-none transition-colors"
+                                className="w-full px-3 py-2 bg-card border border-border rounded-md focus:border-purple-500/50 outline-none transition-colors"
                                 disabled={loading}
                             />
                         </div>
@@ -337,7 +337,7 @@ export default function AdjustModal({
                                 value={orderReference}
                                 onChange={(e) => setOrderReference(e.target.value)}
                                 placeholder="Enter order reference..."
-                                className="w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-purple-500/50 outline-none transition-colors"
+                                className="w-full px-3 py-2 bg-card border border-border rounded-md focus:border-purple-500/50 outline-none transition-colors"
                                 disabled={loading}
                             />
                         </div>

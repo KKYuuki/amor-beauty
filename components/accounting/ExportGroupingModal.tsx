@@ -166,23 +166,23 @@ export default function ExportGroupingModal({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-zinc-900 rounded-xl shadow-2xl w-full max-w-lg border border-white/10 overflow-hidden"
+                className="bg-card rounded-xl shadow-2xl w-full max-w-lg border border-border overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Header */}
-                <div className="p-6 border-b border-white/10 flex justify-between items-center">
+                <div className="p-6 border-b border-border flex justify-between items-center">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-blue-500/20 rounded-lg">
                             <DownloadIcon className="w-5 h-5 text-blue-400" />
                         </div>
                         <div>
                             <h3 className="text-xl font-bold">Export Grouped Report</h3>
-                            <p className="text-sm text-white/60">Configure export options</p>
+                            <p className="text-sm text-muted-foreground">Configure export options</p>
                         </div>
                     </div>
                     <button
                         onClick={onClose}
-                        className="text-white/60 hover:text-white transition-colors"
+                        className="text-muted-foreground hover:text-foreground transition-colors"
                     >
                         <XIcon className="w-5 h-5" />
                     </button>
@@ -192,7 +192,7 @@ export default function ExportGroupingModal({
                 <div className="p-6 space-y-6 max-h-[70vh] overflow-y-auto">
                     {/* Format Selection */}
                     <div className="space-y-3">
-                        <label className="block text-sm font-medium text-white/80">
+                        <label className="block text-sm font-medium text-foreground">
                             Format
                         </label>
                         <div className="flex gap-2">
@@ -205,7 +205,7 @@ export default function ExportGroupingModal({
                                         className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 transition-colors ${
                                             format === option.key
                                                 ? "bg-blue-500/20 border-blue-500/50 text-blue-300"
-                                                : "bg-white/5 border-white/10 text-white/60 hover:border-white/20"
+                                                : "bg-muted border-border text-muted-foreground hover:border-border"
                                         }`}
                                     >
                                         <Icon className="w-4 h-4" />
@@ -218,7 +218,7 @@ export default function ExportGroupingModal({
 
                     {/* Grouping Selection */}
                     <div className="space-y-3">
-                        <label className="block text-sm font-medium text-white/80">
+                        <label className="block text-sm font-medium text-foreground">
                             Group By
                         </label>
                         <div className="grid grid-cols-2 gap-2">
@@ -231,25 +231,25 @@ export default function ExportGroupingModal({
                                         className={`w-full flex items-center gap-2 px-3 py-2.5 rounded-lg border transition-colors text-left ${
                                             groupings.includes(option.key)
                                                 ? "bg-blue-500/20 border-blue-500/40 text-blue-300"
-                                                : "bg-white/5 border-white/10 text-white/60 hover:border-white/20"
+                                                : "bg-muted border-border text-muted-foreground hover:border-border"
                                         }`}
                                     >
                                         <div
                                             className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-colors ${
                                                 groupings.includes(option.key)
                                                     ? "bg-blue-500 border-blue-500"
-                                                    : "border-white/30"
+                                                    : "border-border"
                                             }`}
                                         >
                                             {groupings.includes(option.key) && (
-                                                <CheckIcon className="w-3 h-3 text-white" />
+                                                <CheckIcon className="w-3 h-3 text-foreground" />
                                             )}
                                         </div>
                                         <span className="text-sm font-medium">{option.label}</span>
-                                        <InfoIcon className="w-3.5 h-3.5 ml-auto text-white/40" />
+                                        <InfoIcon className="w-3.5 h-3.5 ml-auto text-muted-foreground/70" />
                                     </button>
                                     {showTooltip === option.key && (
-                                        <div className="absolute z-10 bottom-full left-0 mb-2 w-64 p-3 bg-zinc-800 rounded-lg border border-white/10 shadow-xl text-xs text-white/80 leading-relaxed">
+                                        <div className="absolute z-10 bottom-full left-0 mb-2 w-64 p-3 bg-muted rounded-lg border border-border shadow-xl text-xs text-foreground leading-relaxed">
                                             {option.tooltip}
                                             <div className="absolute top-full left-4 border-4 border-transparent border-t-zinc-800" />
                                         </div>
@@ -261,25 +261,25 @@ export default function ExportGroupingModal({
 
                     {/* Export Scope */}
                     <div className="space-y-3">
-                        <label className="block text-sm font-medium text-white/80">
+                        <label className="block text-sm font-medium text-foreground">
                             Export Scope
                         </label>
                         <div className="relative" ref={scopeDropdownRef}>
                             <button
                                 onClick={() => setShowScopeDropdown(!showScopeDropdown)}
-                                className="w-full flex items-center justify-between px-4 py-3 bg-white/5 border border-white/10 rounded-lg hover:border-white/20 transition-colors"
+                                className="w-full flex items-center justify-between px-4 py-3 bg-muted border border-border rounded-lg hover:border-border transition-colors"
                             >
-                                <span className="text-white/80">
+                                <span className="text-foreground">
                                     {EXPORT_SCOPES.find((s) => s.key === scope)?.label}
                                 </span>
                                 <ChevronDownIcon
-                                    className={`w-4 h-4 text-white/60 transition-transform ${
+                                    className={`w-4 h-4 text-muted-foreground transition-transform ${
                                         showScopeDropdown ? "rotate-180" : ""
                                     }`}
                                 />
                             </button>
                             {showScopeDropdown && (
-                                <div className="absolute z-20 top-full left-0 right-0 mt-1 bg-zinc-800 border border-white/10 rounded-lg shadow-xl overflow-hidden">
+                                <div className="absolute z-20 top-full left-0 right-0 mt-1 bg-muted border border-border rounded-lg shadow-xl overflow-hidden">
                                     {EXPORT_SCOPES.map((option) => (
                                         <button
                                             key={option.key}
@@ -287,10 +287,10 @@ export default function ExportGroupingModal({
                                                 setScope(option.key)
                                                 setShowScopeDropdown(false)
                                             }}
-                                            className={`w-full px-4 py-2.5 text-left text-sm hover:bg-white/10 transition-colors ${
+                                            className={`w-full px-4 py-2.5 text-left text-sm hover:bg-muted transition-colors ${
                                                 scope === option.key
                                                     ? "text-blue-400 bg-blue-500/10"
-                                                    : "text-white/80"
+                                                    : "text-foreground"
                                             }`}
                                         >
                                             {option.label}
@@ -303,26 +303,26 @@ export default function ExportGroupingModal({
 
                     {/* Date Range */}
                     <div className="space-y-3">
-                        <label className="block text-sm font-medium text-white/80">
+                        <label className="block text-sm font-medium text-foreground">
                             Date Range
                         </label>
                         <div className="space-y-3">
                             <div className="relative" ref={dateDropdownRef}>
                                 <button
                                     onClick={() => setShowDateDropdown(!showDateDropdown)}
-                                    className="w-full flex items-center justify-between px-4 py-3 bg-white/5 border border-white/10 rounded-lg hover:border-white/20 transition-colors"
+                                    className="w-full flex items-center justify-between px-4 py-3 bg-muted border border-border rounded-lg hover:border-border transition-colors"
                                 >
-                                    <span className="text-white/80">
+                                    <span className="text-foreground">
                                         {DATE_PRESETS.find((p) => p.key === datePreset)?.label}
                                     </span>
                                     <ChevronDownIcon
-                                        className={`w-4 h-4 text-white/60 transition-transform ${
+                                        className={`w-4 h-4 text-muted-foreground transition-transform ${
                                             showDateDropdown ? "rotate-180" : ""
                                         }`}
                                     />
                                 </button>
                                 {showDateDropdown && (
-                                    <div className="absolute z-20 top-full left-0 right-0 mt-1 bg-zinc-800 border border-white/10 rounded-lg shadow-xl overflow-hidden">
+                                    <div className="absolute z-20 top-full left-0 right-0 mt-1 bg-muted border border-border rounded-lg shadow-xl overflow-hidden">
                                         {DATE_PRESETS.map((preset) => (
                                             <button
                                                 key={preset.key}
@@ -330,10 +330,10 @@ export default function ExportGroupingModal({
                                                     setDatePreset(preset.key)
                                                     setShowDateDropdown(false)
                                                 }}
-                                                className={`w-full px-4 py-2.5 text-left text-sm hover:bg-white/10 transition-colors ${
+                                                className={`w-full px-4 py-2.5 text-left text-sm hover:bg-muted transition-colors ${
                                                     datePreset === preset.key
                                                         ? "text-blue-400 bg-blue-500/10"
-                                                        : "text-white/80"
+                                                        : "text-foreground"
                                                 }`}
                                             >
                                                 {preset.label}
@@ -346,7 +346,7 @@ export default function ExportGroupingModal({
                             {datePreset === "custom" && (
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
-                                        <label className="block text-xs text-white/50 mb-1.5">
+                                        <label className="block text-xs text-muted-foreground mb-1.5">
                                             Start Date
                                         </label>
                                         <input
@@ -356,11 +356,11 @@ export default function ExportGroupingModal({
                                                 const d = safeToDate(e.target.value)
                                                 if (isValidDate(d)) setStartDate(d)
                                             }}
-                                            className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:border-blue-500/50 outline-none transition-colors text-sm"
+                                            className="w-full px-3 py-2 bg-muted border border-border rounded-lg focus:border-blue-500/50 outline-none transition-colors text-sm"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs text-white/50 mb-1.5">
+                                        <label className="block text-xs text-muted-foreground mb-1.5">
                                             End Date
                                         </label>
                                         <input
@@ -370,7 +370,7 @@ export default function ExportGroupingModal({
                                                 const d = safeToDate(e.target.value)
                                                 if (isValidDate(d)) setEndDate(d)
                                             }}
-                                            className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:border-blue-500/50 outline-none transition-colors text-sm"
+                                            className="w-full px-3 py-2 bg-muted border border-border rounded-lg focus:border-blue-500/50 outline-none transition-colors text-sm"
                                         />
                                     </div>
                                 </div>
@@ -380,21 +380,21 @@ export default function ExportGroupingModal({
 
                     {/* Options Toggles */}
                     <div className="space-y-3">
-                        <label className="block text-sm font-medium text-white/80">
+                        <label className="block text-sm font-medium text-foreground">
                             Options
                         </label>
                         <div className="space-y-2">
-                            <div className="flex items-center justify-between px-4 py-3 bg-white/5 rounded-lg border border-white/10">
+                            <div className="flex items-center justify-between px-4 py-3 bg-muted rounded-lg border border-border">
                                 <div>
                                     <span className="text-sm font-medium">Include Summary Sheet</span>
-                                    <p className="text-xs text-white/50 mt-0.5">
+                                    <p className="text-xs text-muted-foreground mt-0.5">
                                         Add a summary tab with totals
                                     </p>
                                 </div>
                                 <button
                                     onClick={() => setIncludeSummarySheet(!includeSummarySheet)}
                                     className={`w-10 h-6 rounded-full transition-colors relative ${
-                                        includeSummarySheet ? "bg-blue-500" : "bg-white/20"
+                                        includeSummarySheet ? "bg-blue-500" : "bg-muted"
                                     }`}
                                 >
                                     <div
@@ -406,17 +406,17 @@ export default function ExportGroupingModal({
                             </div>
 
                             {format !== "csv" && (
-                                <div className="flex items-center justify-between px-4 py-3 bg-white/5 rounded-lg border border-white/10">
+                                <div className="flex items-center justify-between px-4 py-3 bg-muted rounded-lg border border-border">
                                     <div>
                                         <span className="text-sm font-medium">Include Charts</span>
-                                        <p className="text-xs text-white/50 mt-0.5">
+                                        <p className="text-xs text-muted-foreground mt-0.5">
                                             Add visual charts to the export
                                         </p>
                                     </div>
                                     <button
                                         onClick={() => setIncludeCharts(!includeCharts)}
                                         className={`w-10 h-6 rounded-full transition-colors relative ${
-                                            includeCharts ? "bg-blue-500" : "bg-white/20"
+                                            includeCharts ? "bg-blue-500" : "bg-muted"
                                         }`}
                                     >
                                         <div
@@ -438,11 +438,11 @@ export default function ExportGroupingModal({
                 </div>
 
                 {/* Footer */}
-                <div className="p-6 border-t border-white/10 flex justify-end gap-3">
+                <div className="p-6 border-t border-border flex justify-end gap-3">
                     <button
                         onClick={onClose}
                         disabled={loading}
-                        className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors disabled:opacity-50"
+                        className="px-4 py-2 bg-card hover:bg-muted rounded-lg transition-colors disabled:opacity-50"
                     >
                         Cancel
                     </button>

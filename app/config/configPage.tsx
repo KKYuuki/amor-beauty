@@ -54,10 +54,12 @@ import {
 import { getInventory } from "@/server/actions/inventory"
 import { InventoryItem } from "@/utils/types/inventory"
 import AdminActionGuard from "@/components/admin/AdminActionGuard"
-import { useBranchContext } from "@/components/branch-context"
+
 import ServiceModal from "@/components/services/ServiceModal"
 
 import { DayOfWeek, DayHours } from "@/utils/types/settings"
+
+const currentBranch: any = null;
 
 export default function ConfigPage() {
     // Refs
@@ -66,7 +68,7 @@ export default function ConfigPage() {
     // Contexts
     const { userInfo } = useContext(SideBarContext)
     const { addNotification } = useContext(NotificationContext)
-    const { currentBranch } = useBranchContext()
+    
 
     // States
     const [activeCategory, setActiveCategory] = useState<
@@ -411,7 +413,7 @@ export default function ConfigPage() {
                 <div className='grid grid-cols-1 gap-3'>
                     {showInactiveServices ? (
                         filteredInactiveServices.length === 0 ? (
-                            <div className='text-center py-12 text-white/40'>
+                            <div className='text-center py-12 text-muted-foreground/70'>
                                 No deleted services found.
                             </div>
                         ) : (
@@ -421,13 +423,13 @@ export default function ConfigPage() {
                                     layout
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    className='bg-white/5 border border-white/5 rounded-lg p-4 flex items-center justify-between group hover:border-white/10 transition-colors opacity-60'
+                                    className='bg-muted border border-border rounded-lg p-4 flex items-center justify-between group hover:border-border transition-colors opacity-60'
                                 >
                                     <div className='flex flex-col gap-1'>
                                         <h4 className='font-medium text-lg'>
                                             {service.title}
                                         </h4>
-                                        <div className='flex items-center gap-4 text-sm text-white/60'>
+                                        <div className='flex items-center gap-4 text-sm text-muted-foreground'>
                                             <span>
                                                 {service.pricing_type === "HOURLY"
                                                     ? `${currencyTax.currency_symbol}${service.hourly_rate.toFixed(2)}/hr`
@@ -447,7 +449,7 @@ export default function ConfigPage() {
                                                     service.service_type === 'WAXING' ? 'bg-rose-400/20 text-rose-300' :
                                                     service.service_type === 'LASH_BROW' ? 'bg-indigo-400/20 text-indigo-300' :
                                                     service.service_type === 'MAKEUP' ? 'bg-orange-400/20 text-orange-300' :
-                                                    'bg-white/10 text-white/60'
+                                                    'bg-card text-muted-foreground'
                                                 }`}>
                                                     {service.service_type}
                                                 </span>
@@ -489,7 +491,7 @@ export default function ConfigPage() {
                             ))
                         )
                     ) : filteredServices.length === 0 ? (
-                        <div className='text-center py-12 text-white/40'>
+                        <div className='text-center py-12 text-muted-foreground/70'>
                             No services found. Create one to get started.
                         </div>
                     ) : (
@@ -499,13 +501,13 @@ export default function ConfigPage() {
                                 layout
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className='bg-white/5 border border-white/5 rounded-lg p-4 flex items-center justify-between group hover:border-white/10 transition-colors'
+                                className='bg-muted border border-border rounded-lg p-4 flex items-center justify-between group hover:border-border transition-colors'
                             >
                                 <div className='flex flex-col gap-1'>
                                     <h4 className='font-medium text-lg'>
                                         {service.title}
                                     </h4>
-                                    <div className='flex items-center gap-4 text-sm text-white/60'>
+                                    <div className='flex items-center gap-4 text-sm text-muted-foreground'>
                                         <span>
                                             {service.pricing_type === "HOURLY"
                                                 ? `${currencyTax.currency_symbol}${service.hourly_rate.toFixed(2)}/hr`
@@ -525,7 +527,7 @@ export default function ConfigPage() {
                                                 service.service_type === 'WAXING' ? 'bg-rose-400/20 text-rose-300' :
                                                 service.service_type === 'LASH_BROW' ? 'bg-indigo-400/20 text-indigo-300' :
                                                 service.service_type === 'MAKEUP' ? 'bg-orange-400/20 text-orange-300' :
-                                                'bg-white/10 text-white/60'
+                                                'bg-card text-muted-foreground'
                                             }`}>
                                                 {service.service_type}
                                             </span>
@@ -630,7 +632,7 @@ export default function ConfigPage() {
             >
                 <h3 className='text-xl font-semibold flex flex-row gap-2 items-center select-none'>
                     Restock Alert Recipients{" "}
-                    <div className='h-6 w-[1px] bg-white/40' />
+                    <div className='h-6 w-[1px] bg-border' />
                     {restockRecipients.user_ids.length ?? 0}
                 </h3>
                 <div className='flex flex-row gap-2 flex-wrap w-max'>
@@ -660,16 +662,16 @@ export default function ConfigPage() {
                 >
                     <thead className='sticky top-0 bg-black/80'>
                         <tr className='text-nowrap select-none'>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase w-max border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase w-max border-b border-white'>
                                 Role
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Name
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Email
                             </th>
-                            <th className='text-left px-4 py-2 text-sm text-white font-bold uppercase border-b border-white'>
+                            <th className='text-left px-4 py-2 text-sm text-foreground font-bold uppercase border-b border-white'>
                                 Included?
                             </th>
                         </tr>
@@ -699,7 +701,7 @@ export default function ConfigPage() {
                                         }) => {
                                             return (
                                                 <motion.tr
-                                                    className='hover:bg-white/5 transition-colors text-nowrap'
+                                                    className='hover:bg-muted transition-colors text-nowrap'
                                                     key={id}
                                                     layout
                                                     initial={{ opacity: 0 }}
@@ -708,7 +710,7 @@ export default function ConfigPage() {
                                                 >
                                                     <td className='px-3 py-1 text-sm font-medium w-max capitalize'>
                                                         <div
-                                                            className={`border-2 border-white/10 px-2 capitalize rounded-lg cursor-pointer w-max ${
+                                                            className={`border-2 border-border px-2 capitalize rounded-lg cursor-pointer w-max ${
                                                                 role ===
                                                                     "admin" &&
                                                                 "bg-orange-400/20"
@@ -733,7 +735,7 @@ export default function ConfigPage() {
                                                     </td>
                                                     <td className='px-3 py-1 text-sm font-medium h-10 w-max flex flex-row gap-2 items-center'>
                                                         <div
-                                                            className={`aspect-square rounded-full w-6 h-6 flex items-center justify-center cursor-pointer bg-white/10 hover:bg-white/30 transition-colors overflow-clip ${
+                                                            className={`aspect-square rounded-full w-6 h-6 flex items-center justify-center cursor-pointer bg-card hover:bg-muted transition-colors overflow-clip ${
                                                                 avatar_url
                                                                     ? "p-0"
                                                                     : "p-1"
@@ -764,7 +766,7 @@ export default function ConfigPage() {
                                                         <a
                                                             href={`mailto:${email}`}
                                                             title={`send an email to ${full_name}`}
-                                                            className='hover:underline hover:text-white/60 transition-colors'
+                                                            className='hover:underline hover:text-foreground transition-colors'
                                                         >
                                                             {email}
                                                         </a>
@@ -810,9 +812,9 @@ export default function ConfigPage() {
             </motion.div>
 
             {/* Daily Summary */}
-            <div className='bg-white/5 border-2 border-white/5 rounded-lg p-4'>
+            <div className='bg-muted border-2 border-border rounded-lg p-4'>
                 <h3 className='font-semibold text-lg mb-2'>Daily Summary</h3>
-                <p className='text-sm text-white/60 mb-4'>
+                <p className='text-sm text-muted-foreground mb-4'>
                     Automated daily email with appointments and low stock items
                 </p>
                 <label className='flex items-center gap-2 mb-4 cursor-pointer'>
@@ -832,7 +834,7 @@ export default function ConfigPage() {
                 {dailySummary.enabled && (
                     <>
                         <div className='flex flex-col gap-2'>
-                            <span className='text-sm text-white/60'>
+                            <span className='text-sm text-muted-foreground'>
                                 Recipients
                             </span>
                             {users
@@ -964,11 +966,11 @@ export default function ConfigPage() {
         return (
             <div className='flex flex-col gap-6'>
                 {/* Business Hours */}
-                <div className='bg-white/5 border-2 border-white/5 rounded-lg p-4'>
+                <div className='bg-muted border-2 border-border rounded-lg p-4'>
                     <div className='flex items-center justify-between mb-2'>
                         <div>
                             <h3 className='font-semibold text-lg'>Operating Hours</h3>
-                            <p className='text-sm text-white/60'>
+                            <p className='text-sm text-muted-foreground'>
                                 Set your studio&apos;s operating hours
                             </p>
                         </div>
@@ -976,7 +978,7 @@ export default function ConfigPage() {
 
                     {/* Global/Branch Toggle - only show when a branch is selected */}
                     {currentBranch && (
-                        <div className='bg-white/5 rounded-md p-3 mb-4'>
+                        <div className='bg-muted rounded-md p-3 mb-4'>
                             <label className='flex items-center gap-3 cursor-pointer'>
                                 <input
                                     type='checkbox'
@@ -986,7 +988,7 @@ export default function ConfigPage() {
                                 />
                                 <div className='flex flex-col'>
                                     <span className='text-sm font-medium'>Use global hours</span>
-                                    <span className='text-xs text-white/60'>
+                                    <span className='text-xs text-muted-foreground'>
                                         {useGlobalHours
                                             ? `Using global hours for ${currentBranch.name}`
                                             : `Using custom hours for ${currentBranch.name}`}
@@ -1022,7 +1024,7 @@ export default function ConfigPage() {
                                             updateHours(day, { open: e.target.value })
                                         }
                                         disabled={dayHours.closed}
-                                        className='bg-white/10 rounded-md px-3 py-2 text-sm disabled:opacity-50'
+                                        className='bg-card rounded-md px-3 py-2 text-sm disabled:opacity-50'
                                     />
                                     <input
                                         type='time'
@@ -1031,7 +1033,7 @@ export default function ConfigPage() {
                                             updateHours(day, { close: e.target.value })
                                         }
                                         disabled={dayHours.closed}
-                                        className='bg-white/10 rounded-md px-3 py-2 text-sm disabled:opacity-50'
+                                        className='bg-card rounded-md px-3 py-2 text-sm disabled:opacity-50'
                                     />
                                     <label className='flex items-center gap-2 cursor-pointer'>
                                         <input
@@ -1063,14 +1065,14 @@ export default function ConfigPage() {
                 </div>
 
             {/* Currency & Tax */}
-            <div className='bg-white/5 border-2 border-white/5 rounded-lg p-4'>
+            <div className='bg-muted border-2 border-border rounded-lg p-4'>
                 <h3 className='font-semibold text-lg mb-2'>Currency & Tax</h3>
-                <p className='text-sm text-white/60 mb-4'>
+                <p className='text-sm text-muted-foreground mb-4'>
                     Set currency and tax defaults
                 </p>
                 <div className='flex flex-col gap-4'>
                     <label className='flex flex-col gap-1'>
-                        <span className='text-sm text-white/60'>
+                        <span className='text-sm text-muted-foreground'>
                             Currency symbol
                         </span>
                         <input
@@ -1082,11 +1084,11 @@ export default function ConfigPage() {
                                     currency_symbol: e.target.value,
                                 })
                             }
-                            className='bg-white/10 rounded-md px-3 py-2 text-sm'
+                            className='bg-card rounded-md px-3 py-2 text-sm'
                         />
                     </label>
                     <label className='flex flex-col gap-1'>
-                        <span className='text-sm text-white/60'>
+                        <span className='text-sm text-muted-foreground'>
                             Tax rate (decimal, e.g., 0.12 for 12%)
                         </span>
                         <input
@@ -1099,11 +1101,11 @@ export default function ConfigPage() {
                                     tax_rate: Number(e.target.value),
                                 })
                             }
-                            className='bg-white/10 rounded-md px-3 py-2 text-sm'
+                            className='bg-card rounded-md px-3 py-2 text-sm'
                         />
                     </label>
                     <label className='flex flex-col gap-1'>
-                        <span className='text-sm text-white/60'>
+                        <span className='text-sm text-muted-foreground'>
                             Tax Enabled
                         </span>
                         <select
@@ -1114,7 +1116,7 @@ export default function ConfigPage() {
                                     tax_enabled: e.target.value === "true",
                                 })
                             }}
-                            className='bg-white/10 rounded-md px-3 py-2 text-sm'
+                            className='bg-card rounded-md px-3 py-2 text-sm'
                         >
                             <option value='true'>Yes</option>
                             <option value='false'>No</option>
@@ -1122,7 +1124,7 @@ export default function ConfigPage() {
                     </label>
                     {currencyTax.tax_enabled && (
                         <label className='flex flex-col gap-1'>
-                            <span className='text-sm text-white/60'>
+                            <span className='text-sm text-muted-foreground'>
                                 Tax Mode
                             </span>
                             <select
@@ -1138,7 +1140,7 @@ export default function ConfigPage() {
                                             e.target.value === "inclusive",
                                     })
                                 }}
-                                className='bg-white/10 rounded-md px-3 py-2 text-sm'
+                                className='bg-card rounded-md px-3 py-2 text-sm'
                             >
                                 <option value='inclusive'>
                                     Inclusive (tax included in price)
@@ -1147,7 +1149,7 @@ export default function ConfigPage() {
                                     Exclusive (tax added on top)
                                 </option>
                             </select>
-                            <span className='text-xs text-white/40 mt-1'>
+                            <span className='text-xs text-muted-foreground/70 mt-1'>
                                 {currencyTax.tax_inclusive
                                     ? "Prices shown already include tax. Tax will be extracted from the total."
                                     : "Prices shown are before tax. Tax will be added to the total."}
@@ -1174,9 +1176,9 @@ export default function ConfigPage() {
     const renderSystemSettings = () => (
         <div className='flex flex-col gap-6'>
             {/* Maintenance Mode */}
-            <div className='bg-white/5 border-2 border-white/5 rounded-lg p-4'>
+            <div className='bg-muted border-2 border-border rounded-lg p-4'>
                 <h3 className='font-semibold text-lg mb-2'>Maintenance Mode</h3>
-                <p className='text-sm text-white/60 mb-4'>
+                <p className='text-sm text-muted-foreground mb-4'>
                     Prevent non-admin access during maintenance
                 </p>
                 <label className='flex items-center gap-2 mb-4 cursor-pointer'>
@@ -1195,7 +1197,7 @@ export default function ConfigPage() {
                 </label>
                 {maintenanceMode.enabled && (
                     <label className='flex flex-col gap-1'>
-                        <span className='text-sm text-white/60'>
+                        <span className='text-sm text-muted-foreground'>
                             Maintenance message
                         </span>
                         <textarea
@@ -1206,7 +1208,7 @@ export default function ConfigPage() {
                                     message: e.target.value,
                                 })
                             }
-                            className='bg-white/10 rounded-md px-3 py-2 text-sm resize-none'
+                            className='bg-card rounded-md px-3 py-2 text-sm resize-none'
                             rows={3}
                         />
                     </label>
@@ -1228,15 +1230,15 @@ export default function ConfigPage() {
             </div>
 
             {/* Log Retention */}
-            <div className='bg-white/5 border-2 border-white/5 rounded-lg p-4'>
+            <div className='bg-muted border-2 border-border rounded-lg p-4'>
                 <h3 className='font-semibold text-lg mb-2'>
                     Log Retention Period
                 </h3>
-                <p className='text-sm text-white/60 mb-4'>
+                <p className='text-sm text-muted-foreground mb-4'>
                     How long to keep system logs
                 </p>
                 <label className='flex flex-col gap-1'>
-                    <span className='text-sm text-white/60'>Days</span>
+                    <span className='text-sm text-muted-foreground'>Days</span>
                     <input
                         type='number'
                         value={logRetention.days}
@@ -1245,7 +1247,7 @@ export default function ConfigPage() {
                                 days: Number(e.target.value),
                             })
                         }
-                        className='bg-white/10 rounded-md px-3 py-2 text-sm'
+                        className='bg-card rounded-md px-3 py-2 text-sm'
                     />
                 </label>
                 <AdminActionGuard
@@ -1272,7 +1274,7 @@ export default function ConfigPage() {
                         <Settings2Icon className='w-6 h-6' />
                         Configuration
                     </h1>
-                    <p className='text-white/60 text-sm mt-1'>
+                    <p className='text-muted-foreground text-sm mt-1'>
                         Manage system settings
                     </p>
                 </div>
@@ -1287,10 +1289,10 @@ export default function ConfigPage() {
                     ).map((category) => (
                         <motion.button
                             key={category}
-                            className={`font-medium cursor-pointer transition-colors hover:text-white flex items-center gap-2 ${
+                            className={`font-medium cursor-pointer transition-colors hover:text-foreground flex items-center gap-2 ${
                                 activeCategory === category
-                                    ? "text-white"
-                                    : "text-white/60"
+                                    ? "text-foreground"
+                                    : "text-muted-foreground"
                             }`}
                             onClick={() => setActiveCategory(category)}
                         >

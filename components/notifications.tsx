@@ -99,7 +99,7 @@ function NotificationToast({
             onClick={() => onDismiss(id)}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className={`w-full cursor-pointer overflow-hidden rounded-xl border-2 bg-zinc-900 shadow-lg select-none ${style.borderColor}`}
+            className={`w-full cursor-pointer overflow-hidden rounded-xl border-2 bg-card shadow-lg select-none ${style.borderColor}`}
         >
             <div className="flex items-start gap-3 p-4 bg-black/20">
                 <div className={`shrink-0 rounded-lg p-1.5 ${style.iconBg}`}>
@@ -107,11 +107,11 @@ function NotificationToast({
                 </div>
                 <div className="min-w-0 flex-1">
                     {title && (
-                        <p className="mb-0.5 text-sm font-semibold text-white select-none">
+                        <p className="mb-0.5 text-sm font-semibold text-foreground select-none">
                             {title}
                         </p>
                     )}
-                    <p className="text-sm leading-relaxed text-white/80 select-none">
+                    <p className="text-sm leading-relaxed text-foreground select-none">
                         {message}
                     </p>
                 </div>
@@ -121,7 +121,7 @@ function NotificationToast({
                         onDismiss(id)
                     }}
                     aria-label="Dismiss notification"
-                    className="shrink-0 rounded-md p-1 text-slate-400 transition-colors hover:bg-white/60 hover:text-slate-700"
+                    className="shrink-0 rounded-md p-1 text-slate-400 transition-colors hover:bg-muted hover:text-foreground"
                 >
                     <XIcon size={14} />
                 </button>
@@ -281,7 +281,7 @@ export default function NotificationProvider({
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 4 }}
                     onClick={clearAll}
-                    className="self-end rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/70 shadow-md ring-1 ring-white/10 select-none hover:bg-white/20 hover:text-white"
+                    className="self-end rounded-full bg-card px-3 py-1 text-xs font-semibold text-foreground/90 shadow-md ring-1 ring-white/10 select-none hover:bg-muted hover:text-foreground"
                 >
                     Clear all
                 </motion.button>

@@ -168,13 +168,13 @@ export default function ExecutiveAccounting({ branchId, currencySymbol: propCurr
             <div className='w-full flex flex-col gap-6 pb-10'>
                 <div className='flex flex-col items-center justify-center p-12 bg-red-500/10 border border-red-500/20 rounded-xl text-center'>
                     <AlertCircleIcon className='text-red-400 mb-4' size={48} />
-                    <h2 className='text-xl font-bold text-white mb-2'>
+                    <h2 className='text-xl font-bold text-foreground mb-2'>
                         Failed to Load Metrics
                     </h2>
-                    <p className='text-white/60 mb-4'>{error}</p>
+                    <p className='text-muted-foreground mb-4'>{error}</p>
                     <button
                         onClick={() => fetchData()}
-                        className='px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors cursor-pointer'
+                        className='px-4 py-2 bg-card hover:bg-muted text-foreground rounded-lg transition-colors cursor-pointer'
                     >
                         Retry
                     </button>
@@ -334,12 +334,12 @@ export default function ExecutiveAccounting({ branchId, currencySymbol: propCurr
                     <BarChart3Icon className='text-purple-400' /> Revenue vs
                     Expenses Trend
                 </h2>
-                <div className='w-full h-60 sm:h-80 bg-white/5 border-2 border-white/5 rounded-xl p-4 flex flex-col gap-2'>
-                    <h3 className='font-semibold text-white/60 text-sm'>
+                <div className='w-full h-60 sm:h-80 bg-muted border-2 border-border rounded-xl p-4 flex flex-col gap-2'>
+                    <h3 className='font-semibold text-muted-foreground text-sm'>
                         {dateRangeStr || "Select a date range"}
                     </h3>
                     {trendData.length === 0 ? (
-                        <div className='flex-1 flex items-center justify-center text-white/40'>
+                        <div className='flex-1 flex items-center justify-center text-muted-foreground/70'>
                             No data available for the selected period
                         </div>
                     ) : (
@@ -381,7 +381,7 @@ export default function ExecutiveAccounting({ branchId, currencySymbol: propCurr
                                 <Legend
                                     wrapperStyle={{ fontSize: "12px" }}
                                     formatter={(value) => (
-                                        <span className='text-white/80'>{value}</span>
+                                        <span className='text-foreground'>{value}</span>
                                     )}
                                 />
                                 <Bar
@@ -409,12 +409,12 @@ export default function ExecutiveAccounting({ branchId, currencySymbol: propCurr
                     Breakdown
                 </h2>
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
-                    <div className='w-full h-80 bg-white/5 border-2 border-white/5 rounded-xl p-4 flex flex-col gap-2'>
-                        <h3 className='font-semibold text-white/60 text-sm'>
+                    <div className='w-full h-80 bg-muted border-2 border-border rounded-xl p-4 flex flex-col gap-2'>
+                        <h3 className='font-semibold text-muted-foreground text-sm'>
                             By Category
                         </h3>
                         {expenseBreakdown.length === 0 ? (
-                            <div className='flex-1 flex items-center justify-center text-white/40'>
+                            <div className='flex-1 flex items-center justify-center text-muted-foreground/70'>
                                 No expense data available
                             </div>
                         ) : (
@@ -454,7 +454,7 @@ export default function ExecutiveAccounting({ branchId, currencySymbol: propCurr
                                     <Legend
                                         wrapperStyle={{ fontSize: "10px" }}
                                         formatter={(value) => (
-                                            <span className='capitalize text-white/60'>
+                                            <span className='capitalize text-muted-foreground'>
                                                 {value}
                                             </span>
                                         )}
@@ -464,12 +464,12 @@ export default function ExecutiveAccounting({ branchId, currencySymbol: propCurr
                         )}
                     </div>
 
-                    <div className='w-full bg-white/5 border-2 border-white/5 rounded-xl p-4'>
-                        <h3 className='font-semibold text-white/60 text-sm mb-4'>
+                    <div className='w-full bg-muted border-2 border-border rounded-xl p-4'>
+                        <h3 className='font-semibold text-muted-foreground text-sm mb-4'>
                             Expense Details
                         </h3>
                         {expenseBreakdown.length === 0 ? (
-                            <div className='flex items-center justify-center text-white/40 py-8'>
+                            <div className='flex items-center justify-center text-muted-foreground/70 py-8'>
                                 No expense data available
                             </div>
                         ) : (
@@ -477,7 +477,7 @@ export default function ExecutiveAccounting({ branchId, currencySymbol: propCurr
                                 {expenseBreakdown.map((item, index) => (
                                     <div
                                         key={`${item.category}-${index}`}
-                                        className='flex items-center justify-between p-3 bg-white/5 rounded-lg'
+                                        className='flex items-center justify-between p-3 bg-muted rounded-lg'
                                     >
                                         <div className='flex items-center gap-3'>
                                             <div
@@ -495,7 +495,7 @@ export default function ExecutiveAccounting({ branchId, currencySymbol: propCurr
                                             <p className='font-bold'>
                                                 {formatCurrency(item.amount)}
                                             </p>
-                                            <p className='text-xs text-white/60'>
+                                            <p className='text-xs text-muted-foreground'>
                                                 {item.percentage.toFixed(1)}%
                                             </p>
                                         </div>
@@ -513,12 +513,12 @@ export default function ExecutiveAccounting({ branchId, currencySymbol: propCurr
                     <TrendingUpIcon className='text-green-400' /> Revenue Breakdown
                 </h2>
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
-                    <div className='w-full h-80 bg-white/5 border-2 border-white/5 rounded-xl p-4 flex flex-col gap-2'>
-                        <h3 className='font-semibold text-white/60 text-sm'>
+                    <div className='w-full h-80 bg-muted border-2 border-border rounded-xl p-4 flex flex-col gap-2'>
+                        <h3 className='font-semibold text-muted-foreground text-sm'>
                             By Category
                         </h3>
                         {revenueBreakdown.length === 0 ? (
-                            <div className='flex-1 flex items-center justify-center text-white/40'>
+                            <div className='flex-1 flex items-center justify-center text-muted-foreground/70'>
                                 No revenue data available
                             </div>
                         ) : (
@@ -556,7 +556,7 @@ export default function ExecutiveAccounting({ branchId, currencySymbol: propCurr
                                     <Legend
                                         wrapperStyle={{ fontSize: "10px" }}
                                         formatter={(value) => (
-                                            <span className='capitalize text-white/60'>
+                                            <span className='capitalize text-muted-foreground'>
                                                 {value}
                                             </span>
                                         )}
@@ -566,12 +566,12 @@ export default function ExecutiveAccounting({ branchId, currencySymbol: propCurr
                         )}
                     </div>
 
-                    <div className='w-full bg-white/5 border-2 border-white/5 rounded-xl p-4'>
-                        <h3 className='font-semibold text-white/60 text-sm mb-4'>
+                    <div className='w-full bg-muted border-2 border-border rounded-xl p-4'>
+                        <h3 className='font-semibold text-muted-foreground text-sm mb-4'>
                             Revenue Details
                         </h3>
                         {revenueBreakdown.length === 0 ? (
-                            <div className='flex items-center justify-center text-white/40 py-8'>
+                            <div className='flex items-center justify-center text-muted-foreground/70 py-8'>
                                 No revenue data available
                             </div>
                         ) : (
@@ -579,7 +579,7 @@ export default function ExecutiveAccounting({ branchId, currencySymbol: propCurr
                                 {revenueBreakdown.map((item, index) => (
                                     <div
                                         key={`${item.category}-${index}`}
-                                        className='flex items-center justify-between p-3 bg-white/5 rounded-lg'
+                                        className='flex items-center justify-between p-3 bg-muted rounded-lg'
                                     >
                                         <div className='flex items-center gap-3'>
                                             <div
@@ -597,7 +597,7 @@ export default function ExecutiveAccounting({ branchId, currencySymbol: propCurr
                                             <p className='font-bold'>
                                                 {formatCurrency(item.amount)}
                                             </p>
-                                            <p className='text-xs text-white/60'>
+                                            <p className='text-xs text-muted-foreground'>
                                                 {item.percentage.toFixed(1)}%
                                             </p>
                                         </div>
@@ -614,12 +614,12 @@ export default function ExecutiveAccounting({ branchId, currencySymbol: propCurr
                 <h2 className='text-xl font-bold flex items-center gap-2'>
                     <TrendingUpIcon className='text-cyan-400' /> Net Profit Trend
                 </h2>
-                <div className='w-full h-60 sm:h-80 bg-white/5 border-2 border-white/5 rounded-xl p-4 flex flex-col gap-2'>
-                    <h3 className='font-semibold text-white/60 text-sm'>
+                <div className='w-full h-60 sm:h-80 bg-muted border-2 border-border rounded-xl p-4 flex flex-col gap-2'>
+                    <h3 className='font-semibold text-muted-foreground text-sm'>
                         Net Profit Over Time
                     </h3>
                     {trendData.length === 0 ? (
-                        <div className='flex-1 flex items-center justify-center text-white/40'>
+                        <div className='flex-1 flex items-center justify-center text-muted-foreground/70'>
                             No data available for the selected period
                         </div>
                     ) : (

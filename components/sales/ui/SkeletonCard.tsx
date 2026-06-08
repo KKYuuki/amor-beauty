@@ -14,7 +14,7 @@ export function SkeletonCard({ count = 8 }: SkeletonCardProps) {
                     key={i}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className='p-4 bg-white dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700'
+                    className='p-4 bg-white dark:bg-muted rounded-xl border border-zinc-200 dark:border-border'
                 >
                     {/* Title placeholder */}
                     <div className='h-5 bg-zinc-200 dark:bg-zinc-700 rounded w-3/4 animate-pulse mb-2' />

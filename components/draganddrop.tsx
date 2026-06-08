@@ -197,7 +197,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
             className={`w-full py-10 h-auto border-2 border-dashed rounded-md flex flex-col items-center justify-center gap-1 font-semibold text-center select-none cursor-pointer transition-colors ${
                 isDragging
                     ? "border-blue-500/80 bg-blue-500/10 cursor-grab"
-                    : "border-white/5 hover:text-white/60"
+                    : "border-border hover:text-foreground"
             }`}
             onClick={handleDivClick}
             onDragOver={handleDragPrevent}
@@ -215,7 +215,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
                 className='hidden'
             />
             {allowedTypes.length > 1 && (
-                <div className='flex flex-row gap-2 mb-2 bg-white/10 p-1 rounded-md z-10'>
+                <div className='flex flex-row gap-2 mb-2 bg-card p-1 rounded-md z-10'>
                     {allowedTypes.map((type) => (
                         <button
                             key={type}
@@ -227,7 +227,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
                             className={`px-3 py-1 rounded-sm text-xs font-bold uppercase transition-colors ${
                                 uploadType === type
                                     ? "bg-white text-black"
-                                    : "text-white/60 hover:text-white hover:bg-white/10"
+                                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
                             }`}
                         >
                             {type}
@@ -236,7 +236,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
                 </div>
             )}
             {title}
-            <span className='text-sm font-semibold text-white/60'>
+            <span className='text-sm font-semibold text-muted-foreground'>
                 Max Size: {maxSizeMB}MB
             </span>
             Drag or Click to Select
@@ -247,14 +247,14 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
         <div className='fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-4'>
             {" "}
             {/* Increased z-index, slightly less opaque background */}
-            <div className='bg-zinc-800 p-6 rounded-lg shadow-xl w-full max-w-xl h-[90vh] md:h-[75vh] flex flex-col border border-white/10'>
+            <div className='bg-muted p-6 rounded-lg shadow-xl w-full max-w-xl h-[90vh] md:h-[75vh] flex flex-col border border-border'>
                 {" "}
                 {/* Adjusted background, padding, height, border */}
-                <h2 className='text-xl font-bold text-white mb-4'>
+                <h2 className='text-xl font-bold text-foreground mb-4'>
                     Crop Image to Square
                 </h2>
                 {/* Cropper container */}
-                <div className='relative flex-1 w-full bg-zinc-900 rounded overflow-hidden mb-4'>
+                <div className='relative flex-1 w-full bg-card rounded overflow-hidden mb-4'>
                     {" "}
                     {/* Darker background for cropper, added rounded corners */}
                     <Cropper
@@ -285,18 +285,18 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
                         aria-label='Zoom slider'
                         onChange={(e) => setZoom(parseFloat(e.target.value))}
                         // Tailwind styling for a custom range input
-                        className='w-full h-2 rounded-lg appearance-none cursor-pointer bg-white/20 dark:bg-gray-700 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-500 [&::-webkit-slider-thumb]:shadow [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-blue-500 [&::-moz-range-thumb]:shadow'
+                        className='w-full h-2 rounded-lg appearance-none cursor-pointer bg-muted dark:bg-gray-700 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-500 [&::-webkit-slider-thumb]:shadow [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-blue-500 [&::-moz-range-thumb]:shadow'
                     />
                     <div className='flex justify-end gap-2'>
                         <button
                             onClick={handleCropCancel}
-                            className='px-6 py-2 border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200 text-sm font-medium'
+                            className='px-6 py-2 border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-foreground transition-colors duration-200 text-sm font-medium'
                         >
                             Cancel
                         </button>
                         <button
                             onClick={handleCropDone}
-                            className='px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 text-sm font-medium'
+                            className='px-6 py-2 bg-blue-600 text-foreground rounded-md hover:bg-blue-700 transition-colors duration-200 text-sm font-medium'
                         >
                             Crop & Upload
                         </button>

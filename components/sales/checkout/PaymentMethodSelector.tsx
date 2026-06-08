@@ -36,7 +36,7 @@ export default function PaymentMethodSelector({
                         className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border-2 ${
                             paymentMethod === method.key
                                 ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400'
-                                : 'border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-600'
+                                : 'border-zinc-200 dark:border-border bg-white dark:bg-muted hover:border-zinc-300 dark:hover:border-zinc-600'
                         }`}
                     >
                         <method.icon className='w-4 h-4' />
@@ -47,11 +47,11 @@ export default function PaymentMethodSelector({
 
             {paymentMethod === 'CASH' && !isPartialPayment && (
                 <div className='space-y-2'>
-                    <label className='text-sm font-medium text-zinc-700 dark:text-zinc-300'>
+                    <label className='text-sm font-medium text-muted-foreground dark:text-foreground'>
                         Cash Received
                     </label>
                     <div className='relative'>
-                        <span className='absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500'>
+                        <span className='absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground'>
                             {taxSettings.currency_symbol}
                         </span>
                         <input
@@ -59,12 +59,12 @@ export default function PaymentMethodSelector({
                             value={cashReceived}
                             onChange={(e) => setCashReceived(e.target.value)}
                             placeholder='0.00'
-                            className='w-full pl-8 pr-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                            className='w-full pl-8 pr-4 py-2 rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-muted focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                         />
                     </div>
                     {cashReceived && change >= 0 && (
                         <div className='flex items-center justify-between text-sm'>
-                            <span className='text-zinc-600 dark:text-zinc-400'>Change Due:</span>
+                            <span className='text-muted-foreground dark:text-muted-foreground'>Change Due:</span>
                             <span className='font-semibold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/30 px-3 py-1 rounded-full'>
                                 {taxSettings.currency_symbol} {change.toFixed(2)}
                             </span>
@@ -75,7 +75,7 @@ export default function PaymentMethodSelector({
 
             {paymentMethod !== 'CASH' && paymentMethod !== 'SPLIT' && (
                 <div className='space-y-2'>
-                    <label className='text-sm font-medium text-zinc-700 dark:text-zinc-300'>
+                    <label className='text-sm font-medium text-muted-foreground dark:text-foreground'>
                         Reference Number
                     </label>
                     <input
@@ -83,7 +83,7 @@ export default function PaymentMethodSelector({
                         value={referenceNumber}
                         onChange={(e) => setReferenceNumber(e.target.value)}
                         placeholder='Enter reference number'
-                        className='w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                        className='w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-muted focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                     />
                 </div>
             )}

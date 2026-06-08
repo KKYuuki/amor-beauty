@@ -199,7 +199,7 @@ export default function TransactionDetailClient({
                     <>
                         <button
                             onClick={() => router.push("/transactions")}
-                            className="flex items-center gap-2 px-3 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors border-2 border-white/5 cursor-pointer"
+                            className="flex items-center gap-2 px-3 py-2 bg-card hover:bg-muted rounded-md transition-colors border-2 border-border cursor-pointer"
                         >
                             <ArrowLeftIcon className="w-4 h-4" />
                             <span className="text-sm font-medium">Back</span>
@@ -241,44 +241,44 @@ export default function TransactionDetailClient({
             <div className="flex-1 overflow-auto p-4">
                 <div className="max-w-6xl mx-auto space-y-6">
                     {/* Status Banner */}
-                    <div className="flex items-center justify-between bg-white/5 rounded-lg p-4 border border-white/10">
+                    <div className="flex items-center justify-between bg-muted rounded-lg p-4 border border-border">
                         <div className="flex items-center gap-4">
                             <div>
-                                <p className="text-sm text-white/60">Status</p>
+                                <p className="text-sm text-muted-foreground">Status</p>
                                 <div className="mt-1">{getStatusBadge(transaction.status)}</div>
                             </div>
                             <div>
-                                <p className="text-sm text-white/60">Transaction Date</p>
-                                <p className="text-white font-medium">
+                                <p className="text-sm text-muted-foreground">Transaction Date</p>
+                                <p className="text-foreground font-medium">
                                     {new Date(transaction.created_at).toLocaleString()}
                                 </p>
                             </div>
                             <div>
-                                <p className="text-sm text-white/60">Transaction Number</p>
-                                <p className="text-white font-mono uppercase">{transaction.transaction_number}</p>
+                                <p className="text-sm text-muted-foreground">Transaction Number</p>
+                                <p className="text-foreground font-mono uppercase">{transaction.transaction_number}</p>
                             </div>
                         </div>
                     </div>
 
                     {/* Customer & Staff Info */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                            <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                                <UserIcon className="w-5 h-5 text-white/60" />
+                        <div className="bg-muted rounded-lg p-4 border border-border">
+                            <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                                <UserIcon className="w-5 h-5 text-muted-foreground" />
                                 Customer Information
                             </h3>
                             <div className="space-y-3">
                                 <div>
-                                    <p className="text-sm text-white/60">Name</p>
-                                    <p className="text-white font-medium capitalize">
+                                    <p className="text-sm text-muted-foreground">Name</p>
+                                    <p className="text-foreground font-medium capitalize">
                                         {transaction.buyer?.full_name || transaction.buyer_name || "Walk-in Customer"}
                                     </p>
                                 </div>
                                 {transaction.client_type && (
                                     <div>
-                                        <p className="text-sm text-white/60">Client Type</p>
+                                        <p className="text-sm text-muted-foreground">Client Type</p>
                                         <span
-                                            className={`inline-block mt-1 px-3 py-0.5 rounded-xs text-sm font-semibold border-2 border-white/5 ${
+                                            className={`inline-block mt-1 px-3 py-0.5 rounded-xs text-sm font-semibold border-2 border-border ${
                                                 transaction.client_type === 'PERSONAL'
                                                     ? 'bg-purple-400/20 text-purple-300'
                                                     : 'bg-cyan-400/20 text-cyan-300'
@@ -290,34 +290,34 @@ export default function TransactionDetailClient({
                                 )}
                                 {transaction.customer_phone && (
                                     <div>
-                                        <p className="text-sm text-white/60">Phone</p>
-                                        <p className="text-white font-medium">{transaction.customer_phone}</p>
+                                        <p className="text-sm text-muted-foreground">Phone</p>
+                                        <p className="text-foreground font-medium">{transaction.customer_phone}</p>
                                     </div>
                                 )}
                                 {transaction.customer_email && (
                                     <div>
-                                        <p className="text-sm text-white/60">Email</p>
-                                        <p className="text-white font-medium">{transaction.customer_email}</p>
+                                        <p className="text-sm text-muted-foreground">Email</p>
+                                        <p className="text-foreground font-medium">{transaction.customer_email}</p>
                                     </div>
                                 )}
                             </div>
                         </div>
 
-                        <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                            <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                                <BuildingIcon className="w-5 h-5 text-white/60" />
+                        <div className="bg-muted rounded-lg p-4 border border-border">
+                            <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                                <BuildingIcon className="w-5 h-5 text-muted-foreground" />
                                 Staff & Location
                             </h3>
                             <div className="space-y-3">
                                 <div>
-                                    <p className="text-sm text-white/60">Staff</p>
-                                    <p className="text-white font-medium capitalize">
+                                    <p className="text-sm text-muted-foreground">Staff</p>
+                                    <p className="text-foreground font-medium capitalize">
                                         {transaction.staff?.full_name || "Unknown"}
                                     </p>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-white/60">Branch</p>
-                                    <p className="text-white font-medium">
+                                    <p className="text-sm text-muted-foreground">Branch</p>
+                                    <p className="text-foreground font-medium">
                                         {transaction.branch?.name || "Default Branch"}
                                     </p>
                                 </div>
@@ -326,33 +326,33 @@ export default function TransactionDetailClient({
                     </div>
 
                     {/* Items */}
-                    <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                            <PackageIcon className="w-5 h-5 text-white/60" />
+                    <div className="bg-muted rounded-lg p-4 border border-border">
+                        <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                            <PackageIcon className="w-5 h-5 text-muted-foreground" />
                             Items ({items.length})
                         </h3>
                         {items.length === 0 ? (
-                            <p className="text-white/60">No items in this transaction</p>
+                            <p className="text-muted-foreground">No items in this transaction</p>
                         ) : (
                             <div className="overflow-x-auto">
                                 <table className="w-full">
                                     <thead>
-                                        <tr className="border-b border-white/10">
-                                            <th className="text-left py-2 px-3 text-sm text-white/60 font-medium">Item</th>
-                                            <th className="text-center py-2 px-3 text-sm text-white/60 font-medium">Qty</th>
-                                            <th className="text-right py-2 px-3 text-sm text-white/60 font-medium">Unit Price</th>
-                                            <th className="text-right py-2 px-3 text-sm text-white/60 font-medium">Line Total</th>
+                                        <tr className="border-b border-border">
+                                            <th className="text-left py-2 px-3 text-sm text-muted-foreground font-medium">Item</th>
+                                            <th className="text-center py-2 px-3 text-sm text-muted-foreground font-medium">Qty</th>
+                                            <th className="text-right py-2 px-3 text-sm text-muted-foreground font-medium">Unit Price</th>
+                                            <th className="text-right py-2 px-3 text-sm text-muted-foreground font-medium">Line Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {items.map((item) => (
-                                            <tr key={item.id} className="border-b border-white/5 last:border-0">
-                                                <td className="py-3 px-3 text-white">{item.itemName || "Unknown Item"}</td>
-                                                <td className="py-3 px-3 text-center text-white">{item.quantity}</td>
-                                                <td className="py-3 px-3 text-right text-white">
+                                            <tr key={item.id} className="border-b border-border last:border-0">
+                                                <td className="py-3 px-3 text-foreground">{item.itemName || "Unknown Item"}</td>
+                                                <td className="py-3 px-3 text-center text-foreground">{item.quantity}</td>
+                                                <td className="py-3 px-3 text-right text-foreground">
                                                     {currencySymbol}{Number(item.unitPrice).toFixed(2)}
                                                 </td>
-                                                <td className="py-3 px-3 text-right text-white font-medium">
+                                                <td className="py-3 px-3 text-right text-foreground font-medium">
                                                     {currencySymbol}{Number(item.lineTotal).toFixed(2)}
                                                 </td>
                                             </tr>
@@ -365,30 +365,30 @@ export default function TransactionDetailClient({
 
                     {/* Payment Information */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                            <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                                <CreditCardIcon className="w-5 h-5 text-white/60" />
+                        <div className="bg-muted rounded-lg p-4 border border-border">
+                            <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                                <CreditCardIcon className="w-5 h-5 text-muted-foreground" />
                                 Payment Details
                             </h3>
                             <div className="space-y-3">
                                 <div className="flex justify-between">
-                                    <span className="text-white/60">Payment Method</span>
-                                    <span className="text-white font-medium">{transaction.payment_method}</span>
+                                    <span className="text-muted-foreground">Payment Method</span>
+                                    <span className="text-foreground font-medium">{transaction.payment_method}</span>
                                 </div>
                                 {transaction.reference_number && (
                                     <div className="flex justify-between">
-                                        <span className="text-white/60">Reference Number</span>
-                                        <span className="text-white font-mono">{transaction.reference_number}</span>
+                                        <span className="text-muted-foreground">Reference Number</span>
+                                        <span className="text-foreground font-mono">{transaction.reference_number}</span>
                                     </div>
                                 )}
                                 {payments.length > 0 && (
                                     <div className="mt-4">
-                                        <p className="text-sm text-white/60 mb-2">Split Payments</p>
+                                        <p className="text-sm text-muted-foreground mb-2">Split Payments</p>
                                         <div className="space-y-2">
                                             {payments.map((payment) => (
-                                                <div key={payment.id} className="flex justify-between bg-white/5 p-2 rounded">
-                                                    <span className="text-white">{payment.paymentMethod}</span>
-                                                    <span className="text-white font-medium">
+                                                <div key={payment.id} className="flex justify-between bg-muted p-2 rounded">
+                                                    <span className="text-foreground">{payment.paymentMethod}</span>
+                                                    <span className="text-foreground font-medium">
                                                         {currencySymbol}{Number(payment.amount).toFixed(2)}
                                                     </span>
                                                 </div>
@@ -400,49 +400,49 @@ export default function TransactionDetailClient({
                         </div>
 
                         {/* Financial Summary */}
-                        <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                            <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                                <HashIcon className="w-5 h-5 text-white/60" />
+                        <div className="bg-muted rounded-lg p-4 border border-border">
+                            <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                                <HashIcon className="w-5 h-5 text-muted-foreground" />
                                 Financial Summary
                             </h3>
                             <div className="space-y-2">
                                 <div className="flex justify-between">
-                                    <span className="text-white/60">Subtotal</span>
-                                    <span className="text-white">
+                                    <span className="text-muted-foreground">Subtotal</span>
+                                    <span className="text-foreground">
                                         {currencySymbol}{transaction.subtotal.toFixed(2)}
                                     </span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-white/60">Tax</span>
-                                    <span className="text-white">
+                                    <span className="text-muted-foreground">Tax</span>
+                                    <span className="text-foreground">
                                         {currencySymbol}{transaction.tax_amount.toFixed(2)}
                                     </span>
                                 </div>
                                 {transaction.discount_amount > 0 && (
                                     <div className="flex justify-between">
-                                        <span className="text-white/60">Discount</span>
+                                        <span className="text-muted-foreground">Discount</span>
                                         <span className="text-green-400">
                                             -{currencySymbol}{transaction.discount_amount.toFixed(2)}
                                         </span>
                                     </div>
                                 )}
-                                <div className="border-t border-white/10 pt-2 mt-2">
+                                <div className="border-t border-border pt-2 mt-2">
                                     <div className="flex justify-between">
-                                        <span className="text-white font-semibold">Total</span>
-                                        <span className="text-white font-bold text-lg">
+                                        <span className="text-foreground font-semibold">Total</span>
+                                        <span className="text-foreground font-bold text-lg">
                                             {currencySymbol}{transaction.total.toFixed(2)}
                                         </span>
                                     </div>
                                 </div>
                                 <div className="flex justify-between pt-1">
-                                    <span className="text-white/60">Amount Paid</span>
+                                    <span className="text-muted-foreground">Amount Paid</span>
                                     <span className="text-green-400">
                                         {currencySymbol}{transaction.amount_paid.toFixed(2)}
                                     </span>
                                 </div>
                                 {transaction.balance_due > 0 && (
                                     <div className="flex justify-between">
-                                        <span className="text-white/60">Balance Due</span>
+                                        <span className="text-muted-foreground">Balance Due</span>
                                         <span className="text-orange-400">
                                             {currencySymbol}{transaction.balance_due.toFixed(2)}
                                         </span>
@@ -450,8 +450,8 @@ export default function TransactionDetailClient({
                                 )}
                                 {transaction.change_given && transaction.change_given > 0 && (
                                     <div className="flex justify-between">
-                                        <span className="text-white/60">Change Given</span>
-                                        <span className="text-white">
+                                        <span className="text-muted-foreground">Change Given</span>
+                                        <span className="text-foreground">
                                             {currencySymbol}{transaction.change_given.toFixed(2)}
                                         </span>
                                     </div>
@@ -469,35 +469,35 @@ export default function TransactionDetailClient({
                             </h3>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
-                                    <p className="text-sm text-white/60">Type</p>
-                                    <p className="text-white">{transaction.downpayment.downpayment_type}</p>
+                                    <p className="text-sm text-muted-foreground">Type</p>
+                                    <p className="text-foreground">{transaction.downpayment.downpayment_type}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-white/60">Amount</p>
-                                    <p className="text-white">{currencySymbol}{transaction.downpayment.amount.toFixed(2)}</p>
+                                    <p className="text-sm text-muted-foreground">Amount</p>
+                                    <p className="text-foreground">{currencySymbol}{transaction.downpayment.amount.toFixed(2)}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-white/60">Split Mode</p>
-                                    <p className="text-white">{transaction.downpayment.payroll_split_mode}</p>
+                                    <p className="text-sm text-muted-foreground">Split Mode</p>
+                                    <p className="text-foreground">{transaction.downpayment.payroll_split_mode}</p>
                                 </div>
                                 {transaction.downpayment.percentage_rate && (
                                     <div>
-                                        <p className="text-sm text-white/60">Percentage Rate</p>
-                                        <p className="text-white">{transaction.downpayment.percentage_rate}%</p>
+                                        <p className="text-sm text-muted-foreground">Percentage Rate</p>
+                                        <p className="text-foreground">{transaction.downpayment.percentage_rate}%</p>
                                     </div>
                                 )}
                                 {transaction.downpayment.estimated_total && (
                                     <div>
-                                        <p className="text-sm text-white/60">Estimated Total</p>
-                                        <p className="text-white">{currencySymbol}{transaction.downpayment.estimated_total.toFixed(2)}</p>
+                                        <p className="text-sm text-muted-foreground">Estimated Total</p>
+                                        <p className="text-foreground">{currencySymbol}{transaction.downpayment.estimated_total.toFixed(2)}</p>
                                     </div>
                                 )}
                                 <div>
-                                    <p className="text-sm text-white/60">Staff Assigned</p>
-                                    <p className="text-white">{transaction.downpayment.staff_id ? 'Yes' : 'Pending'}</p>
+                                    <p className="text-sm text-muted-foreground">Staff Assigned</p>
+                                    <p className="text-foreground">{transaction.downpayment.staff_id ? 'Yes' : 'Pending'}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-white/60">Status</p>
+                                    <p className="text-sm text-muted-foreground">Status</p>
                                     <p className={transaction.downpayment.is_settled ? 'text-green-400' : 'text-amber-400'}>
                                         {transaction.downpayment.is_settled ? 'Settled' : 'Outstanding'}
                                     </p>
@@ -516,20 +516,20 @@ export default function TransactionDetailClient({
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 {transaction.voided_at && (
                                     <div>
-                                        <p className="text-sm text-white/60">Date</p>
-                                        <p className="text-white">{new Date(transaction.voided_at).toLocaleString()}</p>
+                                        <p className="text-sm text-muted-foreground">Date</p>
+                                        <p className="text-foreground">{new Date(transaction.voided_at).toLocaleString()}</p>
                                     </div>
                                 )}
                                 {transaction.voided_by && (
                                     <div>
-                                        <p className="text-sm text-white/60">Processed By</p>
-                                        <p className="text-white">{transaction.voided_by}</p>
+                                        <p className="text-sm text-muted-foreground">Processed By</p>
+                                        <p className="text-foreground">{transaction.voided_by}</p>
                                     </div>
                                 )}
                                 {transaction.void_reason && (
                                     <div className="md:col-span-3">
-                                        <p className="text-sm text-white/60">Reason</p>
-                                        <p className="text-white">{transaction.void_reason}</p>
+                                        <p className="text-sm text-muted-foreground">Reason</p>
+                                        <p className="text-foreground">{transaction.void_reason}</p>
                                     </div>
                                 )}
                             </div>
@@ -538,17 +538,17 @@ export default function TransactionDetailClient({
 
                     {/* Sales Description */}
                     {transaction.sales_description && (
-                        <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                            <h3 className="text-lg font-semibold text-white mb-2">Description</h3>
-                            <p className="text-white/80 whitespace-pre-line">{transaction.sales_description}</p>
+                        <div className="bg-muted rounded-lg p-4 border border-border">
+                            <h3 className="text-lg font-semibold text-foreground mb-2">Description</h3>
+                            <p className="text-foreground whitespace-pre-line">{transaction.sales_description}</p>
                         </div>
                     )}
 
                     {/* Notes */}
                     {transaction.notes && (
-                        <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                            <h3 className="text-lg font-semibold text-white mb-2">Notes</h3>
-                            <p className="text-white/80 whitespace-pre-line">{transaction.notes}</p>
+                        <div className="bg-muted rounded-lg p-4 border border-border">
+                            <h3 className="text-lg font-semibold text-foreground mb-2">Notes</h3>
+                            <p className="text-foreground whitespace-pre-line">{transaction.notes}</p>
                         </div>
                     )}
                 </div>
@@ -557,21 +557,21 @@ export default function TransactionDetailClient({
             {/* Void Modal */}
             {showVoidModal && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-zinc-900 rounded-lg p-6 max-w-md w-full border border-white/10">
-                        <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                    <div className="bg-card rounded-lg p-6 max-w-md w-full border border-border">
+                        <h3 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
                             <XCircleIcon className="w-6 h-6 text-red-400" />
                             Void Transaction
                         </h3>
-                        <p className="text-white/60 mb-4">
+                        <p className="text-muted-foreground mb-4">
                             Are you sure you want to void this transaction? This action will restore inventory stock and create a reversing accounting entry.
                         </p>
                         <div className="space-y-3">
-                            <label className="block text-sm text-white/60">Reason for voiding</label>
+                            <label className="block text-sm text-muted-foreground">Reason for voiding</label>
                             <textarea
                                 value={voidReason}
                                 onChange={(e) => setVoidReason(e.target.value)}
                                 placeholder="Enter reason..."
-                                className="w-full px-3 py-2 bg-white/10 rounded-md border-2 border-white/10 focus:border-white/30 outline-none text-white placeholder:text-white/40 resize-none"
+                                className="w-full px-3 py-2 bg-card rounded-md border-2 border-border focus:border-primary outline-none text-foreground placeholder:text-muted-foreground/70 resize-none"
                                 rows={3}
                             />
                         </div>
@@ -579,7 +579,7 @@ export default function TransactionDetailClient({
                             <button
                                 onClick={() => setShowVoidModal(false)}
                                 disabled={isLoading}
-                                className="flex-1 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors text-white cursor-pointer disabled:opacity-50"
+                                className="flex-1 px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors text-foreground cursor-pointer disabled:opacity-50"
                             >
                                 Cancel
                             </button>
@@ -602,21 +602,21 @@ export default function TransactionDetailClient({
             {/* Refund Modal */}
             {showRefundModal && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-zinc-900 rounded-lg p-6 max-w-md w-full border border-white/10">
-                        <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                    <div className="bg-card rounded-lg p-6 max-w-md w-full border border-border">
+                        <h3 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
                             <RotateCcwIcon className="w-6 h-6 text-orange-400" />
                             Refund Transaction
                         </h3>
-                        <p className="text-white/60 mb-4">
+                        <p className="text-muted-foreground mb-4">
                             This will create a refund transaction and mark the original as refunded. The refund amount will be {currencySymbol}{transaction.total.toFixed(2)}.
                         </p>
                         <div className="space-y-3">
-                            <label className="block text-sm text-white/60">Reason for refund</label>
+                            <label className="block text-sm text-muted-foreground">Reason for refund</label>
                             <textarea
                                 value={refundReason}
                                 onChange={(e) => setRefundReason(e.target.value)}
                                 placeholder="Enter reason..."
-                                className="w-full px-3 py-2 bg-white/10 rounded-md border-2 border-white/10 focus:border-white/30 outline-none text-white placeholder:text-white/40 resize-none"
+                                className="w-full px-3 py-2 bg-card rounded-md border-2 border-border focus:border-primary outline-none text-foreground placeholder:text-muted-foreground/70 resize-none"
                                 rows={3}
                             />
                         </div>
@@ -624,7 +624,7 @@ export default function TransactionDetailClient({
                             <button
                                 onClick={() => setShowRefundModal(false)}
                                 disabled={isLoading}
-                                className="flex-1 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors text-white cursor-pointer disabled:opacity-50"
+                                className="flex-1 px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors text-foreground cursor-pointer disabled:opacity-50"
                             >
                                 Cancel
                             </button>

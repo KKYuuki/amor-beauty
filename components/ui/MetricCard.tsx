@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { Surfaces } from "@/components/ui/design-system"
 
 interface MetricCardProps {
     title: string
@@ -33,16 +34,16 @@ export default function MetricCard({
                 : value.toLocaleString()
 
     const getTrendColor = () => {
-        if (value === undefined) return "text-white/40"
-        if (format === "percent") return value >= 0 ? "text-green-400" : "text-red-400"
-        if (value < 0) return "text-red-400"
-        return "text-white"
+        if (value === undefined) return "text-muted-foreground/70"
+        if (format === "percent") return value >= 0 ? "text-green-600" : "text-red-600"
+        if (value < 0) return "text-red-600"
+        return "text-foreground"
     }
 
     return (
-        <div className='bg-white/5 border-2 border-white/5 rounded-xl p-4 flex flex-col gap-2 select-none hover:bg-white/10 transition-colors'>
+        <div className={`${Surfaces.cardHover} rounded-xl p-4 flex flex-col gap-2 select-none`}>
             <div className='flex justify-between items-start'>
-                <span className='text-white/60 font-medium text-sm'>
+                <span className='text-muted-foreground font-medium text-sm'>
                     {title}
                 </span>
                 {icon}
@@ -54,7 +55,7 @@ export default function MetricCard({
                 {formattedValue}
             </span>
             {trend && trendValue && (
-                <div className={`flex items-center gap-1 text-xs ${trend === 'up' ? 'text-green-400' : 'text-red-400'}`}>
+                <div className={`flex items-center gap-1 text-xs ${trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
                     <span>{trend === 'up' ? '↑' : '↓'}</span>
                     <span>{trendValue}</span>
                 </div>

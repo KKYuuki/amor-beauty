@@ -129,20 +129,20 @@ export default function AdminActionGuard({
                             initial={{ scale: 0.95, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.95, opacity: 0 }}
-                            className='bg-black/90 border-2 border-white/10 rounded-xl w-full max-w-md overflow-hidden shadow-2xl'
+                            className='bg-black/90 border-2 border-border rounded-xl w-full max-w-md overflow-hidden shadow-2xl'
                             onClick={(e) => e.stopPropagation()}
                         >
                             {/* Header */}
-                            <div className='p-4 border-b border-white/10 flex justify-between items-center bg-white/5'>
+                            <div className='p-4 border-b border-border flex justify-between items-center bg-muted'>
                                 <div className='flex items-center gap-2 text-red-400'>
                                     <Lock className='w-5 h-5' />
-                                    <h2 className='text-lg font-semibold text-white'>
+                                    <h2 className='text-lg font-semibold text-foreground'>
                                         Admin Verification
                                     </h2>
                                 </div>
                                 <button
                                     onClick={() => setShowModal(false)}
-                                    className='p-1 hover:bg-white/10 rounded-full transition-colors text-white/60 hover:text-white'
+                                    className='p-1 hover:bg-muted rounded-full transition-colors text-muted-foreground hover:text-foreground'
                                 >
                                     <XIcon size={20} />
                                 </button>
@@ -154,10 +154,10 @@ export default function AdminActionGuard({
                                     <Fingerprint className='w-8 h-8' />
                                 </div>
                                 <div>
-                                    <p className='text-white font-medium text-lg'>
+                                    <p className='text-foreground font-medium text-lg'>
                                         Passkey Required
                                     </p>
-                                    <p className='text-white/60 text-sm mt-1'>
+                                    <p className='text-muted-foreground text-sm mt-1'>
                                         This is a protected admin action. Please
                                         verify your identity using your passkey to
                                         proceed.
@@ -167,7 +167,7 @@ export default function AdminActionGuard({
                                 <button
                                     onClick={verifyPasskey}
                                     disabled={loading}
-                                    className='w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-500/50 disabled:cursor-not-allowed text-white font-medium py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 mt-2 shadow-lg shadow-blue-500/20'
+                                    className='w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-500/50 disabled:cursor-not-allowed text-foreground font-medium py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 mt-2 shadow-lg shadow-blue-500/20'
                                 >
                                     {loading ? (
                                         <>
@@ -184,7 +184,7 @@ export default function AdminActionGuard({
 
                                 <button
                                     onClick={() => setShowModal(false)}
-                                    className='text-sm text-white/40 hover:text-white/60 transition-colors'
+                                    className='text-sm text-muted-foreground/70 hover:text-foreground transition-colors'
                                 >
                                     Cancel Action
                                 </button>

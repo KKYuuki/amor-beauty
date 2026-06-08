@@ -57,20 +57,20 @@ export default function ConfirmModal({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className='bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden'
+                className='bg-white dark:bg-card rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden'
             >
                 <div className='p-6 text-center'>
                     <div
-                        className={`mx-auto w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mb-4 ${variantStyles[variant].icon}`}
+                        className={`mx-auto w-12 h-12 rounded-full bg-zinc-100 dark:bg-muted flex items-center justify-center mb-4 ${variantStyles[variant].icon}`}
                     >
                         <AlertTriangleIcon className='w-6 h-6' />
                     </div>
 
-                    <h3 className='text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-2'>
+                    <h3 className='text-lg font-bold text-foreground text-foreground mb-2'>
                         {title}
                     </h3>
 
-                    <p className='text-sm text-zinc-600 dark:text-zinc-400 mb-6'>
+                    <p className='text-sm text-muted-foreground dark:text-muted-foreground mb-6'>
                         {message}
                     </p>
 
@@ -78,14 +78,14 @@ export default function ConfirmModal({
                         <button
                             onClick={onClose}
                             disabled={isLoading}
-                            className='flex-1 px-4 py-2 rounded-lg border-2 border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 font-medium hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed'
+                            className='flex-1 px-4 py-2 rounded-lg border-2 border-zinc-200 dark:border-border text-muted-foreground dark:text-foreground font-medium hover:bg-zinc-50 dark:hover:bg-muted transition-all disabled:opacity-50 disabled:cursor-not-allowed'
                         >
                             {cancelText}
                         </button>
                         <button
                             onClick={handleConfirm}
                             disabled={isLoading}
-                            className={`flex-1 px-4 py-2 rounded-lg text-white font-medium transition-all ${variantStyles[variant].button} disabled:opacity-50 disabled:cursor-not-allowed`}
+                            className={`flex-1 px-4 py-2 rounded-lg text-foreground font-medium transition-all ${variantStyles[variant].button} disabled:opacity-50 disabled:cursor-not-allowed`}
                         >
                             {isLoading ? "Loading..." : confirmText}
                         </button>

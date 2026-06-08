@@ -16,9 +16,11 @@ import StatsGrid from "@/components/ui/StatsGrid"
 import StatCard from "@/components/ui/StatCard"
 
 import { UserProfile } from "@/utils/types/auth"
-import { useBranchContext } from "@/components/branch-context"
+
 import { getSetting } from "@/server/actions/settings"
 import { CurrencyTaxValue } from "@/utils/types/settings"
+
+const currentBranch: any = null;
 
 export interface DashboardData {
     staff?: {
@@ -76,7 +78,7 @@ export default function DashboardClient({
                         <HomeIcon className='w-6 h-6' />
                         Dashboard
                     </h1>
-                    <p className='text-white/60 text-sm mt-1'>
+                    <p className='text-muted-foreground text-sm mt-1'>
                         Welcome back, {userInfo.full_name}
                     </p>
                 </div>
@@ -139,7 +141,7 @@ function StaffDashboard({ initialData, userProfile }: StaffDashboardProps) {
     // Context
     const { userInfo: contextUserInfo } = useContext(SideBarContext)
     const userInfo = userProfile || contextUserInfo
-    const { currentBranch } = useBranchContext()
+    
 
     // State
     // -- Page
@@ -193,11 +195,11 @@ function StaffDashboard({ initialData, userProfile }: StaffDashboardProps) {
             <div className='w-full flex-1 overflow-y-auto flex flex-col gap-4'>
 
                 {/* Quick Actions */}
-                <div className='flex flex-col gap-2 bg-white/10 p-4 border-2 border-white/5 rounded-lg select-none'>
+                <div className='flex flex-col gap-2 bg-card p-4 border-2 border-border rounded-lg select-none'>
                     <div className='flex flex-row gap-2 flex-1'>
                         <a
                             href='/images'
-                            className='flex-1 flex flex-col items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border-2 border-white/5 rounded-md transition-colors'
+                            className='flex-1 flex flex-col items-center justify-center gap-2 bg-muted hover:bg-muted border-2 border-border rounded-md transition-colors'
                         >
                             <span className='text-xs font-medium'>Gallery</span>
                         </a>
@@ -206,14 +208,14 @@ function StaffDashboard({ initialData, userProfile }: StaffDashboardProps) {
 
                 {/* Inventory */}
                 {userInfo.access_flags?.some(f => normalizeFlag(f) === "inventory_manage") && (
-                    <div className='flex flex-col gap-2 bg-white/10 p-4 border-2 border-white/5 rounded-lg select-none'>
+                    <div className='flex flex-col gap-2 bg-card p-4 border-2 border-border rounded-lg select-none'>
                         <div className='flex flex-row gap-2 w-full justify-between items-top'>
-                            <span className='text-white/60 font-medium text-sm'>
+                            <span className='text-muted-foreground font-medium text-sm'>
                                 Inventory Alerts
                             </span>
                             <a
                                 title='View Inventory'
-                                className='px-4 py-1 bg-white/5 rounded-md border-2 border-white/10 hover:bg-white/10 transition-colors cursor-pointer'
+                                className='px-4 py-1 bg-muted rounded-md border-2 border-border hover:bg-muted transition-colors cursor-pointer'
                                 href={`/inventory`}
                             >
                                 View Inventory
@@ -230,25 +232,25 @@ function StaffDashboard({ initialData, userProfile }: StaffDashboardProps) {
                                 .map((inv, idx) => (
                                     <div
                                         key={idx + "-inv"}
-                                        className='flex flex-col gap-2 items-center p-2 border-2 border-transparent transition-colors hover:border-white/5 rounded-md cursor-pointer hover:bg-white/10 active:bg-white/20'
+                                        className='flex flex-col gap-2 items-center p-2 border-2 border border-border transition-colors hover:border-border rounded-md cursor-pointer hover:bg-muted active:bg-muted'
                                     >
                                         <div className='w-full flex flex-row justify-between items-center'>
                                             <span className='font-medium flex flex-row gap-1'>
                                                 {inv.name}
                                             </span>
-                                            <span className='font-semibold capitalize px-2 bg-red-400/20 text-white/80 rounded-sm border-2 border-white/5'>
+                                            <span className='font-semibold capitalize px-2 bg-red-400/20 text-foreground rounded-sm border-2 border-border'>
                                                 Low Stock
                                             </span>
                                         </div>
                                         <div className='w-full flex flex-row justify-between'>
                                             <span
-                                                className='text-xs font-semibold text-white/60 flex flex-row gap-1 items-center'
+                                                className='text-xs font-semibold text-muted-foreground flex flex-row gap-1 items-center'
                                                 title='Item Code'
                                             >
                                                 {inv.item_code}
                                             </span>
                                             <span
-                                                className='text-xs font-semibold text-white/60 flex flex-row gap-1 items-center'
+                                                className='text-xs font-semibold text-muted-foreground flex flex-row gap-1 items-center'
                                                 title={`Minimum Stock ${inv.stock_warning_threshold ?? 0}`}
                                             >
                                                 {inv.current_stock} left
@@ -285,9 +287,9 @@ function ArtistDashboard({ initialData, userProfile }: StaffDashboardProps) {
 
     return (
         <div className='w-full flex-1 overflow-y-auto flex flex-col gap-4'>
-            <div className='flex flex-col gap-2 bg-white/10 p-4 border-2 border-white/5 rounded-lg'>
+            <div className='flex flex-col gap-2 bg-card p-4 border-2 border-border rounded-lg'>
                 <div className='flex flex-row gap-2 flex-1'>
-                    <a href='/images' className='flex-1 flex flex-col items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border-2 border-white/5 rounded-md transition-colors'>
+                    <a href='/images' className='flex-1 flex flex-col items-center justify-center gap-2 bg-muted hover:bg-muted border-2 border-border rounded-md transition-colors'>
                         <span className='text-xs font-medium'>Gallery</span>
                     </a>
                 </div>
@@ -299,7 +301,7 @@ function ArtistDashboard({ initialData, userProfile }: StaffDashboardProps) {
 function ManagerDashboard({ initialData, userProfile }: StaffDashboardProps) {
     const { userInfo: contextUserInfo } = useContext(SideBarContext)
     const userInfo = userProfile || contextUserInfo
-    const { currentBranch } = useBranchContext()
+    
     const { formatCurrency } = useCurrencySettings()
 
     const [loading, setLoading] = useState(!initialData)
@@ -331,37 +333,37 @@ function ManagerDashboard({ initialData, userProfile }: StaffDashboardProps) {
     return (
         <div className='w-full flex-1 overflow-y-auto flex flex-col gap-4'>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                <div className='bg-white/10 p-4 border-2 border-white/5 rounded-lg flex flex-col gap-2'>
-                    <span className='text-white/60 font-medium text-sm'>Inventory Valuation</span>
+                <div className='bg-card p-4 border-2 border-border rounded-lg flex flex-col gap-2'>
+                    <span className='text-muted-foreground font-medium text-sm'>Inventory Valuation</span>
                     <span className='text-2xl font-bold'>{formatCurrency(filteredInventory.reduce((acc, item) => acc + (item.unit_price || 0) * item.current_stock, 0))}</span>
                 </div>
             </div>
-            <div className='flex flex-col gap-2 bg-white/10 p-4 border-2 border-white/5 rounded-lg'>
+            <div className='flex flex-col gap-2 bg-card p-4 border-2 border-border rounded-lg'>
                 <div className='flex flex-row gap-2 flex-1'>
-                    <a href='/inventory' className='flex-1 flex flex-col items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border-2 border-white/5 rounded-md transition-colors'>
+                    <a href='/inventory' className='flex-1 flex flex-col items-center justify-center gap-2 bg-muted hover:bg-muted border-2 border-border rounded-md transition-colors'>
                         <span className='text-xs font-medium'>Inventory</span>
                     </a>
                 </div>
             </div>
             {userInfo.access_flags?.some(f => normalizeFlag(f) === "inventory_manage") && (
-                <div className='flex flex-col gap-2 bg-white/10 p-4 border-2 border-white/5 rounded-lg'>
+                <div className='flex flex-col gap-2 bg-card p-4 border-2 border-border rounded-lg'>
                     <div className='flex flex-row gap-2 w-full justify-between items-top'>
-                        <span className='text-white/60 font-medium text-sm'>Inventory Alerts</span>
-                        <a title='View Inventory' className='px-4 py-1 bg-white/5 rounded-md border-2 border-white/10 hover:bg-white/10 transition-colors cursor-pointer' href='/inventory'>View Inventory</a>
+                        <span className='text-muted-foreground font-medium text-sm'>Inventory Alerts</span>
+                        <a title='View Inventory' className='px-4 py-1 bg-muted rounded-md border-2 border-border hover:bg-muted transition-colors cursor-pointer' href='/inventory'>View Inventory</a>
                     </div>
                     <div className='flex-1 flex flex-col overflow-y-auto'>
                         {filteredInventory.filter(inv => inv.stock_warning_threshold && inv.current_stock <= inv.stock_warning_threshold).length === 0 && (
-                            <p className='text-white/30 text-sm py-4 text-center'>No inventory alerts</p>
+                            <p className='text-muted-foreground/70 text-sm py-4 text-center'>No inventory alerts</p>
                         )}
                         {filteredInventory.filter(inv => inv.stock_warning_threshold && inv.current_stock <= inv.stock_warning_threshold).map((inv, idx) => (
-                            <div key={idx + "-inv"} className='flex flex-col gap-2 items-center p-2 border-2 border-transparent hover:border-white/5 rounded-md cursor-pointer hover:bg-white/10 active:bg-white/20'>
+                            <div key={idx + "-inv"} className='flex flex-col gap-2 items-center p-2 border-2 border-transparent hover:border-border rounded-md cursor-pointer hover:bg-muted active:bg-muted'>
                                 <div className='w-full flex flex-row justify-between items-center'>
                                     <span className='font-medium flex flex-row gap-1'>{inv.name}</span>
-                                    <span className='font-semibold capitalize px-2 bg-red-400/20 text-white/80 rounded-sm border-2 border-white/5'>Low Stock</span>
+                                    <span className='font-semibold capitalize px-2 bg-red-400/20 text-foreground rounded-sm border-2 border-border'>Low Stock</span>
                                 </div>
                                 <div className='w-full flex flex-row justify-between'>
-                                    <span className='text-xs font-semibold text-white/60 flex flex-row gap-1 items-center'><span>Code:</span> {inv.item_code}</span>
-                                    <span className='text-xs font-semibold text-white/60 flex flex-row gap-1 items-center'><span>Stock:</span> {inv.current_stock}</span>
+                                    <span className='text-xs font-semibold text-muted-foreground flex flex-row gap-1 items-center'><span>Code:</span> {inv.item_code}</span>
+                                    <span className='text-xs font-semibold text-muted-foreground flex flex-row gap-1 items-center'><span>Stock:</span> {inv.current_stock}</span>
                                 </div>
                             </div>
                         ))}
@@ -378,7 +380,7 @@ interface AdminDashboardProps {
 }
 function AdminDashboard({ initialData, userProfile }: AdminDashboardProps) {
     // Context
-    const { currentBranch } = useBranchContext()
+    
     const { formatCurrency } = useCurrencySettings()
 
     // Constant
@@ -504,11 +506,11 @@ function AdminDashboard({ initialData, userProfile }: AdminDashboardProps) {
             </StatsGrid>
 
             {/* Quick Actions */}
-            <div className='flex flex-col gap-2 bg-white/10 p-4 border-2 border-white/5 rounded-lg select-none'>
+            <div className='flex flex-col gap-2 bg-card p-4 border-2 border-border rounded-lg select-none'>
                 <div className='flex flex-row gap-2 flex-1'>
                     <a
                         href='/inventory'
-                        className='flex-1 flex flex-col items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border-2 border-white/5 rounded-md transition-colors'
+                        className='flex-1 flex flex-col items-center justify-center gap-2 bg-muted hover:bg-muted border-2 border-border rounded-md transition-colors'
                     >
                         <span className='text-xs font-medium'>
                             Inventory
@@ -518,14 +520,14 @@ function AdminDashboard({ initialData, userProfile }: AdminDashboardProps) {
             </div>
 
             {/* Inventory */}
-            <div className='flex flex-col gap-2 bg-white/10 p-4 border-2 border-white/5 rounded-lg select-none'>
+            <div className='flex flex-col gap-2 bg-card p-4 border-2 border-border rounded-lg select-none'>
                 <div className='flex flex-row gap-2 w-full justify-between items-top'>
-                    <span className='text-white/60 font-medium text-sm'>
+                    <span className='text-muted-foreground font-medium text-sm'>
                         Inventory Alerts
                     </span>
                     <a
                         title='View Inventory'
-                        className='px-4 py-1 bg-white/5 rounded-md border-2 border-white/10 hover:bg-white/10 transition-colors cursor-pointer'
+                        className='px-4 py-1 bg-muted rounded-md border-2 border-border hover:bg-muted transition-colors cursor-pointer'
                         href={`/inventory`}
                     >
                         View Inventory
@@ -542,25 +544,25 @@ function AdminDashboard({ initialData, userProfile }: AdminDashboardProps) {
                         .map((inv, idx) => (
                             <div
                                 key={idx + "-inv"}
-                                className='flex flex-col gap-2 items-center p-2 border-2 border-transparent transition-colors hover:border-white/5 rounded-md cursor-pointer hover:bg-white/10 active:bg-white/20'
+                                className='flex flex-col gap-2 items-center p-2 border-2 border border-border transition-colors hover:border-border rounded-md cursor-pointer hover:bg-muted active:bg-muted'
                             >
                                 <div className='w-full flex flex-row justify-between items-center'>
                                     <span className='font-medium flex flex-row gap-1'>
                                         {inv.name}
                                     </span>
-                                    <span className='font-semibold capitalize px-2 bg-red-400/20 text-white/80 rounded-sm border-2 border-white/5'>
+                                    <span className='font-semibold capitalize px-2 bg-red-400/20 text-foreground rounded-sm border-2 border-border'>
                                         Low Stock
                                     </span>
                                 </div>
                                 <div className='w-full flex flex-row justify-between'>
                                     <span
-                                        className='text-xs font-semibold text-white/60 flex flex-row gap-1 items-center'
+                                        className='text-xs font-semibold text-muted-foreground flex flex-row gap-1 items-center'
                                         title='Item Code'
                                     >
                                         {inv.item_code}
                                     </span>
                                     <span
-                                        className='text-xs font-semibold text-white/60 flex flex-row gap-1 items-center'
+                                        className='text-xs font-semibold text-muted-foreground flex flex-row gap-1 items-center'
                                         title={`Minimum Stock ${inv.stock_warning_threshold ?? 0}`}
                                     >
                                         {inv.current_stock} left
@@ -611,10 +613,10 @@ class DashboardErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundary
         if (this.state.hasError) {
             return (
                 <div className="w-full flex-1 flex flex-col items-center justify-center gap-4 p-8">
-                    <p className="text-lg font-semibold text-white/80">
+                    <p className="text-lg font-semibold text-foreground">
                         Dashboard temporarily unavailable
                     </p>
-                    <p className="text-sm text-white/40 max-w-md text-center">
+                    <p className="text-sm text-muted-foreground/70 max-w-md text-center">
                         An unexpected error occurred while loading this dashboard view.
                         Please try reloading the page.
                     </p>
@@ -623,7 +625,7 @@ class DashboardErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundary
                             this.setState({ hasError: false, error: null })
                             window.location.reload()
                         }}
-                        className="px-4 py-2 bg-white/10 border border-white/20 rounded-md text-sm hover:bg-white/20 transition-colors cursor-pointer"
+                        className="px-4 py-2 bg-card border border-border rounded-md text-sm hover:bg-muted transition-colors cursor-pointer"
                     >
                         Reload Dashboard
                     </button>

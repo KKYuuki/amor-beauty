@@ -39,7 +39,7 @@ export const transactions = pgTable('transactions', {
     // Status & Metadata
     transactionNumber: text('transaction_number').notNull().unique(),
     status: text('status').notNull().default('COMPLETED'),
-    appointmentId: uuid('appointment_id'),
+
     notes: text('notes'),
     // Sales-side description (user-authored, flows to general_ledger.description)
     salesDescription: text('sales_description'),
@@ -62,7 +62,7 @@ export const transactions = pgTable('transactions', {
     createdAtIdx: index('idx_transactions_created_at').on(table.createdAt),
     statusIdx: index('idx_transactions_status').on(table.status),
     branchIdIdx: index('idx_transactions_branch_id').on(table.branchId),
-    appointmentIdIdx: index('idx_transactions_appointment_id').on(table.appointmentId),
+
 }))
 
 export const transactionItems = pgTable('transaction_items', {

@@ -27,11 +27,11 @@ export default function PeriodProjection({
 }: PeriodProjectionProps) {
   if (!historicalData || historicalData.length < 3) {
     return (
-      <div className='bg-white/5 border border-white/10 rounded-lg p-4'>
-        <h3 className='text-sm font-semibold text-white/60 uppercase tracking-wider mb-3'>
+      <div className='bg-muted border border-border rounded-lg p-4'>
+        <h3 className='text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3'>
           Period Projection
         </h3>
-        <div className='flex flex-col items-center justify-center py-12 text-white/40'>
+        <div className='flex flex-col items-center justify-center py-12 text-muted-foreground/70'>
           <p className='text-sm'>Insufficient data for projection</p>
           <p className='text-xs mt-1'>Requires at least 3 periods of historical data</p>
         </div>
@@ -55,8 +55,8 @@ export default function PeriodProjection({
   }))
 
   return (
-    <div className='bg-white/5 border border-white/10 rounded-lg p-4'>
-      <h3 className='text-sm font-semibold text-white/60 uppercase tracking-wider mb-3'>
+    <div className='bg-muted border border-border rounded-lg p-4'>
+      <h3 className='text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3'>
         Period Projection
       </h3>
       <ResponsiveContainer width='100%' height={height}>

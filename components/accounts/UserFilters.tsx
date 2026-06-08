@@ -48,7 +48,7 @@ export default function UserFilters({
                 {/* User Count */}
                 <span className='text-xl font-semibold flex flex-row gap-2 items-center select-none'>
                     {showInactive ? "Deleted Users" : "Users"}{" "}
-                    <div className='h-6 w-[1px] bg-white/40' />
+                    <div className='h-6 w-[1px] bg-border' />
                     {showInactive ? inactiveCount : activeCount}
                 </span>
 
@@ -95,7 +95,7 @@ export default function UserFilters({
             <div className='flex flex-row gap-4 flex-wrap w-full items-center justify-end'>
                 <select
                     title='Filter Users by Role'
-                    className='min-w-max px-2 py-1 bg-white/5 border-2 border-white/10 rounded-md hover:bg-white/20 transition-colors cursor-pointer font-medium flex-1 md:flex-none'
+                    className='min-w-max px-2 py-1 bg-muted border-2 border-border rounded-md hover:bg-muted transition-colors cursor-pointer font-medium flex-1 md:flex-none'
                     value={userType}
                     onChange={(e) =>
                         setUserType(e.target.value as UserRoleType | "")
@@ -118,10 +118,10 @@ export default function UserFilters({
                                 ? "Show Active Users"
                                 : "Show Deleted Users"
                         }
-                        className={`flex flex-row gap-2 items-center px-2 py-1 font-semibold border-2 border-white/10 rounded-md transition-colors cursor-pointer flex-1 md:flex-none ${
+                        className={`flex flex-row gap-2 items-center px-2 py-1 font-semibold border-2 border-border rounded-md transition-colors cursor-pointer flex-1 md:flex-none ${
                             showInactive
                                 ? "bg-amber-400/20 hover:bg-amber-400/30"
-                                : "bg-white/5 hover:bg-white/20"
+                                : "bg-muted hover:bg-muted"
                         }`}
                         onClick={() => setShowInactive(!showInactive)}
                     >
@@ -133,7 +133,7 @@ export default function UserFilters({
                 )}
                 <label
                     title='Search Users (Full Name, Email, or User ID)'
-                    className='flex flex-row gap-2 items-center px-2 py-1 font-semibold bg-white/5 border-2 border-white/10 rounded-md hover:bg-white/20 transition-colors cursor-pointer flex-1 md:flex-none'
+                    className='flex flex-row gap-2 items-center px-2 py-1 font-semibold bg-muted border-2 border-border rounded-md hover:bg-muted transition-colors cursor-pointer flex-1 md:flex-none'
                 >
                     <SearchIcon size={16} />
                     <input

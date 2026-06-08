@@ -30,7 +30,7 @@ export default function ProductGrid({
             ) : (
                 <>
                     <div className='mb-8'>
-                        <h2 className='text-sm font-semibold text-zinc-500 uppercase tracking-wider mb-4'>
+                        <h2 className='text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4'>
                             Services
                         </h2>
                         <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
@@ -38,12 +38,12 @@ export default function ProductGrid({
                                 <button
                                     key={service.id}
                                     onClick={() => addToCart(service, "SERVICE")}
-                                    className='p-4 bg-white dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 hover:border-blue-500 hover:shadow-md hover:scale-[1.02] transition-all text-left group cursor-pointer'
+                                    className='p-4 bg-white dark:bg-muted rounded-xl border border-zinc-200 dark:border-border hover:border-blue-500 hover:shadow-md hover:scale-[1.02] transition-all text-left group cursor-pointer'
                                 >
-                                    <div className='font-medium text-zinc-800 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 truncate'>
+                                    <div className='font-medium text-foreground group-hover:text-blue-600 truncate'>
                                         {service.title}
                                     </div>
-                                    <div className='text-sm text-zinc-500 mt-1'>
+                                    <div className='text-sm text-muted-foreground mt-1'>
                                         {taxSettings.currency_symbol}
                                         {service.price.toFixed(2)}
                                     </div>
@@ -61,7 +61,7 @@ export default function ProductGrid({
                         </div>
                     </div>
                     <div>
-                        <h2 className='text-sm font-semibold text-zinc-500 uppercase tracking-wider mb-4'>
+                        <h2 className='text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4'>
                             Inventory
                         </h2>
                         <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
@@ -70,17 +70,17 @@ export default function ProductGrid({
                                     key={item.id}
                                     onClick={() => addToCart(item, "INVENTORY")}
                                     disabled={item.current_stock <= 0}
-                                    className={`p-4 bg-white dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 text-left transition-all ${
+                                    className={`p-4 bg-white dark:bg-muted rounded-xl border border-zinc-200 dark:border-border text-left transition-all ${
                                         item.current_stock <= 0
                                             ? "opacity-50 cursor-not-allowed"
                                             : "hover:border-blue-500 hover:shadow-md group cursor-pointer"
                                     }`}
                                 >
-                                    <div className='font-medium text-zinc-800 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 truncate'>
+                                    <div className='font-medium text-foreground group-hover:text-blue-600 truncate'>
                                         {item.name}
                                     </div>
                                     <div className='flex justify-between items-center mt-2'>
-                                        <span className='text-sm text-zinc-500'>
+                                        <span className='text-sm text-muted-foreground'>
                                             {taxSettings.currency_symbol}
                                             {(item.selling_price || 0).toFixed(2)}
                                         </span>

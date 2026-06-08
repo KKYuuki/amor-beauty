@@ -65,7 +65,7 @@ export default function SalesHeader({
             </div>
             <div className='flex flex-row gap-4 mb-6'>
                 {/* Partial Payment Toggle */}
-                <div className='flex items-center gap-3 px-4 py-2 bg-zinc-100 dark:bg-zinc-800/50 rounded-lg'>
+                <div className='flex items-center gap-3 px-4 py-2 bg-zinc-100 dark:bg-muted/50 rounded-lg'>
                     <label className='flex items-center gap-2 cursor-pointer w-full'>
                         <input
                             type='checkbox'
@@ -77,7 +77,7 @@ export default function SalesHeader({
                                     // Just set the flag here
                                 }
                             }}
-                            className='w-5 h-5 rounded border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 checked:bg-blue-600'
+                            className='w-5 h-5 rounded border-zinc-300 dark:border-zinc-600 bg-white dark:bg-muted checked:bg-blue-600'
                         />
                         <span className='text-sm font-medium'>
                             Deposit / Partial Payment
@@ -87,11 +87,11 @@ export default function SalesHeader({
 
                 {/* Search Bar */}
                 <div className='relative flex-1'>
-                    <SearchIcon className='absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 w-5 h-5' />
+                    <SearchIcon className='absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5' />
                     <input
                         type='text'
                         placeholder='Search products, services, or codes...'
-                        className='w-full pl-10 pr-4 py-2 bg-white/10 rounded-md border-2 border-white/5 focus:border-white/20 outline-none transition-all text-white placeholder:text-white/40'
+                        className='w-full pl-10 pr-4 py-2 bg-card rounded-md border-2 border-border focus:border-border outline-none transition-all text-foreground placeholder:text-muted-foreground/70'
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />

@@ -18,7 +18,7 @@ import {
     parseCSV,
     generateCSVTemplate,
 } from '@/utils/csv-import'
-import { BranchSelectorInline } from '@/components/ui/branch-selector-inline'
+
 
 interface CSVImportModalProps<T extends Record<string, unknown>> {
     isOpen: boolean
@@ -185,23 +185,23 @@ export default function CSVImportModal<T extends Record<string, unknown>>({
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95 }}
-                        className='bg-zinc-900 rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden border border-white/10 flex flex-col'
+                        className='bg-card rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden border border-border flex flex-col'
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Header */}
-                        <div className='p-6 border-b border-white/10 flex items-center justify-between'>
+                        <div className='p-6 border-b border-border flex items-center justify-between'>
                             <div className='flex items-center gap-3'>
                                 <div className='p-2 bg-blue-500/20 rounded-lg'>
                                     <FileSpreadsheetIcon className='w-6 h-6 text-blue-400' />
                                 </div>
                                 <div>
                                     <h2 className='text-xl font-bold'>{title}</h2>
-                                    <p className='text-white/60 text-sm'>{description}</p>
+                                    <p className='text-muted-foreground text-sm'>{description}</p>
                                 </div>
                             </div>
                             <button
                                 onClick={handleClose}
-                                className='p-2 hover:bg-white/10 rounded-lg transition-colors'
+                                className='p-2 hover:bg-muted rounded-lg transition-colors'
                             >
                                 <XIcon className='w-5 h-5' />
                             </button>
@@ -210,32 +210,27 @@ export default function CSVImportModal<T extends Record<string, unknown>>({
                         {/* Content */}
                         <div className='flex-1 overflow-auto p-6 space-y-6'>
                             {/* Branch Selector */}
-                            <div className='p-4 bg-white/5 rounded-lg border border-white/10'>
-                                <BranchSelectorInline
-                                    value={selectedBranchId}
-                                    onChange={setSelectedBranchId}
-                                    showAllOption={true}
-                                    label='Default Branch for Import'
-                                />
-                                <p className='mt-2 text-xs text-white/50'>
+                            <div className='p-4 bg-muted rounded-lg border border-border'>
+                                
+                                <p className='mt-2 text-xs text-muted-foreground'>
                                     Select a default branch. Entries without a &apos;branch&apos; column will use this branch.
                                 </p>
                             </div>
 
                             {/* Template Download */}
-                            <div className='flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10'>
+                            <div className='flex items-center justify-between p-4 bg-muted rounded-lg border border-border'>
                                 <div className='flex items-center gap-3'>
-                                    <TableIcon className='w-5 h-5 text-white/60' />
+                                    <TableIcon className='w-5 h-5 text-muted-foreground' />
                                     <div>
                                         <p className='font-medium'>Download Template</p>
-                                        <p className='text-sm text-white/60'>
+                                        <p className='text-sm text-muted-foreground'>
                                             Get a CSV template with the correct columns
                                         </p>
                                     </div>
                                 </div>
                                 <button
                                     onClick={handleDownloadTemplate}
-                                    className='flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-sm'
+                                    className='flex items-center gap-2 px-4 py-2 bg-card hover:bg-muted rounded-lg transition-colors text-sm'
                                 >
                                     <DownloadIcon className='w-4 h-4' />
                                     Template
@@ -252,14 +247,14 @@ export default function CSVImportModal<T extends Record<string, unknown>>({
                                     className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
                                         isDragging
                                             ? 'border-blue-500 bg-blue-500/10'
-                                            : 'border-white/20 hover:border-white/40'
+                                            : 'border-border hover:border-border'
                                     }`}
                                 >
-                                    <UploadIcon className='w-12 h-12 mx-auto mb-4 text-white/40' />
+                                    <UploadIcon className='w-12 h-12 mx-auto mb-4 text-muted-foreground/70' />
                                     <p className='font-medium mb-2'>
                                         Drop your CSV file here, or click to browse
                                     </p>
-                                    <p className='text-sm text-white/60'>
+                                    <p className='text-sm text-muted-foreground'>
                                         Supports .csv files up to 10MB
                                     </p>
                                     <input
@@ -274,17 +269,17 @@ export default function CSVImportModal<T extends Record<string, unknown>>({
 
                             {/* File Info */}
                             {file && !importSuccess && (
-                                <div className='flex items-center gap-3 p-4 bg-white/5 rounded-lg border border-white/10'>
+                                <div className='flex items-center gap-3 p-4 bg-muted rounded-lg border border-border'>
                                     <FileIcon className='w-8 h-8 text-green-400' />
                                     <div className='flex-1'>
                                         <p className='font-medium'>{file.name}</p>
-                                        <p className='text-sm text-white/60'>
+                                        <p className='text-sm text-muted-foreground'>
                                             {(file.size / 1024).toFixed(2)} KB
                                         </p>
                                     </div>
                                     <button
                                         onClick={resetState}
-                                        className='p-2 hover:bg-white/10 rounded-lg transition-colors'
+                                        className='p-2 hover:bg-muted rounded-lg transition-colors'
                                     >
                                         <XIcon className='w-4 h-4' />
                                     </button>
@@ -299,14 +294,14 @@ export default function CSVImportModal<T extends Record<string, unknown>>({
                                         Preview ({Math.min(parseResult.data.length, maxPreviewRows)} of{' '}
                                         {parseResult.data.length} rows)
                                     </h3>
-                                    <div className='overflow-x-auto border border-white/10 rounded-lg'>
+                                    <div className='overflow-x-auto border border-border rounded-lg'>
                                         <table className='w-full text-sm'>
-                                            <thead className='bg-white/5'>
+                                            <thead className='bg-muted'>
                                                 <tr>
                                                     {getPreviewHeaders().map((header, idx) => (
                                                         <th
                                                             key={idx}
-                                                            className='px-4 py-2 text-left font-medium text-white/80 border-b border-white/10 whitespace-nowrap'
+                                                            className='px-4 py-2 text-left font-medium text-foreground border-b border-border whitespace-nowrap'
                                                         >
                                                             {header}
                                                         </th>
@@ -317,12 +312,12 @@ export default function CSVImportModal<T extends Record<string, unknown>>({
                                                 {getPreviewRows().map((row, rowIdx) => (
                                                     <tr
                                                         key={rowIdx}
-                                                        className='border-b border-white/5 last:border-0'
+                                                        className='border-b border-border last:border-0'
                                                     >
                                                         {row.split(',').map((cell, cellIdx) => (
                                                             <td
                                                                 key={cellIdx}
-                                                                className='px-4 py-2 text-white/60 whitespace-nowrap truncate max-w-[150px]'
+                                                                className='px-4 py-2 text-muted-foreground whitespace-nowrap truncate max-w-[150px]'
                                                             >
                                                                 {cell.replace(/^"|"$/g, '')}
                                                             </td>
@@ -372,7 +367,7 @@ export default function CSVImportModal<T extends Record<string, unknown>>({
                                             {parseResult.data.length} row(s) ready to import
                                         </p>
                                         {parseResult.skippedRows && parseResult.skippedRows > 0 && (
-                                            <p className='text-sm text-white/60'>
+                                            <p className='text-sm text-muted-foreground'>
                                                 {parseResult.skippedRows} empty row(s) skipped
                                             </p>
                                         )}
@@ -392,10 +387,10 @@ export default function CSVImportModal<T extends Record<string, unknown>>({
                         </div>
 
                         {/* Footer */}
-                        <div className='p-6 border-t border-white/10 flex justify-end gap-3'>
+                        <div className='p-6 border-t border-border flex justify-end gap-3'>
                             <button
                                 onClick={handleClose}
-                                className='px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors'
+                                className='px-4 py-2 bg-card hover:bg-muted rounded-lg transition-colors'
                             >
                                 Cancel
                             </button>

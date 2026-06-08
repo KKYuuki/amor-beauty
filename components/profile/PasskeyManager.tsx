@@ -96,7 +96,7 @@ export default function PasskeyManager() {
     }
 
     return (
-        <div className="w-full bg-white/10 border-2 border-white/5 rounded-lg p-4 flex flex-col gap-2">
+        <div className="w-full bg-card border-2 border-border rounded-lg p-4 flex flex-col gap-2">
             <div className="w-full flex flex-row gap-2 justify-between font-semibold text-lg md:text-xl items-start">
                 <div className="flex items-center gap-2">
                     Security & Passkeys
@@ -104,7 +104,7 @@ export default function PasskeyManager() {
                 {!isAdding && (
                     <button
                         type="button"
-                        className="flex flex-row gap-1 items-center border-2 border-white/5 px-3 py-1 font-semibold text-sm rounded-md cursor-pointer transition-colors bg-white/10 hover:bg-white/20 active:hover:bg-white/30"
+                        className="flex flex-row gap-1 items-center border-2 border-border px-3 py-1 font-semibold text-sm rounded-md cursor-pointer transition-colors bg-card hover:bg-muted active:bg-muted"
                         onClick={() => setIsAdding(true)}
                     >
                         <Plus size={18} />
@@ -123,15 +123,15 @@ export default function PasskeyManager() {
                             exit={{ opacity: 0, height: 0 }}
                             className="overflow-hidden"
                         >
-                            <div className="bg-white/5 border border-white/10 rounded-lg p-3 flex flex-col sm:flex-row gap-3 items-end sm:items-center">
+                            <div className="bg-muted border border-border rounded-lg p-3 flex flex-col sm:flex-row gap-3 items-end sm:items-center">
                                 <div className="flex-1 w-full">
-                                    <label className="text-xs text-white/60 mb-1 block">Passkey Name</label>
+                                    <label className="text-xs text-muted-foreground mb-1 block">Passkey Name</label>
                                     <input
                                         type="text"
                                         value={newPasskeyName}
                                         onChange={(e) => setNewPasskeyName(e.target.value)}
                                         placeholder="e.g. MacBook Pro, iPhone 15"
-                                        className="w-full bg-black/20 border border-white/10 rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-white/30"
+                                        className="w-full bg-black/20 border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-primary"
                                         autoFocus
                                     />
                                 </div>
@@ -139,7 +139,7 @@ export default function PasskeyManager() {
                                     <button
                                         type="button"
                                         onClick={() => setIsAdding(false)}
-                                        className="flex-1 sm:flex-none px-3 py-2 text-sm font-medium text-white/60 hover:text-white bg-white/5 hover:bg-white/10 rounded-md transition-colors"
+                                        className="flex-1 sm:flex-none px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground bg-muted hover:bg-muted rounded-md transition-colors"
                                         disabled={actionLoading === "add"}
                                     >
                                         Cancel
@@ -148,7 +148,7 @@ export default function PasskeyManager() {
                                         type="button"
                                         onClick={handleAddPasskey}
                                         disabled={actionLoading === "add"}
-                                        className="flex-1 sm:flex-none px-3 py-2 text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 rounded-md transition-colors flex items-center justify-center gap-2 min-w-[100px]"
+                                        className="flex-1 sm:flex-none px-3 py-2 text-sm font-medium text-foreground bg-blue-500 hover:bg-blue-600 rounded-md transition-colors flex items-center justify-center gap-2 min-w-[100px]"
                                     >
                                         {actionLoading === "add" ? (
                                             <Loader2 className="w-4 h-4 animate-spin" />
@@ -167,12 +167,12 @@ export default function PasskeyManager() {
 
                 {/* List Passkeys */}
                 {loading ? (
-                    <div className="text-center py-8 text-white/40 flex flex-col items-center gap-2">
+                    <div className="text-center py-8 text-muted-foreground/70 flex flex-col items-center gap-2">
                         <Loader2 className="w-6 h-6 animate-spin" />
                         <span className="text-sm">Loading passkeys...</span>
                     </div>
                 ) : passkeys.length === 0 ? (
-                    <div className="text-center py-8 text-white/40 bg-white/5 rounded-lg border-2 border-dashed border-white/5">
+                    <div className="text-center py-8 text-muted-foreground/70 bg-muted rounded-lg border-2 border-dashed border-border">
                         <Fingerprint className="w-8 h-8 mx-auto mb-2 opacity-50" />
                         <p>No passkeys registered yet</p>
                         <p className="text-xs mt-1">Add a passkey to sign in securely without a password</p>
@@ -182,14 +182,14 @@ export default function PasskeyManager() {
                         {passkeys.map((passkey) => (
                             <div
                                 key={passkey.id}
-                                className="bg-white/5 border border-white/10 rounded-lg p-3 flex items-center justify-between group hover:border-white/20 transition-colors"
+                                className="bg-muted border border-border rounded-lg p-3 flex items-center justify-between group hover:border-border transition-colors"
                             >
                                 <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400">
                                         {getIconForDevice(passkey.deviceType)}
                                     </div>
                                     <div>
-                                        <div className="font-medium text-white flex items-center gap-2">
+                                        <div className="font-medium text-foreground flex items-center gap-2">
                                             {passkey.name || "Unnamed Passkey"}
                                             {passkey.backedUp && (
                                                 <span className="text-[10px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded-full border border-green-500/20">
@@ -197,7 +197,7 @@ export default function PasskeyManager() {
                                                 </span>
                                             )}
                                         </div>
-                                        <div className="text-xs text-white/40">
+                                        <div className="text-xs text-muted-foreground/70">
                                             Added {passkey.createdAt ? new Date(passkey.createdAt).toLocaleDateString() : "Unknown date"}
                                         </div>
                                     </div>
@@ -206,7 +206,7 @@ export default function PasskeyManager() {
                                     type="button"
                                     onClick={() => handleDeletePasskey(passkey.id)}
                                     disabled={actionLoading === passkey.id}
-                                    className="p-2 text-white/40 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-colors"
+                                    className="p-2 text-muted-foreground/70 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-colors"
                                     title="Remove passkey"
                                 >
                                     {actionLoading === passkey.id ? (

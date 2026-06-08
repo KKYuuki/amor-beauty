@@ -3,7 +3,6 @@
 import { useContext } from "react"
 import { AnimatePresence } from "motion/react"
 import { SideBarContext } from "@/components/sidebar"
-import { useBranchContext } from "@/components/branch-context"
 import {
     SalesProvider,
     useSales,
@@ -18,8 +17,6 @@ import DiscountModal from "@/components/sales/modals/DiscountModal"
 import ConfirmModal from "@/components/sales/modals/ConfirmModal"
 
 function SalesContent() {
-    const { branches } = useBranchContext()
-
     const { totalOverride, setTotalOverride, calculatedTotal, ...sales } =
         useSales()
 
@@ -50,7 +47,6 @@ function SalesContent() {
                     />
                     <RecentTransactions
                         {...sales}
-                        branches={branches}
                         refreshTransactions={sales.refreshTransactions}
                     />
                 </div>

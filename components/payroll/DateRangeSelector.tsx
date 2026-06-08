@@ -62,15 +62,15 @@ export default function DateRangeSelector({ value, onChange }: DateRangeSelector
 
     return (
         <div className='flex flex-wrap items-center gap-2'>
-            <div className='flex gap-1 bg-white/5 p-1 rounded'>
+            <div className='flex gap-1 bg-muted p-1 rounded'>
                 {PRESETS.map((preset) => (
                     <button
                         key={preset.key}
                         onClick={() => handlePreset(preset.key)}
                         className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${
                             activePreset === preset.key
-                                ? "bg-white/20 text-white"
-                                : "text-white/50 hover:text-white hover:bg-white/10"
+                                ? "bg-muted text-foreground"
+                                : "text-muted-foreground hover:text-foreground hover:bg-muted"
                         }`}
                     >
                         {preset.label}
@@ -80,8 +80,8 @@ export default function DateRangeSelector({ value, onChange }: DateRangeSelector
                     onClick={() => setActivePreset(null)}
                     className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${
                         activePreset === null
-                            ? "bg-white/20 text-white"
-                            : "text-white/50 hover:text-white hover:bg-white/10"
+                            ? "bg-muted text-foreground"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     }`}
                 >
                     Custom
@@ -93,14 +93,14 @@ export default function DateRangeSelector({ value, onChange }: DateRangeSelector
                         type='date'
                         value={customFrom}
                         onChange={(e) => setCustomFrom(e.target.value)}
-                        className='px-2 py-1.5 bg-white/5 border border-white/10 rounded text-xs text-white focus:outline-none focus:border-white/30'
+                        className='px-2 py-1.5 bg-muted border border-border rounded text-xs text-foreground focus:outline-none focus:border-primary'
                     />
-                    <span className='text-white/40 text-xs'>to</span>
+                    <span className='text-muted-foreground/70 text-xs'>to</span>
                     <input
                         type='date'
                         value={customTo}
                         onChange={(e) => setCustomTo(e.target.value)}
-                        className='px-2 py-1.5 bg-white/5 border border-white/10 rounded text-xs text-white focus:outline-none focus:border-white/30'
+                        className='px-2 py-1.5 bg-muted border border-border rounded text-xs text-foreground focus:outline-none focus:border-primary'
                     />
                     <button
                         onClick={handleCustomApply}

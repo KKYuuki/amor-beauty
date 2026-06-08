@@ -10,7 +10,7 @@ interface SkeletonProps {
 export function Skeleton({ className = "", style }: SkeletonProps) {
     return (
         <div
-            className={`animate-pulse bg-white/10 rounded-md ${className}`}
+            className={`animate-pulse bg-muted rounded-md ${className}`}
             style={style}
             aria-hidden="true"
         />

@@ -64,11 +64,11 @@ export function CreateDownpaymentModal({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className='bg-zinc-900 rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-white/10'
+                className='bg-card rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-border'
             >
-                <div className='p-6 border-b border-white/10 flex justify-between items-center'>
+                <div className='p-6 border-b border-border flex justify-between items-center'>
                     <h3 className='text-xl font-bold'>Create Downpayment</h3>
-                    <button onClick={onClose} className='text-white/60 hover:text-white'>
+                    <button onClick={onClose} className='text-muted-foreground hover:text-foreground'>
                         <XIcon className='w-5 h-5' />
                     </button>
                 </div>
@@ -79,7 +79,7 @@ export function CreateDownpaymentModal({
                         <select
                             value={transactionId}
                             onChange={(e) => setTransactionId(e.target.value)}
-                            className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none'
+                            className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none'
                         >
                             <option value=''>Select Transaction</option>
                             {transactions.map((txn) => (
@@ -95,7 +95,7 @@ export function CreateDownpaymentModal({
                         <select
                             value={downpaymentType}
                             onChange={(e) => setDownpaymentType(e.target.value as DownpaymentType)}
-                            className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none'
+                            className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none'
                         >
                             <option value='FLAT_FEE'>Flat Fee</option>
                             <option value='PERCENTAGE'>Percentage</option>
@@ -110,7 +110,7 @@ export function CreateDownpaymentModal({
                                 type='number' min='0' step='0.01'
                                 value={amount}
                                 onChange={(e) => setAmount(Number(e.target.value))}
-                                className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none font-mono'
+                                className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none font-mono'
                             />
                         </div>
                     )}
@@ -123,7 +123,7 @@ export function CreateDownpaymentModal({
                                     type='number' min='0' max='100' step='0.01'
                                     value={percentageRate}
                                     onChange={(e) => setPercentageRate(Number(e.target.value))}
-                                    className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none font-mono'
+                                    className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none font-mono'
                                 />
                             </div>
                             <div>
@@ -132,11 +132,11 @@ export function CreateDownpaymentModal({
                                     type='number' min='0' step='0.01'
                                     value={estimatedTotal}
                                     onChange={(e) => setEstimatedTotal(Number(e.target.value))}
-                                    className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none font-mono'
+                                    className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none font-mono'
                                 />
                             </div>
                             {percentageRate > 0 && estimatedTotal > 0 && (
-                                <p className='text-xs text-white/40'>
+                                <p className='text-xs text-muted-foreground/70'>
                                     Calculated downpayment: {currencySymbol}{calculatedDownpayment.toFixed(2)}
                                 </p>
                             )}
@@ -148,7 +148,7 @@ export function CreateDownpaymentModal({
                         <select
                             value={staffId}
                             onChange={(e) => setStaffId(e.target.value)}
-                            className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none'
+                            className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none'
                         >
                             <option value=''>Unassigned</option>
                             {staffList.map((staff) => (
@@ -162,7 +162,7 @@ export function CreateDownpaymentModal({
                         <select
                             value={payrollSplitMode}
                             onChange={(e) => setPayrollSplitMode(e.target.value as PayrollSplitMode)}
-                            className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none'
+                            className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none'
                         >
                             <option value='PER_PAYMENT'>Per Payment</option>
                             <option value='ON_COMPLETION'>On Completion</option>
@@ -175,12 +175,12 @@ export function CreateDownpaymentModal({
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
                             rows={2}
-                            className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none resize-none'
+                            className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none resize-none'
                         />
                     </div>
 
                     <div className='flex justify-end gap-3 pt-4'>
-                        <button onClick={onClose} className='px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors'>Cancel</button>
+                        <button onClick={onClose} className='px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors'>Cancel</button>
                         <button
                             onClick={handleSave}
                             disabled={loading || !transactionId || (downpaymentType === 'PERCENTAGE' && (!percentageRate || !estimatedTotal))}

@@ -42,7 +42,7 @@ export default function HistoryModal({
             <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors"
+                className="px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors"
             >
                 Close
             </button>
@@ -64,16 +64,16 @@ export default function HistoryModal({
         >
             {loading ? (
                 <div className="flex flex-col items-center justify-center py-12">
-                    <div className="w-8 h-8 border-2 border-white/20 border-t-white/80 rounded-full animate-spin mb-4"></div>
-                    <p className="text-white/60">Loading history... </p>
+                    <div className="w-8 h-8 border-2 border-border border-t-white/80 rounded-full animate-spin mb-4"></div>
+                    <p className="text-muted-foreground">Loading history... </p>
                 </div>
             ) : history.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
-                    <div className="p-4 bg-white/5 rounded-full mb-4">
-                        <PackageIcon className="w-8 h-8 text-white/40" />
+                    <div className="p-4 bg-muted rounded-full mb-4">
+                        <PackageIcon className="w-8 h-8 text-muted-foreground/70" />
                     </div>
-                    <p className="text-white/60">No restock history found</p>
-                    <p className="text-sm text-white/40 mt-1">
+                    <p className="text-muted-foreground">No restock history found</p>
+                    <p className="text-sm text-muted-foreground/70 mt-1">
                         This item has not been restocked yet.
                     </p>
                 </div>
@@ -81,23 +81,23 @@ export default function HistoryModal({
                 <div className="overflow-x-auto">
                     <table className="w-full">
                         <thead>
-                            <tr className="border-b border-white/10">
-                                <th className="text-left py-3 px-4 text-sm font-medium text-white/60">
+                            <tr className="border-b border-border">
+                                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
                                     Date
                                 </th>
-                                <th className="text-left py-3 px-4 text-sm font-medium text-white/60">
+                                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
                                     Quantity
                                 </th>
-                                <th className="text-left py-3 px-4 text-sm font-medium text-white/60">
+                                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
                                     Unit Cost
                                 </th>
-                                <th className="text-left py-3 px-4 text-sm font-medium text-white/60">
+                                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
                                     Supplier
                                 </th>
-                                <th className="text-left py-3 px-4 text-sm font-medium text-white/60">
+                                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
                                     Invoice
                                 </th>
-                                <th className="text-left py-3 px-4 text-sm font-medium text-white/60">
+                                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
                                     Proof
                                 </th>
                             </tr>
@@ -106,7 +106,7 @@ export default function HistoryModal({
                             {history.map((restock) => (
                                 <tr
                                     key={restock.id}
-                                    className="border-b border-white/5 hover:bg-white/5 transition-colors"
+                                    className="border-b border-border hover:bg-muted transition-colors"
                                 >
                                     <td className="py-3 px-4 text-sm whitespace-nowrap">
                                         {new Intl.DateTimeFormat(

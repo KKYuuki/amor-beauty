@@ -64,7 +64,7 @@ export default function DuplicateModal({
                 type="button"
                 onClick={onClose}
                 disabled={loading}
-                className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors disabled:opacity-50"
+                className="px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors disabled:opacity-50"
             >
                 Cancel
             </button>
@@ -105,14 +105,14 @@ export default function DuplicateModal({
                         value={duplicateName}
                         onChange={(e) => setDuplicateName(e.target.value)}
                         placeholder="Enter new item name..."
-                        className="w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-orange-500/50 outline-none transition-colors"
+                        className="w-full px-3 py-2 bg-card border border-border rounded-md focus:border-orange-500/50 outline-none transition-colors"
                         required
                         disabled={loading}
                     />
                 </div>
 
-                <div className="p-3 bg-white/5 rounded-lg border border-white/10">
-                    <p className="text-sm text-white/60">
+                <div className="p-3 bg-muted rounded-lg border border-border">
+                    <p className="text-sm text-muted-foreground">
                         The duplicated item will start with 0 stock and
                         inherit all other properties from the original.
                     </p>

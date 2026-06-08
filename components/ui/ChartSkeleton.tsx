@@ -6,7 +6,7 @@ interface ChartSkeletonProps {
 
 export function ChartSkeleton({ className = "" }: ChartSkeletonProps) {
     return (
-        <div className={`w-full h-60 sm:h-80 bg-white/5 border-2 border-white/5 rounded-xl p-4 flex flex-col gap-2 ${className}`}>
+        <div className={`w-full h-60 sm:h-80 bg-muted border-2 border-border rounded-xl p-4 flex flex-col gap-2 ${className}`}>
             <Skeleton className='h-4 w-40' />
             <div className='flex-1 flex items-end gap-1'>
                 {Array.from({ length: 7 }).map((_, i) => (
@@ -28,7 +28,7 @@ interface PieChartSkeletonProps {
 
 export function PieChartSkeleton({ className = "", showLegend = true }: PieChartSkeletonProps) {
     return (
-        <div className={`bg-white/5 border-2 border-white/5 rounded-xl p-4 flex flex-col gap-2 ${className}`}>
+        <div className={`bg-muted border-2 border-border rounded-xl p-4 flex flex-col gap-2 ${className}`}>
             <Skeleton className='h-4 w-36' />
             <div className='flex-1 flex items-center justify-center'>
                 <Skeleton className='w-28 h-28 sm:w-32 sm:h-32 rounded-full' />
@@ -53,7 +53,7 @@ export function LeaderboardSkeleton({ count = 3 }: LeaderboardSkeletonProps) {
             {Array.from({ length: count }).map((_, i) => (
                 <div
                     key={i}
-                    className='bg-white/5 rounded-lg p-4 flex items-center justify-between'
+                    className='bg-muted rounded-lg p-4 flex items-center justify-between'
                 >
                     <div className='flex items-center gap-3'>
                         <Skeleton className='w-8 h-8 rounded-full' />

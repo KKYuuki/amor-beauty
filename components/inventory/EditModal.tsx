@@ -82,7 +82,7 @@ export default function EditModal({
                 type="button"
                 onClick={onClose}
                 disabled={loading}
-                className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors disabled:opacity-50"
+                className="px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors disabled:opacity-50"
             >
                 Cancel
             </button>
@@ -128,7 +128,7 @@ export default function EditModal({
                                 name: e.target.value,
                             })
                         }
-                        className="w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-blue-500/50 outline-none transition-colors"
+                        className="w-full px-3 py-2 bg-card border border-border rounded-md focus:border-blue-500/50 outline-none transition-colors"
                         required
                         disabled={loading}
                     />
@@ -148,7 +148,7 @@ export default function EditModal({
                                 item_code: e.target.value,
                             })
                         }
-                        className="w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-blue-500/50 outline-none transition-colors"
+                        className="w-full px-3 py-2 bg-card border border-border rounded-md focus:border-blue-500/50 outline-none transition-colors"
                         disabled={loading}
                     />
                 </div>
@@ -170,7 +170,7 @@ export default function EditModal({
                                     unit_price: parseFloat(e.target.value) || 0,
                                 })
                             }
-                            className="w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-blue-500/50 outline-none transition-colors"
+                            className="w-full px-3 py-2 bg-card border border-border rounded-md focus:border-blue-500/50 outline-none transition-colors"
                             disabled={loading}
                         />
                     </div>
@@ -191,7 +191,7 @@ export default function EditModal({
                                     selling_price: parseFloat(e.target.value) || 0,
                                 })
                             }
-                            className="w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-blue-500/50 outline-none transition-colors"
+                            className="w-full px-3 py-2 bg-card border border-border rounded-md focus:border-blue-500/50 outline-none transition-colors"
                             disabled={loading}
                         />
                     </div>
@@ -212,7 +212,7 @@ export default function EditModal({
                                 stock_warning_threshold: parseFloat(e.target.value) || 0,
                             })
                         }
-                        className="w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-blue-500/50 outline-none transition-colors"
+                        className="w-full px-3 py-2 bg-card border border-border rounded-md focus:border-blue-500/50 outline-none transition-colors"
                         disabled={loading}
                     />
                 </div>
@@ -231,7 +231,7 @@ export default function EditModal({
                             })
                         }
                         rows={2}
-                        className="w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-blue-500/50 outline-none resize-none transition-colors"
+                        className="w-full px-3 py-2 bg-card border border-border rounded-md focus:border-blue-500/50 outline-none resize-none transition-colors"
                         disabled={loading}
                     />
                 </div>
@@ -251,7 +251,7 @@ export default function EditModal({
                             })
                         }
                         placeholder="https://..."
-                        className="w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-blue-500/50 outline-none transition-colors"
+                        className="w-full px-3 py-2 bg-card border border-border rounded-md focus:border-blue-500/50 outline-none transition-colors"
                         disabled={loading}
                     />
                 </div>

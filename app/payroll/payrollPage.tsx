@@ -24,7 +24,7 @@ import { AnimatePresence } from "motion/react"
 import { SideBarContext } from "@/components/sidebar"
 import { NotificationContext } from "@/components/notifications"
 import AdminActionGuard from "@/components/admin/AdminActionGuard"
-import { useBranchContext } from "@/components/branch-context"
+
 import {
     PayrollRequest,
     PayrollStaffRate,
@@ -77,6 +77,8 @@ import {
 } from "@/server/actions/rate-levels"
 import { getSetting } from "@/server/actions/settings"
 import { createLogs } from "@/server/actions/logs"
+
+const currentBranch: any = null;
 import {
     CompletePaymentModal,
     StaggeredPaymentModal,
@@ -112,7 +114,7 @@ type TabType = "dashboard" | "requests" | "rateConfiguration" | "deductions" | "
 export default function PayrollPageClient() {
     const { userInfo } = useContext(SideBarContext)
     const { addNotification } = useContext(NotificationContext)
-    const { currentBranch } = useBranchContext()
+    
     const isAdmin = userInfo?.role === "admin"
 
     // State
@@ -565,7 +567,7 @@ export default function PayrollPageClient() {
                                 <WalletIcon className='w-5 h-5 md:w-6 md:h-6' />
                                 Payroll Management
                             </h1>
-                            <p className='text-white/60 text-xs md:text-sm mt-1'>
+                            <p className='text-muted-foreground text-xs md:text-sm mt-1'>
                                 Manage staff payments and rates
                             </p>
                         </div>
@@ -576,7 +578,7 @@ export default function PayrollPageClient() {
                                 onAction={() => setManualEntryModal(true)}
                             >
                                 <button
-                                    className='p-2 bg-blue-600 hover:bg-blue-700 rounded-md transition-colors border-2 border-white/5 cursor-pointer flex items-center gap-2 px-4'
+                                    className='p-2 bg-blue-600 hover:bg-blue-700 rounded-md transition-colors border-2 border-border cursor-pointer flex items-center gap-2 px-4'
                                     title='Manual Payroll Entry'
                                 >
                                     <PlusIcon className='w-4 h-4' />
@@ -587,7 +589,7 @@ export default function PayrollPageClient() {
                         <button
                             onClick={fetchData}
                             disabled={loading}
-                            className='p-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors disabled:opacity-50 border-2 border-white/5 cursor-pointer'
+                            className='p-2 bg-card hover:bg-muted rounded-md transition-colors disabled:opacity-50 border-2 border-border cursor-pointer'
                             title='Refresh'
                         >
                             <RefreshCwIcon
@@ -643,8 +645,8 @@ export default function PayrollPageClient() {
                             onClick={() => setActiveTab(tab.key as TabType)}
                             className={`flex items-center gap-1 md:gap-2 px-2 md:px-4 py-1.5 md:py-2 rounded-md transition-colors ${
                                 activeTab === tab.key
-                                    ? "bg-white/20 text-white"
-                                    : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white"
+                                    ? "bg-muted text-foreground"
+                                    : "bg-muted text-muted-foreground hover:bg-muted hover:text-foreground"
                             }`}
                         >
                             <tab.icon className='w-4 h-4' />
@@ -663,7 +665,7 @@ export default function PayrollPageClient() {
             <div className='flex-1 overflow-auto relative'>
                 {loading && (
                     <div className='absolute inset-0 z-10 flex items-center justify-center bg-black/60'>
-                        <LoaderCircleIcon className='w-8 h-8 animate-spin text-white/40' />
+                        <LoaderCircleIcon className='w-8 h-8 animate-spin text-muted-foreground/70' />
                     </div>
                 )}
                 <>
@@ -1189,7 +1191,7 @@ function DashboardTab({
                     Staff Period Earnings
                 </h2>
                 {staffSummary.length === 0 ? (
-                    <div className='bg-white/5 rounded-lg p-6 text-center text-white/60'>
+                    <div className='bg-muted rounded-lg p-6 text-center text-muted-foreground'>
                         No staff earnings for this period
                     </div>
                 ) : (
@@ -1292,8 +1294,8 @@ function RequestsTab({
                         onClick={() => onFilterChange(f as typeof filter)}
                         className={`px-3 py-1 rounded-md text-sm transition-colors ${
                             filter === f
-                                ? "bg-white/20 text-white"
-                                : "bg-white/5 text-white/60 hover:bg-white/10"
+                                ? "bg-muted text-foreground"
+                                : "bg-muted text-muted-foreground hover:bg-muted"
                         }`}
                     >
                         {f === "all"
@@ -1305,21 +1307,21 @@ function RequestsTab({
 
             {/* Request List - Grouped by Staff */}
             {requests.length === 0 ? (
-                <div className='flex flex-col items-center justify-center gap-2 py-12 text-center text-white/60'>
+                <div className='flex flex-col items-center justify-center gap-2 py-12 text-center text-muted-foreground'>
                     <WalletIcon className='w-8 h-8 opacity-20' />
                     <p className='text-sm'>No payment requests found</p>
-                    <p className='text-xs text-white/40'>Staff must have pending earnings to create a request</p>
+                    <p className='text-xs text-muted-foreground/70'>Staff must have pending earnings to create a request</p>
                 </div>
             ) : (
                 <div className='space-y-4'>
                     {Object.entries(groupedByStaff).map(([staffId, group]) => (
                         <div
                             key={staffId}
-                            className='bg-white/5 rounded-xl p-4'
+                            className='bg-muted rounded-xl p-4'
                         >
                             {/* Staff Header */}
-                            <div className='flex items-center gap-3 mb-3 pb-3 border-b border-white/10'>
-                                <div className='w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white font-bold overflow-hidden'>
+                            <div className='flex items-center gap-3 mb-3 pb-3 border-b border-border'>
+                                <div className='w-10 h-10 bg-muted rounded-full flex items-center justify-center text-foreground font-bold overflow-hidden'>
                                     {group.avatarUrl ? (
                                         <NextImage
                                             src={group.avatarUrl}
@@ -1336,7 +1338,7 @@ function RequestsTab({
                                     <p className='font-semibold'>
                                         {group.staffName}
                                     </p>
-                                    <p className='text-xs text-white/50'>
+                                    <p className='text-xs text-muted-foreground'>
                                         {group.requests.length} request
                                         {group.requests.length !== 1 ? "s" : ""}
                                     </p>
@@ -1348,7 +1350,7 @@ function RequestsTab({
                                 {group.requests.map((request) => (
                                     <div
                                         key={request.id}
-                                        className='bg-white/5 hover:bg-white/10 rounded-lg p-3 transition-colors'
+                                        className='bg-muted hover:bg-muted rounded-lg p-3 transition-colors'
                                     >
                                         <div className='flex items-start justify-between'>
                                             <div>
@@ -1362,7 +1364,7 @@ function RequestsTab({
                                                         {request.status}
                                                     </span>
                                                 </div>
-                                                <p className='text-sm text-white/60'>
+                                                <p className='text-sm text-muted-foreground'>
                                                     {new Date(
                                                         request.period_start
                                                     ).toLocaleDateString()}{" "}
@@ -1385,7 +1387,7 @@ function RequestsTab({
                                         {/* Actions */}
                                         {(request.status === "REQUESTED" ||
                                             request.status === "CONFIRMED") && (
-                                            <div className='flex flex-wrap gap-2 mt-2 pt-2 border-t border-white/10'>
+                                            <div className='flex flex-wrap gap-2 mt-2 pt-2 border-t border-border'>
                                                 {request.status === "REQUESTED" && (
                                                     <>
                                                         <AdminActionGuard
@@ -1446,16 +1448,16 @@ function RequestsTab({
                                         )}
 
                                         {request.status === "COMPLETED" && request.payment_method && (
-                                            <div className='mt-2 pt-2 border-t border-white/10'>
+                                            <div className='mt-2 pt-2 border-t border-border'>
                                                 <div className='flex items-center gap-2'>
-                                                    <span className={`text-xs px-2 py-0.5 rounded border ${PAYROLL_PAYMENT_METHOD_COLORS[request.payment_method] || 'bg-white/10 text-white/60 border-white/10'}`}>
+                                                    <span className={`text-xs px-2 py-0.5 rounded border ${PAYROLL_PAYMENT_METHOD_COLORS[request.payment_method] || 'bg-card text-muted-foreground border-border'}`}>
                                                         {getPayrollPaymentMethodLabel(request.payment_method)}
                                                     </span>
-                                                    <span className='text-xs text-white/50'>
+                                                    <span className='text-xs text-muted-foreground'>
                                                         Completed {request.completed_at ? new Date(request.completed_at).toLocaleDateString() : ''}
                                                     </span>
                                                     {request.reference_number && (
-                                                        <span className='text-xs font-mono text-white/70'>
+                                                        <span className='text-xs font-mono text-foreground/90'>
                                                             Ref: {request.reference_number}
                                                         </span>
                                                     )}
@@ -1480,16 +1482,16 @@ function RequestsTab({
                                                 {expandedRequestId === request.id && requestDisbursementsMap[request.id] && (
                                                     <div className='mt-2 space-y-1'>
                                                         {requestDisbursementsMap[request.id].map(d => (
-                                                            <div key={d.id} className='flex items-center justify-between text-xs bg-white/5 rounded p-2'>
+                                                            <div key={d.id} className='flex items-center justify-between text-xs bg-muted rounded p-2'>
                                                                 <div className='flex items-center gap-2'>
-                                                                    <span className={`px-1.5 py-0.5 rounded ${PAYROLL_PAYMENT_METHOD_COLORS[d.payment_method] || 'bg-white/10 text-white/60'}`}>
+                                                                    <span className={`px-1.5 py-0.5 rounded ${PAYROLL_PAYMENT_METHOD_COLORS[d.payment_method] || 'bg-card text-muted-foreground'}`}>
                                                                         {getPayrollPaymentMethodLabel(d.payment_method)}
                                                                     </span>
-                                                                    <span className='text-white/70'>
+                                                                    <span className='text-foreground/90'>
                                                                         {currencySymbol}{Number(d.amount).toFixed(2)}
                                                                     </span>
                                                                 </div>
-                                                                <div className='text-white/50'>
+                                                                <div className='text-muted-foreground'>
                                                                     {d.reference_number && <span className='font-mono mr-2'>Ref: {d.reference_number}</span>}
                                                                     {d.completed_at && new Date(d.completed_at).toLocaleDateString()}
                                                                 </div>
@@ -1548,15 +1550,15 @@ function RatesTab({
         <div className='mb-6'>
             <h3 className='text-lg font-semibold mb-3'>{title}</h3>
             {rateList.length === 0 ? (
-                <div className='flex flex-col items-center justify-center gap-2 py-8 text-center text-white/60'>
+                <div className='flex flex-col items-center justify-center gap-2 py-8 text-center text-muted-foreground'>
                     <SettingsIcon className='w-6 h-6 opacity-20' />
                     <p className='text-sm'>No rates configured</p>
-                    <p className='text-xs text-white/40'>Create staff rates to configure commission splits</p>
+                    <p className='text-xs text-muted-foreground/70'>Create staff rates to configure commission splits</p>
                 </div>
             ) : (
                 <table className='w-full'>
                     <thead>
-                        <tr className='text-left text-xs text-white/60 uppercase'>
+                        <tr className='text-left text-xs text-muted-foreground uppercase'>
                             <th className='pb-2'>Client Type</th>
                             <th className='pb-2'>Rate Level</th>
                             <th className='pb-2 text-right'>Shop %</th>
@@ -1570,7 +1572,7 @@ function RatesTab({
                         {rateList.map((rate) => (
                             <tr
                                 key={rate.id}
-                                className='border-t border-white/10'
+                                className='border-t border-border'
                             >
                                 <td className='py-3 text-sm'>
                                     {rate.client_type}
@@ -1591,7 +1593,7 @@ function RatesTab({
                                                 onAction={() => onEdit(rate)}
                                             >
                                                 <button
-                                                    className='px-2 py-1 text-xs bg-white/10 hover:bg-white/20 rounded transition-colors'
+                                                    className='px-2 py-1 text-xs bg-card hover:bg-muted rounded transition-colors'
                                                 >
                                                     Edit
                                                 </button>
@@ -1716,16 +1718,16 @@ function DeductionsTab({
             )}
 
             {deductions.length === 0 ? (
-                <div className='flex flex-col items-center justify-center gap-2 py-12 text-center text-white/60'>
+                <div className='flex flex-col items-center justify-center gap-2 py-12 text-center text-muted-foreground'>
                     <PercentIcon className='w-8 h-8 opacity-20' />
                     <p className='text-sm'>No deductions found</p>
-                    <p className='text-xs text-white/40'>Use &apos;Create Deduction&apos; to add a new deduction</p>
+                    <p className='text-xs text-muted-foreground/70'>Use &apos;Create Deduction&apos; to add a new deduction</p>
                 </div>
             ) : (
-                <div className='bg-white/5 rounded-xl overflow-hidden'>
+                <div className='bg-muted rounded-xl overflow-hidden'>
                     <table className='w-full'>
                         <thead>
-                            <tr className='text-left text-xs text-white/60 uppercase border-b border-white/10'>
+                            <tr className='text-left text-xs text-muted-foreground uppercase border-b border-border'>
                                 <th className='p-4'>Staff</th>
                                 <th className='p-4'>Type</th>
                                 <th className='p-4 text-right'>Amount</th>
@@ -1739,11 +1741,11 @@ function DeductionsTab({
                             {deductions.map((deduction) => (
                                 <tr
                                     key={deduction.id}
-                                    className='border-b border-white/5 hover:bg-white/5 transition-colors'
+                                    className='border-b border-border hover:bg-muted transition-colors'
                                 >
                                     <td className='p-4'>
                                         <div className='flex items-center gap-2'>
-                                            <div className='w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white font-bold text-sm overflow-hidden'>
+                                            <div className='w-8 h-8 bg-muted rounded-full flex items-center justify-center text-foreground font-bold text-sm overflow-hidden'>
                                                 {deduction.staff_avatar_url ? (
                                                     <NextImage
                                                         src={deduction.staff_avatar_url}
@@ -1775,7 +1777,7 @@ function DeductionsTab({
                                             })}
                                         </span>
                                     </td>
-                                    <td className='p-4 text-sm text-white/70 max-w-[200px] truncate'>
+                                    <td className='p-4 text-sm text-foreground/90 max-w-[200px] truncate'>
                                         {deduction.reason || '-'}
                                     </td>
                                     <td className='p-4'>
@@ -1783,7 +1785,7 @@ function DeductionsTab({
                                             {deduction.status}
                                         </span>
                                     </td>
-                                    <td className='p-4 text-sm text-white/60'>
+                                    <td className='p-4 text-sm text-muted-foreground'>
                                         {new Date(deduction.created_at).toLocaleDateString()}
                                     </td>
                                     {isAdmin && (
@@ -1847,16 +1849,16 @@ function ScheduledPaymentsTab({
             )}
 
             {scheduledPayments.length === 0 ? (
-                <div className='flex flex-col items-center justify-center gap-2 py-12 text-center text-white/60'>
+                <div className='flex flex-col items-center justify-center gap-2 py-12 text-center text-muted-foreground'>
                     <CalendarIcon className='w-8 h-8 opacity-20' />
                     <p className='text-sm'>No scheduled payments found</p>
-                    <p className='text-xs text-white/40'>Schedule payments from the payment requests tab</p>
+                    <p className='text-xs text-muted-foreground/70'>Schedule payments from the payment requests tab</p>
                 </div>
             ) : (
-                <div className='bg-white/5 rounded-xl overflow-hidden'>
+                <div className='bg-muted rounded-xl overflow-hidden'>
                     <table className='w-full'>
                         <thead>
-                            <tr className='text-left text-xs text-white/60 uppercase border-b border-white/10'>
+                            <tr className='text-left text-xs text-muted-foreground uppercase border-b border-border'>
                                 <th className='p-4'>Staff</th>
                                 <th className='p-4'>Amount</th>
                                 <th className='p-4'>Frequency</th>
@@ -1870,11 +1872,11 @@ function ScheduledPaymentsTab({
                             {scheduledPayments.map((payment) => (
                                 <tr
                                     key={payment.id}
-                                    className='border-b border-white/5 hover:bg-white/5 transition-colors'
+                                    className='border-b border-border hover:bg-muted transition-colors'
                                 >
                                     <td className='p-4'>
                                         <div className='flex items-center gap-2'>
-                                            <div className='w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white font-bold text-sm overflow-hidden'>
+                                            <div className='w-8 h-8 bg-muted rounded-full flex items-center justify-center text-foreground font-bold text-sm overflow-hidden'>
                                                 {payment.staff_avatar_url ? (
                                                     <NextImage
                                                         src={payment.staff_avatar_url}
@@ -1905,12 +1907,12 @@ function ScheduledPaymentsTab({
                                                 : '-'}
                                         </span>
                                     </td>
-                                    <td className='p-4 text-sm text-white/70'>
+                                    <td className='p-4 text-sm text-foreground/90'>
                                         {payment.recurrence_rule?.startDate
                                             ? new Date(payment.recurrence_rule.startDate).toLocaleDateString()
                                             : '-'}
                                     </td>
-                                    <td className='p-4 text-sm text-white/70'>
+                                    <td className='p-4 text-sm text-foreground/90'>
                                         {payment.recurrence_rule?.endDate
                                             ? new Date(payment.recurrence_rule.endDate).toLocaleDateString()
                                             : 'Indefinite'}
@@ -1971,7 +1973,7 @@ function RateLevelsTab({
     return (
         <div className='space-y-4'>
             <div className='flex justify-between items-center'>
-                <p className='text-white/60 text-sm'>Manage rate levels that determine commission splits for staff.</p>
+                <p className='text-muted-foreground text-sm'>Manage rate levels that determine commission splits for staff.</p>
                 {isAdmin && (
                     <AdminActionGuard onAction={onCreate}>
                         <button className='px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md transition-colors font-medium flex items-center gap-2'>
@@ -1982,16 +1984,16 @@ function RateLevelsTab({
                 )}
             </div>
 
-            <div className='rounded-lg border border-white/10 overflow-hidden'>
+            <div className='rounded-lg border border-border overflow-hidden'>
                 <table className='w-full'>
-                    <thead className='bg-white/5'>
+                    <thead className='bg-muted'>
                         <tr>
-                            <th className='text-left px-4 py-3 text-sm font-semibold text-white/60'>Name</th>
-                            <th className='text-left px-4 py-3 text-sm font-semibold text-white/60'>Slug</th>
-                            <th className='text-left px-4 py-3 text-sm font-semibold text-white/60'>Status</th>
-                            <th className='text-left px-4 py-3 text-sm font-semibold text-white/60'>Sort Order</th>
+                            <th className='text-left px-4 py-3 text-sm font-semibold text-muted-foreground'>Name</th>
+                            <th className='text-left px-4 py-3 text-sm font-semibold text-muted-foreground'>Slug</th>
+                            <th className='text-left px-4 py-3 text-sm font-semibold text-muted-foreground'>Status</th>
+                            <th className='text-left px-4 py-3 text-sm font-semibold text-muted-foreground'>Sort Order</th>
                             {isAdmin && (
-                                <th className='text-right px-4 py-3 text-sm font-semibold text-white/60'>Actions</th>
+                                <th className='text-right px-4 py-3 text-sm font-semibold text-muted-foreground'>Actions</th>
                             )}
                         </tr>
                     </thead>
@@ -1999,10 +2001,10 @@ function RateLevelsTab({
                         {rateLevels.map((level) => (
                             <tr
                                 key={level.id}
-                                className={`border-t border-white/5 ${!level.is_active ? 'opacity-50' : 'hover:bg-white/5'}`}
+                                className={`border-t border-border ${!level.is_active ? 'opacity-50' : 'hover:bg-muted'}`}
                             >
                                 <td className='px-4 py-3 text-sm font-medium'>{level.name}</td>
-                                <td className='px-4 py-3 text-sm text-white/60 font-mono'>{level.slug}</td>
+                                <td className='px-4 py-3 text-sm text-muted-foreground font-mono'>{level.slug}</td>
                                 <td className='px-4 py-3'>
                                     {level.is_active ? (
                                         <span className='px-2 py-0.5 rounded text-xs font-semibold bg-green-500/30 text-green-300'>Active</span>
@@ -2018,7 +2020,7 @@ function RateLevelsTab({
                                                 onAction={() => onEdit(level)}
                                             >
                                                 <button
-                                                    className='px-2 py-1 text-xs bg-white/10 hover:bg-white/20 rounded transition-colors'
+                                                    className='px-2 py-1 text-xs bg-card hover:bg-muted rounded transition-colors'
                                                 >
                                                     Edit
                                                 </button>
@@ -2050,7 +2052,7 @@ function RateLevelsTab({
                         ))}
                         {rateLevels.length === 0 && (
                             <tr>
-                                <td colSpan={isAdmin ? 5 : 4} className='px-4 py-8 text-center text-white/40'>
+                                <td colSpan={isAdmin ? 5 : 4} className='px-4 py-8 text-center text-muted-foreground/70'>
                                     No rate levels found. Create one to get started.
                                 </td>
                             </tr>
@@ -2096,13 +2098,13 @@ function RateConfigurationTab({
     return (
         <div className='space-y-4'>
             {/* View Toggle */}
-            <div className='flex gap-1 p-1 bg-white/5 rounded-lg w-fit'>
+            <div className='flex gap-1 p-1 bg-muted rounded-lg w-fit'>
                 <button
                     onClick={() => setView("staffRates")}
                     className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                         view === "staffRates"
-                            ? "bg-white/20 text-white"
-                            : "text-white/60 hover:text-white hover:bg-white/10"
+                            ? "bg-muted text-foreground"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     }`}
                 >
                     Staff Rates
@@ -2111,8 +2113,8 @@ function RateConfigurationTab({
                     onClick={() => setView("rateLevels")}
                     className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                         view === "rateLevels"
-                            ? "bg-white/20 text-white"
-                            : "text-white/60 hover:text-white hover:bg-white/10"
+                            ? "bg-muted text-foreground"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     }`}
                 >
                     Rate Levels
@@ -2170,12 +2172,12 @@ function DownpaymentsTab({
         <div className='space-y-4'>
             {/* Summary Cards */}
             <div className='grid grid-cols-3 gap-4'>
-                <div className='bg-white/5 border border-white/10 rounded-lg p-4'>
-                    <p className='text-xs text-white/60 uppercase font-semibold'>Total</p>
-                    <p className='text-lg font-bold text-white'>
+                <div className='bg-muted border border-border rounded-lg p-4'>
+                    <p className='text-xs text-muted-foreground uppercase font-semibold'>Total</p>
+                    <p className='text-lg font-bold text-foreground'>
                         {currencySymbol}{totalDownpayments.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </p>
-                    <p className='text-xs text-white/40'>{downpayments.length} entries</p>
+                    <p className='text-xs text-muted-foreground/70'>{downpayments.length} entries</p>
                 </div>
                 <div className='bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4'>
                     <p className='text-xs text-yellow-400 uppercase font-semibold'>Unassigned</p>
@@ -2195,8 +2197,8 @@ function DownpaymentsTab({
                         onClick={() => onFilterChange(f)}
                         className={`px-3 py-1 rounded-md text-sm transition-colors ${
                             filter === f
-                                ? "bg-white/20 text-white"
-                                : "bg-white/5 text-white/60 hover:bg-white/10"
+                                ? "bg-muted text-foreground"
+                                : "bg-muted text-muted-foreground hover:bg-muted"
                         }`}
                     >
                         {f === "all" ? "All" : f === "unassigned" ? "Unassigned" : "Settled"}
@@ -2206,14 +2208,14 @@ function DownpaymentsTab({
 
             {/* Table */}
             {downpayments.length === 0 ? (
-                <div className='bg-white/5 rounded-lg p-8 text-center text-white/60'>
+                <div className='bg-muted rounded-lg p-8 text-center text-muted-foreground'>
                     No downpayments found
                 </div>
             ) : (
-                <div className='bg-white/5 rounded-xl overflow-hidden'>
+                <div className='bg-muted rounded-xl overflow-hidden'>
                     <table className='w-full'>
                         <thead>
-                            <tr className='text-left text-xs text-white/60 uppercase border-b border-white/10'>
+                            <tr className='text-left text-xs text-muted-foreground uppercase border-b border-border'>
                                 <th className='p-4'>Transaction</th>
                                 <th className='p-4 text-right'>Amount</th>
                                 <th className='p-4'>Type</th>
@@ -2227,12 +2229,12 @@ function DownpaymentsTab({
                             {downpayments.map((dp) => (
                                 <tr
                                     key={dp.id}
-                                    className='border-b border-white/5 hover:bg-white/5 transition-colors'
+                                    className='border-b border-border hover:bg-muted transition-colors'
                                 >
-                                    <td className='p-4 text-sm font-mono text-white/70'>
+                                    <td className='p-4 text-sm font-mono text-foreground/90'>
                                         {dp.transaction_id.slice(0, 8)}...
                                     </td>
-                                    <td className='p-4 text-right font-mono text-white'>
+                                    <td className='p-4 text-right font-mono text-foreground'>
                                         {currencySymbol}{dp.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                                     </td>
                                     <td className='p-4'>
@@ -2240,10 +2242,10 @@ function DownpaymentsTab({
                                             {dp.downpayment_type}
                                         </span>
                                     </td>
-                                    <td className='p-4 text-sm text-white/60'>
+                                    <td className='p-4 text-sm text-muted-foreground'>
                                         {dp.staff_id ? dp.staff_id.slice(0, 8) + '...' : <span className='text-yellow-400'>Unassigned</span>}
                                     </td>
-                                    <td className='p-4 text-sm text-white/60'>
+                                    <td className='p-4 text-sm text-muted-foreground'>
                                         {dp.payroll_split_mode}
                                     </td>
                                     <td className='p-4'>

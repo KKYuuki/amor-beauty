@@ -53,15 +53,15 @@ export default function DiscountModal({
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95 }}
-                        className='bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden'
+                        className='bg-white dark:bg-card rounded-2xl shadow-2xl w-full max-w-md overflow-hidden'
                     >
-                        <div className='p-6 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center'>
+                        <div className='p-6 border-b border-zinc-200 dark:border-border flex justify-between items-center'>
                             <h3 className='text-xl font-bold'>
                                 Apply Discount
                             </h3>
                             <button
                                 onClick={onClose}
-                                className='text-zinc-500 hover:text-zinc-800'
+                                className='text-muted-foreground hover:text-foreground'
                             >
                                 <XCircleIcon className='w-6 h-6' />
                             </button>
@@ -80,7 +80,7 @@ export default function DiscountModal({
                                         className={`p-3 rounded-lg border text-sm font-medium transition-all ${
                                             discountType === "PERCENTAGE"
                                                 ? "border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300"
-                                                : "border-zinc-200 dark:border-zinc-700 hover:border-zinc-300"
+                                                : "border-zinc-200 dark:border-border hover:border-zinc-300"
                                         }`}
                                     >
                                         Percentage (%)
@@ -91,7 +91,7 @@ export default function DiscountModal({
                                         className={`p-3 rounded-lg border text-sm font-medium transition-all ${
                                             discountType === "FIXED"
                                                 ? "border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300"
-                                                : "border-zinc-200 dark:border-zinc-700 hover:border-zinc-300"
+                                                : "border-zinc-200 dark:border-border hover:border-zinc-300"
                                         }`}
                                     >
                                         Fixed Amount (
@@ -110,18 +110,18 @@ export default function DiscountModal({
                                 </label>
                                 <div className='relative'>
                                     {discountType === "PERCENTAGE" && (
-                                        <span className='absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500'>
+                                        <span className='absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground'>
                                             %
                                         </span>
                                     )}
                                     {discountType === "FIXED" && (
-                                        <span className='absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500'>
+                                        <span className='absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground'>
                                             {taxSettings.currency_symbol}
                                         </span>
                                     )}
                                     <input
                                         type='number'
-                                        className={`w-full px-3 py-3 bg-zinc-100 dark:bg-zinc-800 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 ${
+                                        className={`w-full px-3 py-3 bg-zinc-100 dark:bg-muted rounded-lg outline-none focus:ring-2 focus:ring-blue-500 ${
                                             discountType === "PERCENTAGE"
                                                 ? "pl-8"
                                                 : "pl-12"
@@ -157,7 +157,7 @@ export default function DiscountModal({
                                 </label>
                                 <input
                                     type='text'
-                                    className='w-full px-4 py-3 bg-zinc-100 dark:bg-zinc-800 rounded-lg outline-none focus:ring-2 focus:ring-blue-500'
+                                    className='w-full px-4 py-3 bg-zinc-100 dark:bg-muted rounded-lg outline-none focus:ring-2 focus:ring-blue-500'
                                     placeholder='e.g., VIP Customer, Holiday Promo, etc.'
                                     value={discountReason}
                                     onChange={(e) =>
@@ -186,7 +186,7 @@ export default function DiscountModal({
                                         }
                                     }}
                                     disabled={isApplyDisabled}
-                                    className='flex-1 px-4 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-zinc-300 disabled:cursor-not-allowed rounded-lg transition-colors font-medium text-white'
+                                    className='flex-1 px-4 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-zinc-300 disabled:cursor-not-allowed rounded-lg transition-colors font-medium text-foreground'
                                 >
                                     Apply Discount
                                 </button>
@@ -200,7 +200,7 @@ export default function DiscountModal({
                                         addNotification("Discount removed", "INFO", "Discount", true)
                                     }}
                                     disabled={appliedDiscount === 0}
-                                    className='px-4 py-3 bg-red-500 hover:bg-red-600 disabled:bg-zinc-300 disabled:cursor-not-allowed rounded-lg transition-colors font-medium text-white flex flex-row items-center justify-center gap-2'
+                                    className='px-4 py-3 bg-red-500 hover:bg-red-600 disabled:bg-zinc-300 disabled:cursor-not-allowed rounded-lg transition-colors font-medium text-foreground flex flex-row items-center justify-center gap-2'
                                 >
                                     Remove Discount
                                 </button>

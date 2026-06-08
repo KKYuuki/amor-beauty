@@ -82,13 +82,13 @@ export default function AddPaymentModal({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className='bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden'
+                className='bg-white dark:bg-card rounded-2xl shadow-2xl w-full max-w-md overflow-hidden'
             >
-                <div className='p-6 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center'>
+                <div className='p-6 border-b border-zinc-200 dark:border-border flex justify-between items-center'>
                     <h3 className='text-xl font-bold'>Add Payment</h3>
                     <button
                         onClick={onClose}
-                        className='text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
+                        className='text-muted-foreground hover:text-foreground'
                     >
                         <XCircleIcon className='w-6 h-6' />
                     </button>
@@ -100,23 +100,23 @@ export default function AddPaymentModal({
                             {staleWarning}
                         </div>
                     )}
-                    <div className='bg-zinc-50 dark:bg-zinc-800/50 rounded-lg p-4 space-y-2'>
+                    <div className='bg-zinc-50 dark:bg-muted/50 rounded-lg p-4 space-y-2'>
                         <div className='flex justify-between text-sm'>
-                            <span className='text-zinc-600 dark:text-zinc-400'>Transaction #:</span>
-                            <span className='font-medium text-zinc-900 dark:text-zinc-100'>
+                            <span className='text-muted-foreground dark:text-muted-foreground'>Transaction #:</span>
+                            <span className='font-medium text-foreground text-foreground'>
                                 {displayTransaction.transaction_number.slice(-8)}
                             </span>
                         </div>
                         <div className='flex justify-between text-sm'>
-                            <span className='text-zinc-600 dark:text-zinc-400'>Total:</span>
+                            <span className='text-muted-foreground dark:text-muted-foreground'>Total:</span>
                             <span className='font-medium'>{taxSettings.currency_symbol} {parseFloat(String(displayTransaction.total)).toFixed(2)}</span>
                         </div>
                         <div className='flex justify-between text-sm'>
-                            <span className='text-zinc-600 dark:text-zinc-400'>Already Paid:</span>
+                            <span className='text-muted-foreground dark:text-muted-foreground'>Already Paid:</span>
                             <span className='font-medium text-green-600'>{taxSettings.currency_symbol} {parseFloat(String(displayTransaction.amount_paid)).toFixed(2)}</span>
                         </div>
                         <div className='flex justify-between text-sm font-medium'>
-                            <span className='text-zinc-600 dark:text-zinc-400'>Balance Due:</span>
+                            <span className='text-muted-foreground dark:text-muted-foreground'>Balance Due:</span>
                             <span className='text-amber-600 dark:text-amber-400'>
                                 {taxSettings.currency_symbol} {(parseFloat(String(displayTransaction.total)) - parseFloat(String(displayTransaction.amount_paid))).toFixed(2)}
                             </span>
@@ -124,7 +124,7 @@ export default function AddPaymentModal({
                     </div>
 
                     <div>
-                        <label className='block text-sm font-medium mb-3 text-zinc-700 dark:text-zinc-300'>
+                        <label className='block text-sm font-medium mb-3 text-muted-foreground dark:text-foreground'>
                             Payment Method
                         </label>
                         <div className='grid grid-cols-2 gap-3'>
@@ -136,7 +136,7 @@ export default function AddPaymentModal({
                                     className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border-2 ${
                                         paymentMethod === method.key
                                             ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400'
-                                            : 'border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-600'
+                                            : 'border-zinc-200 dark:border-border bg-white dark:bg-muted hover:border-zinc-300 dark:hover:border-zinc-600'
                                     }`}
                                 >
                                     <method.icon className='w-4 h-4' />
@@ -147,11 +147,11 @@ export default function AddPaymentModal({
                     </div>
 
                     <div>
-                        <label className='block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300'>
+                        <label className='block text-sm font-medium mb-2 text-muted-foreground dark:text-foreground'>
                             Payment Amount
                         </label>
                         <div className='relative'>
-                            <span className='absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500'>
+                            <span className='absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground'>
                                 {taxSettings.currency_symbol}
                             </span>
                             <input
@@ -159,14 +159,14 @@ export default function AddPaymentModal({
                                 value={paymentAmount}
                                 onChange={(e) => setPaymentAmount(e.target.value)}
                                 placeholder='0.00'
-                                className='w-full pl-8 pr-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                                className='w-full pl-8 pr-4 py-2 rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-muted focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                             />
                         </div>
                     </div>
 
                     {paymentMethod !== 'CASH' && (
                         <div>
-                            <label className='block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300'>
+                            <label className='block text-sm font-medium mb-2 text-muted-foreground dark:text-foreground'>
                                 Reference Number
                             </label>
                             <input
@@ -174,7 +174,7 @@ export default function AddPaymentModal({
                                 value={referenceNumber}
                                 onChange={(e) => setReferenceNumber(e.target.value)}
                                 placeholder='Enter reference number'
-                                className='w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                                className='w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-muted focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                             />
                         </div>
                     )}
@@ -184,7 +184,7 @@ export default function AddPaymentModal({
                             type='button'
                             onClick={onClose}
                             disabled={processing}
-                            className='flex-1 px-4 py-3 rounded-lg border-2 border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 font-medium hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all disabled:opacity-50'
+                            className='flex-1 px-4 py-3 rounded-lg border-2 border-zinc-200 dark:border-border text-muted-foreground dark:text-foreground font-medium hover:bg-zinc-50 dark:hover:bg-muted transition-all disabled:opacity-50'
                         >
                             Cancel
                         </button>
@@ -192,11 +192,11 @@ export default function AddPaymentModal({
                             type='button'
                             onClick={onAddPayment}
                             disabled={processing || !isValid}
-                            className='flex-1 px-4 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2'
+                            className='flex-1 px-4 py-3 rounded-lg bg-blue-600 text-foreground font-medium hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2'
                         >
                             {processing ? (
                                 <>
-                                    <div className='w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin' />
+                                    <div className='w-4 h-4 border-2 border-border border-t-primary rounded-full animate-spin' />
                                     Processing...
                                 </>
                             ) : (

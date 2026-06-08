@@ -6,7 +6,9 @@ import { ChevronDownIcon, LoaderCircleIcon, SendIcon } from "lucide-react"
 import { motion, AnimatePresence } from "motion/react"
 import { PayrollEntry } from "@/utils/types/payroll"
 import { getStaffEarningsForPeriod } from "@/server/actions/payroll"
-import { useBranchContext } from "@/components/branch-context"
+
+const currentBranch: any = null;
+
 
 const STATUS_COLORS: Record<string, string> = {
     PENDING: "bg-yellow-400/20 text-yellow-300 border-yellow-400/30",
@@ -47,7 +49,7 @@ export default function StaffEarningsRow({
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [selectedEntryIds, setSelectedEntryIds] = useState<Set<string>>(new Set())
-    const { currentBranch } = useBranchContext()
+    
 
     const handleToggle = async () => {
         if (isExpanded) {
@@ -98,14 +100,14 @@ export default function StaffEarningsRow({
     const hasPending = pendingAmount > 0
 
     return (
-        <div className={`bg-white/5 rounded-lg transition-colors ${isExpanded ? "bg-white/10" : "hover:bg-white/10"}`}>
+        <div className={`bg-muted rounded-lg transition-colors ${isExpanded ? "bg-card" : "hover:bg-muted"}`}>
             {/* Header Row */}
             <button
                 onClick={handleToggle}
                 className={`w-full flex items-center justify-between p-4 text-left ${!hasPending ? "opacity-60" : ""}`}
             >
                 <div className='flex items-center gap-3'>
-                    <div className='w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white font-bold overflow-hidden'>
+                    <div className='w-10 h-10 bg-muted rounded-full flex items-center justify-center text-foreground font-bold overflow-hidden'>
                         {avatarUrl ? (
                             <NextImage
                                 src={avatarUrl}
@@ -120,12 +122,12 @@ export default function StaffEarningsRow({
                     </div>
                     <div>
                         <p className='font-medium'>{staffName}</p>
-                        <p className='text-xs text-white/40'>
+                        <p className='text-xs text-muted-foreground/70'>
                             Total: {currencySymbol}{totalEarned.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                             {" · "}
                             <span className='text-green-400'>Paid: {currencySymbol}{paidAmount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
                             {" · "}
-                            <span className={hasPending ? "text-yellow-300" : "text-white/40"}>
+                            <span className={hasPending ? "text-yellow-300" : "text-muted-foreground/70"}>
                                 Pending: {currencySymbol}{pendingAmount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                             </span>
                         </p>
@@ -135,7 +137,7 @@ export default function StaffEarningsRow({
                     animate={{ rotate: isExpanded ? 180 : 0 }}
                     transition={{ duration: 0.2 }}
                 >
-                    <ChevronDownIcon className='w-5 h-5 text-white/40' />
+                    <ChevronDownIcon className='w-5 h-5 text-muted-foreground/70' />
                 </motion.div>
             </button>
 
@@ -149,23 +151,23 @@ export default function StaffEarningsRow({
                         transition={{ duration: 0.2 }}
                         className='overflow-hidden'
                     >
-                        <div className='px-4 pb-4 border-t border-white/10'>
+                        <div className='px-4 pb-4 border-t border-border'>
                             {loading ? (
                                 <div className='flex justify-center py-4'>
-                                    <LoaderCircleIcon className='w-5 h-5 animate-spin text-white/40' />
+                                    <LoaderCircleIcon className='w-5 h-5 animate-spin text-muted-foreground/70' />
                                 </div>
                             ) : error ? (
                                 <p className='text-red-400/80 text-sm text-center py-4'>
                                     {error}
                                 </p>
                             ) : entries.length === 0 ? (
-                                <p className='text-white/40 text-sm text-center py-4'>
+                                <p className='text-muted-foreground/70 text-sm text-center py-4'>
                                     No earnings in this period for {staffName}
                                 </p>
                             ) : (
                                 <>
                                     <div className='flex justify-between items-center mt-3 mb-2'>
-                                        <span className='text-xs text-white/50'>
+                                        <span className='text-xs text-muted-foreground'>
                                             {entries.filter(e => e.payment_status === "PENDING").length} pending entries
                                         </span>
                                         {entries.some(e => e.payment_status === "PENDING") && (
@@ -188,7 +190,7 @@ export default function StaffEarningsRow({
                                                         ? "opacity-60"
                                                         : selectedEntryIds.has(entry.id)
                                                           ? "bg-green-500/20"
-                                                          : "bg-white/5 hover:bg-white/10"
+                                                          : "bg-muted hover:bg-muted"
                                                 }`}
                                             >
                                                 {entry.payment_status === "PENDING" && (
@@ -208,12 +210,12 @@ export default function StaffEarningsRow({
                                                             {entry.service_description || "Service"}
                                                         </p>
                                                         {entry.staff_rate_snapshot?.serviceType && (
-                                                            <span className='text-xs px-1.5 py-0.5 rounded bg-white/10 text-white/60'>
+                                                            <span className='text-xs px-1.5 py-0.5 rounded bg-card text-muted-foreground'>
                                                                 {entry.staff_rate_snapshot.serviceType}
                                                             </span>
                                                         )}
                                                     </div>
-                                                    <p className='text-xs text-white/40'>
+                                                    <p className='text-xs text-muted-foreground/70'>
                                                         {new Date(entry.service_date).toLocaleDateString()}
                                                     </p>
                                                 </div>
@@ -221,7 +223,7 @@ export default function StaffEarningsRow({
                                                     <p className='text-sm font-bold text-green-400'>
                                                         {currencySymbol}{Number(entry.staff_cut).toFixed(2)}
                                                     </p>
-                                                    <span className={`text-[10px] px-1.5 py-0.5 rounded ${STATUS_COLORS[entry.payment_status] || "bg-white/10 text-white/60"}`}>
+                                                    <span className={`text-[10px] px-1.5 py-0.5 rounded ${STATUS_COLORS[entry.payment_status] || "bg-card text-muted-foreground"}`}>
                                                         {entry.payment_status}
                                                     </span>
                                                 </div>
@@ -229,9 +231,9 @@ export default function StaffEarningsRow({
                                         ))}
                                     </div>
                                     {selectedEntryIds.size > 0 && (
-                                        <div className='flex items-center justify-between pt-3 mt-3 border-t border-white/10'>
+                                        <div className='flex items-center justify-between pt-3 mt-3 border-t border-border'>
                                             <div>
-                                                <p className='text-xs text-white/50'>
+                                                <p className='text-xs text-muted-foreground'>
                                                     {selectedEntryIds.size} entries selected
                                                 </p>
                                                 <p className='text-lg font-bold text-green-400'>

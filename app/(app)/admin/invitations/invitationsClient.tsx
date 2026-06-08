@@ -74,13 +74,13 @@ export default function InvitationsClient() {
                     <KeyIcon className="w-6 h-6 text-blue-500" />
                     <div>
                         <h1 className="text-2xl font-bold">Invitation Codes</h1>
-                        <p className="text-white/60 text-sm">Manage user invitation codes</p>
+                        <p className="text-muted-foreground text-sm">Manage user invitation codes</p>
                     </div>
                 </div>
                 <button
                     onClick={fetchInvitations}
                     disabled={loading}
-                    className="flex items-center gap-2 px-3 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 bg-card hover:bg-muted rounded-md transition-colors"
                 >
                     <RefreshCwIcon className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
                     Refresh
@@ -95,18 +95,18 @@ export default function InvitationsClient() {
 
             {loading ? (
                 <div className="flex items-center justify-center py-12">
-                    <RefreshCwIcon className="w-8 h-8 animate-spin text-white/60" />
+                    <RefreshCwIcon className="w-8 h-8 animate-spin text-muted-foreground" />
                 </div>
             ) : invitations.length === 0 ? (
-                <div className="text-center py-12 text-white/60">
+                <div className="text-center py-12 text-muted-foreground">
                     <MailIcon className="w-12 h-12 mx-auto mb-4 opacity-30" />
                     <p>No pending invitations</p>
                 </div>
             ) : (
-                <div className="bg-white/5 border border-white/10 rounded-lg overflow-hidden">
+                <div className="bg-muted border border-border rounded-lg overflow-hidden">
                     <table className="w-full">
-                        <thead className="bg-white/5">
-                            <tr className="text-left text-sm text-white/60">
+                        <thead className="bg-muted">
+                            <tr className="text-left text-sm text-muted-foreground">
                                 <th className="px-4 py-3">Email</th>
                                 <th className="px-4 py-3">Role</th>
                                 <th className="px-4 py-3">Code</th>
@@ -117,7 +117,7 @@ export default function InvitationsClient() {
                         </thead>
                         <tbody className="divide-y divide-white/5">
                             {invitations.map((inv) => (
-                                <tr key={inv.id} className="hover:bg-white/5 transition-colors">
+                                <tr key={inv.id} className="hover:bg-muted transition-colors">
                                     <td className="px-4 py-3 font-medium">{inv.email}</td>
                                     <td className="px-4 py-3">
                                         <span className={`px-2 py-0.5 rounded text-xs border ${ROLE_COLORS[inv.role]}`}>
@@ -126,32 +126,32 @@ export default function InvitationsClient() {
                                     </td>
                                     <td className="px-4 py-3">
                                         <div className="flex items-center gap-2">
-                                            <code className="bg-white/10 px-2 py-1 rounded text-sm font-mono">
+                                            <code className="bg-card px-2 py-1 rounded text-sm font-mono">
                                                 {inv.token}
                                             </code>
                                             <button
                                                 onClick={() => copyToken(inv.token)}
-                                                className="p-1 hover:bg-white/10 rounded transition-colors"
+                                                className="p-1 hover:bg-muted rounded transition-colors"
                                                 title="Copy code"
                                             >
-                                                <CopyIcon className="w-4 h-4 text-white/60" />
+                                                <CopyIcon className="w-4 h-4 text-muted-foreground" />
                                             </button>
                                         </div>
                                     </td>
-                                    <td className="px-4 py-3 text-sm text-white/60">
+                                    <td className="px-4 py-3 text-sm text-muted-foreground">
                                         {formatDate(inv.created_at)}
                                     </td>
                                     <td className="px-4 py-3">
                                         {inv.expires_at ? (
-                                            <span className={isExpired(inv.expires_at) ? "text-red-400" : "text-white/60"}>
+                                            <span className={isExpired(inv.expires_at) ? "text-red-400" : "text-muted-foreground"}>
                                                 {formatDate(inv.expires_at)}
                                                 {isExpired(inv.expires_at) && " (Expired)"}
                                             </span>
                                         ) : (
-                                            <span className="text-white/40">Never</span>
+                                            <span className="text-muted-foreground/70">Never</span>
                                         )}
                                     </td>
-                                    <td className="px-4 py-3 text-sm text-white/60">
+                                    <td className="px-4 py-3 text-sm text-muted-foreground">
                                         {inv.creator_name}
                                     </td>
                                 </tr>

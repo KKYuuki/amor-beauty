@@ -5,10 +5,12 @@ import { SaveIcon, XIcon, PackageIcon, ShareIcon } from "lucide-react"
 import BaseModal from "@/components/inventory/BaseModal"
 import { Button } from "@/components/ui/button"
 import AdminActionGuard from "@/components/admin/AdminActionGuard"
-import { BranchSelectorInline } from "@/components/ui/branch-selector-inline"
+
 import { ServiceWithItems } from "@/server/actions/services"
 import { InventoryItem } from "@/utils/types/inventory"
 import { ServiceType } from "@/utils/types/payroll"
+
+const currentBranch: any = null;
 
 type ServiceFormState = {
     title: string
@@ -170,19 +172,19 @@ export default function ServiceModal({
             <div className="flex flex-col gap-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <label className="flex flex-col gap-1">
-                        <span className="text-sm text-white/60">Service Title</span>
+                        <span className="text-sm text-muted-foreground">Service Title</span>
                         <input
                             type="text"
                             value={formData.title}
                             onChange={(e) =>
                                 setFormData({ ...formData, title: e.target.value })
                             }
-                            className="bg-white/10 rounded-md px-3 py-2 text-sm"
+                            className="bg-card rounded-md px-3 py-2 text-sm"
                             placeholder="e.g., Haircut & Style"
                         />
                     </label>
                     <label className="flex flex-col gap-1">
-                        <span className="text-sm text-white/60">
+                        <span className="text-sm text-muted-foreground">
                             Base Price ({currencySymbol})
                         </span>
                         <input
@@ -191,12 +193,12 @@ export default function ServiceModal({
                             onChange={(e) =>
                                 setFormData({ ...formData, price: Number(e.target.value) })
                             }
-                            className="bg-white/10 rounded-md px-3 py-2 text-sm"
+                            className="bg-card rounded-md px-3 py-2 text-sm"
                             min="0"
                         />
                     </label>
                     <label className="flex flex-col gap-1">
-                        <span className="text-sm text-white/60">Pricing Type</span>
+                        <span className="text-sm text-muted-foreground">Pricing Type</span>
                         <select
                             value={formData.pricing_type}
                             onChange={(e) =>
@@ -205,7 +207,7 @@ export default function ServiceModal({
                                     pricing_type: e.target.value as "FIXED" | "HOURLY",
                                 })
                             }
-                            className="bg-white/10 rounded-md px-3 py-2 text-sm"
+                            className="bg-card rounded-md px-3 py-2 text-sm"
                         >
                             <option value="FIXED">Fixed Price</option>
                             <option value="HOURLY">Hourly Rate</option>
@@ -215,7 +217,7 @@ export default function ServiceModal({
 
                 {formData.pricing_type === "HOURLY" && (
                     <label className="flex flex-col gap-1">
-                        <span className="text-sm text-white/60">
+                        <span className="text-sm text-muted-foreground">
                             Hourly Rate ({currencySymbol}/hr)
                         </span>
                         <input
@@ -227,14 +229,14 @@ export default function ServiceModal({
                                     hourly_rate: Number(e.target.value),
                                 })
                             }
-                            className="bg-white/10 rounded-md px-3 py-2 text-sm"
+                            className="bg-card rounded-md px-3 py-2 text-sm"
                             min="0"
                         />
                     </label>
                 )}
 
                 <div className="flex flex-col gap-3">
-                    <span className="text-sm text-white/60">Service Type</span>
+                    <span className="text-sm text-muted-foreground">Service Type</span>
                     <div className="flex gap-2">
                         {(["HAIR", "NAILS", "FACIAL", "BODY_MASSAGE", "WAXING", "LASH_BROW", "MAKEUP"] as ServiceType[]).map((type) => (
                             <button
@@ -243,8 +245,8 @@ export default function ServiceModal({
                                 onClick={() => setFormData({ ...formData, service_type: type })}
                                 className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                                     formData.service_type === type
-                                        ? "bg-blue-500/30 border-2 border-blue-400 text-white"
-                                        : "bg-white/5 border-2 border-white/10 text-white/60 hover:border-white/20"
+                                        ? "bg-blue-500/30 border-2 border-blue-400 text-foreground"
+                                        : "bg-muted border-2 border-border text-muted-foreground hover:border-border"
                                 }`}
                             >
                                 {SERVICE_TYPE_LABELS[type] || type}
@@ -261,25 +263,18 @@ export default function ServiceModal({
                             onChange={(e) =>
                                 setFormData({ ...formData, is_shared: e.target.checked })
                             }
-                            className="w-4 h-4 rounded border-white/20 bg-white/10"
+                            className="w-4 h-4 rounded border-border bg-card"
                         />
-                        <ShareIcon size={16} className="text-white/60" />
-                        <span className="text-sm text-white/60">Share across all branches</span>
+                        <ShareIcon size={16} className="text-muted-foreground" />
+                        <span className="text-sm text-muted-foreground">Share across all branches</span>
                     </label>
                 </div>
 
-                {!formData.is_shared && (
-                    <BranchSelectorInline
-                        value={formData.branch_id}
-                        onChange={(id) => setFormData({ ...formData, branch_id: id })}
-                        showAllOption={true}
-                        label="Branch (optional)"
-                    />
-                )}
+                {/* Branch selector removed */}
 
                 <div className="flex flex-col gap-3">
                     <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium text-white/80">
+                        <span className="text-sm font-medium text-foreground">
                             Linked Inventory Items
                         </span>
                     </div>
@@ -290,12 +285,12 @@ export default function ServiceModal({
                             value={itemSearch}
                             onChange={(e) => setItemSearch(e.target.value)}
                             onFocus={() => setShowItemDropdown(true)}
-                            className="w-full bg-white/5 border border-white/10 rounded-md px-3 py-2 text-sm"
+                            className="w-full bg-muted border border-border rounded-md px-3 py-2 text-sm"
                         />
                         {showItemDropdown && (
-                            <div className="absolute z-50 w-full mt-1 bg-zinc-900 border border-white/10 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                            <div className="absolute z-50 w-full mt-1 bg-card border border-border rounded-md shadow-lg max-h-60 overflow-y-auto">
                                 {filteredItems.length === 0 ? (
-                                    <div className="px-3 py-2 text-sm text-white/40 text-center">
+                                    <div className="px-3 py-2 text-sm text-muted-foreground/70 text-center">
                                         {itemSearch ? "No matching items" : "No items available"}
                                     </div>
                                 ) : (
@@ -314,10 +309,10 @@ export default function ServiceModal({
                                                 setItemSearch("")
                                                 setShowItemDropdown(false)
                                             }}
-                                            className="w-full px-3 py-2 text-left hover:bg-white/10 text-sm text-left flex justify-between"
+                                            className="w-full px-3 py-2 text-left hover:bg-muted text-sm text-left flex justify-between"
                                         >
                                             <span>{item.name}</span>
-                                            <span className="text-white/60">
+                                            <span className="text-muted-foreground">
                                                 {currencySymbol}
                                                 {item.unit_price}
                                             </span>
@@ -329,7 +324,7 @@ export default function ServiceModal({
                     </div>
 
                     {formData.items.length === 0 ? (
-                        <div className="text-sm text-white/40 italic p-4 border border-dashed border-white/10 rounded-md text-center">
+                        <div className="text-sm text-muted-foreground/70 italic p-4 border border-dashed border-border rounded-md text-center">
                             No inventory items linked
                         </div>
                     ) : (
@@ -339,11 +334,11 @@ export default function ServiceModal({
                                 return (
                                     <div
                                         key={item.inventory_id}
-                                        className="flex items-center gap-3 bg-white/5 p-2 rounded-md"
+                                        className="flex items-center gap-3 bg-muted p-2 rounded-md"
                                     >
                                         <span className="flex-1 text-sm">{invItem?.name || "Unknown Item"}</span>
                                         <div className="flex items-center gap-2">
-                                            <span className="text-xs text-white/60">Qty:</span>
+                                            <span className="text-xs text-muted-foreground">Qty:</span>
                                             <input
                                                 type="number"
                                                 value={item.quantity}
@@ -355,7 +350,7 @@ export default function ServiceModal({
                                                     )
                                                     setFormData({ ...formData, items: newItems })
                                                 }}
-                                                className="w-16 bg-white/10 rounded px-2 py-1 text-sm"
+                                                className="w-16 bg-card rounded px-2 py-1 text-sm"
                                                 min="1"
                                             />
                                         </div>

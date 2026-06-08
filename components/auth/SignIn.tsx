@@ -25,11 +25,7 @@ export default function SignIn({ onSuccess }: SignInProps) {
 
     // Password requirements
     const checkPasswordRequirements = (pwd: string) => ({
-        length: pwd.length >= 12,
-        uppercase: /[A-Z]/.test(pwd),
-        lowercase: /[a-z]/.test(pwd),
-        number: /[0-9]/.test(pwd),
-        special: /[^A-Za-z0-9]/.test(pwd),
+        length: pwd.length >= 8,
     });
     const reqs = checkPasswordRequirements(password);
     const allRequirementsMet = Object.values(reqs).every(Boolean);
@@ -163,35 +159,31 @@ export default function SignIn({ onSuccess }: SignInProps) {
         }
     };
 
-    // Enable passkey autofill on mount (sign-in view only)
-    useEffect(() => {
-        if (!showSignUp && typeof window !== 'undefined' && 'PublicKeyCredential' in window) {
-            // Prevent duplicate autofill requests
-            if (autofillInProgressRef.current) return;
-            autofillInProgressRef.current = true;
-
-            // Small delay to let the form render and avoid immediate API call
-            const timer = setTimeout(() => {
-                handlePasskeySignIn(true);
-            }, 500);
-
-            return () => {
-                clearTimeout(timer);
-                autofillInProgressRef.current = false;
-            };
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showSignUp]);
+    // Passkey autofill disabled — causes WebAuthn errors when no passkeys are registered
+    // and can interfere with form stability on focus changes.
+    // useEffect(() => {
+    //     if (!showSignUp && typeof window !== 'undefined' && 'PublicKeyCredential' in window) {
+    //         if (autofillInProgressRef.current) return;
+    //         autofillInProgressRef.current = true;
+    //         const timer = setTimeout(() => {
+    //             handlePasskeySignIn(true);
+    //         }, 500);
+    //         return () => {
+    //             clearTimeout(timer);
+    //             autofillInProgressRef.current = false;
+    //         };
+    //     }
+    // }, [showSignUp]);
 
     return (
         <div className='w-full max-w-md mx-auto'>
-            <div className='bg-black/40 backdrop-blur-sm border border-white/10 rounded-lg p-6 shadow-xl'>
+            <div className='bg-background/80 backdrop-blur-xl border border-border rounded-lg p-6 shadow-2xl'>
                 {/* Header */}
                 <div className='text-center mb-6'>
-                    <h2 className='text-xl font-semibold text-white'>
+                    <h2 className='text-xl font-semibold text-foreground'>
                         {showSignUp ? 'Create Account' : 'Welcome Back'}
                     </h2>
-                    <p className='text-sm text-white/60 mt-1'>
+                    <p className='text-sm text-muted-foreground mt-1'>
                         {showSignUp 
                             ? 'Sign up with your invitation code' 
                             : 'Sign in to your account'}
@@ -207,7 +199,7 @@ export default function SignIn({ onSuccess }: SignInProps) {
                             exit={{ opacity: 0, y: -10 }}
                             className='mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-md'
                         >
-                            <p className='text-sm text-red-400'>{error}</p>
+                            <p className='text-sm text-red-500'>{error}</p>
                         </motion.div>
                     )}
                 </AnimatePresence>
@@ -223,42 +215,42 @@ export default function SignIn({ onSuccess }: SignInProps) {
                         {/* Password Form */}
                         <form onSubmit={handleEmailSignIn} className='space-y-4'>
                                 <div>
-                                    <label className='block text-sm font-medium text-white/70 mb-1.5'>
+                                    <label className='block text-sm font-medium text-foreground/80 mb-1.5'>
                                         Email
                                     </label>
                                     <div className='relative'>
-                                        <Mail className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40' />
+                                        <Mail className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground' />
                                         <input
                                             type='email'
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                             required
                                             autoComplete='username webauthn'
-                                            className='w-full bg-white/5 border border-white/10 rounded-md py-2.5 pl-10 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all'
+                                            className='w-full bg-background/50 border border-border rounded-md py-2.5 pl-10 pr-4 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all'
                                             placeholder='you@example.com'
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className='block text-sm font-medium text-white/70 mb-1.5'>
+                                    <label className='block text-sm font-medium text-foreground/80 mb-1.5'>
                                         Password
                                     </label>
                                     <div className='relative'>
-                                        <Lock className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40' />
+                                        <Lock className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground' />
                                         <input
                                             type={showPassword ? 'text' : 'password'}
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                             required
                                             autoComplete='current-password webauthn'
-                                            className='w-full bg-white/5 border border-white/10 rounded-md py-2.5 pl-10 pr-10 text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all'
+                                            className='w-full bg-background/50 border border-border rounded-md py-2.5 pl-10 pr-10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all'
                                             placeholder='Enter your password'
                                         />
                                         <button
                                             type='button'
                                             onClick={() => setShowPassword(!showPassword)}
-                                            className='absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/60 transition-colors'
+                                            className='absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors'
                                         >
                                             {showPassword ? (
                                                 <EyeClosedIcon className='w-4 h-4' />
@@ -272,13 +264,13 @@ export default function SignIn({ onSuccess }: SignInProps) {
                                 <button
                                     type='submit'
                                     disabled={isLoading}
-                                    className='w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-500/50 disabled:cursor-not-allowed text-white font-medium py-2.5 rounded-md transition-all duration-200 flex items-center justify-center gap-2'
+                                    className='w-full bg-primary hover:bg-primary/90 disabled:bg-primary/50 disabled:cursor-not-allowed text-primary-foreground font-medium py-2.5 rounded-md transition-all duration-200 flex items-center justify-center gap-2'
                                 >
                                     {isLoading ? (
                                         <motion.div
                                             animate={{ rotate: 360 }}
                                             transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                                            className='w-5 h-5 border-2 border-white/30 border-t-white rounded-full'
+                                            className='w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full'
                                         />
                                     ) : (
                                         <>
@@ -291,10 +283,10 @@ export default function SignIn({ onSuccess }: SignInProps) {
 
                         <div className='relative my-4'>
                             <div className='absolute inset-0 flex items-center'>
-                                <div className='w-full border-t border-white/10'></div>
+                                <div className='w-full border-t border-border'></div>
                             </div>
                             <div className='relative flex justify-center text-sm'>
-                                <span className='px-2 bg-black/40 text-white/40'>or</span>
+                                <span className='px-2 bg-background/80 text-muted-foreground'>or</span>
                             </div>
                         </div>
 
@@ -302,14 +294,14 @@ export default function SignIn({ onSuccess }: SignInProps) {
                             type='button'
                             onClick={() => handlePasskeySignIn(false)}
                             disabled={isLoading}
-                            className='w-full bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium py-2.5 rounded-md transition-all duration-200 flex items-center justify-center gap-2'
+                            className='w-full bg-card hover:bg-muted border border-border text-foreground font-medium py-2.5 rounded-md transition-all duration-200 flex items-center justify-center gap-2 shadow-sm'
                         >
                             <Fingerprint className='w-4 h-4' />
                             Sign in with passkey
                         </button>
 
                         {/* Toggle to Sign Up */}
-                        <p className='text-center text-sm text-white/60 mt-4'>
+                        <p className='text-center text-sm text-muted-foreground mt-4'>
                             Don&apos;t have an account?{' '}
                             <button
                                 type='button'
@@ -317,7 +309,7 @@ export default function SignIn({ onSuccess }: SignInProps) {
                                     setShowSignUp(true);
                                     setError(null);
                                 }}
-                                className='text-blue-400 hover:text-blue-300 font-medium'
+                                className='text-primary hover:text-primary/80 font-medium'
                             >
                                 Create one
                             </button>
@@ -335,58 +327,58 @@ export default function SignIn({ onSuccess }: SignInProps) {
                         className='space-y-4'
                     >
                         <div>
-                            <label className='block text-sm font-medium text-white/70 mb-1.5'>
+                            <label className='block text-sm font-medium text-foreground/80 mb-1.5'>
                                 Full Name
                             </label>
                             <div className='relative'>
-                                <KeyRound className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40' />
+                                <KeyRound className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground' />
                                 <input
                                     type='text'
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     required
-                                    className='w-full bg-white/5 border border-white/10 rounded-md py-2.5 pl-10 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all'
+                                    className='w-full bg-background/50 border border-border rounded-md py-2.5 pl-10 pr-4 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all'
                                     placeholder='John Doe'
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className='block text-sm font-medium text-white/70 mb-1.5'>
+                            <label className='block text-sm font-medium text-foreground/80 mb-1.5'>
                                 Email
                             </label>
                             <div className='relative'>
-                                <Mail className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40' />
+                                <Mail className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground' />
                                 <input
                                     type='email'
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
-                                    className='w-full bg-white/5 border border-white/10 rounded-md py-2.5 pl-10 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all'
+                                    className='w-full bg-background/50 border border-border rounded-md py-2.5 pl-10 pr-4 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all'
                                     placeholder='you@example.com'
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className='block text-sm font-medium text-white/70 mb-1.5'>
+                            <label className='block text-sm font-medium text-foreground/80 mb-1.5'>
                                 Password
                             </label>
                             <div className='relative'>
-                                <Lock className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40' />
+                                <Lock className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground' />
                                 <input
                                     type={showPassword ? 'text' : 'password'}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
-                                    minLength={12}
-                                    className='w-full bg-white/5 border border-white/10 rounded-md py-2.5 pl-10 pr-10 text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all'
-                                    placeholder='Create a password (min 12 chars)'
+                                    minLength={8}
+                                    className='w-full bg-background/50 border border-border rounded-md py-2.5 pl-10 pr-10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all'
+                                    placeholder='Create a password (min 8 chars)'
                                 />
                                 <button
                                     type='button'
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className='absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/60 transition-colors'
+                                    className='absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors'
                                 >
                                     {showPassword ? (
                                         <EyeClosedIcon className='w-4 h-4' />
@@ -398,51 +390,35 @@ export default function SignIn({ onSuccess }: SignInProps) {
                         </div>
 
                         {password.length > 0 && (
-                            <div className='bg-white/5 border border-white/10 rounded-lg px-3 py-2'>
-                                <span className='text-white/60 font-bold text-xs tracking-wider uppercase mb-2 block'>
+                            <div className='bg-background/50 border border-border rounded-lg px-3 py-2'>
+                                <span className='text-muted-foreground font-bold text-xs tracking-wider uppercase mb-2 block'>
                                     Password Requirements
                                 </span>
                                 <ul className='flex flex-col gap-1'>
-                                    <li className={`text-xs flex items-center gap-2 transition-colors ${reqs.length ? "text-blue-400 font-medium" : "text-white/40"}`}>
-                                        <span className={`w-1.5 h-1.5 rounded-full ${reqs.length ? "bg-blue-400" : "bg-white/20"}`}></span>
-                                        At least 12 characters
-                                    </li>
-                                    <li className={`text-xs flex items-center gap-2 transition-colors ${reqs.uppercase ? "text-blue-400 font-medium" : "text-white/40"}`}>
-                                        <span className={`w-1.5 h-1.5 rounded-full ${reqs.uppercase ? "bg-blue-400" : "bg-white/20"}`}></span>
-                                        One uppercase letter
-                                    </li>
-                                    <li className={`text-xs flex items-center gap-2 transition-colors ${reqs.lowercase ? "text-blue-400 font-medium" : "text-white/40"}`}>
-                                        <span className={`w-1.5 h-1.5 rounded-full ${reqs.lowercase ? "bg-blue-400" : "bg-white/20"}`}></span>
-                                        One lowercase letter
-                                    </li>
-                                    <li className={`text-xs flex items-center gap-2 transition-colors ${reqs.number ? "text-blue-400 font-medium" : "text-white/40"}`}>
-                                        <span className={`w-1.5 h-1.5 rounded-full ${reqs.number ? "bg-blue-400" : "bg-white/20"}`}></span>
-                                        One number
-                                    </li>
-                                    <li className={`text-xs flex items-center gap-2 transition-colors ${reqs.special ? "text-blue-400 font-medium" : "text-white/40"}`}>
-                                        <span className={`w-1.5 h-1.5 rounded-full ${reqs.special ? "bg-blue-400" : "bg-white/20"}`}></span>
-                                        One special character
+                                    <li className={`text-xs flex items-center gap-2 transition-colors ${reqs.length ? "text-primary font-medium" : "text-muted-foreground/70"}`}>
+                                        <span className={`w-1.5 h-1.5 rounded-full ${reqs.length ? "bg-primary" : "bg-muted-foreground/30"}`}></span>
+                                        At least 8 characters
                                     </li>
                                 </ul>
                             </div>
                         )}
 
                         <div>
-                            <label className='block text-sm font-medium text-white/70 mb-1.5'>
+                            <label className='block text-sm font-medium text-foreground/80 mb-1.5'>
                                 Invitation Code
                             </label>
                             <div className='relative'>
-                                <KeyRound className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40' />
+                                <KeyRound className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground' />
                                 <input
                                     type='text'
                                     value={invitationCode}
                                     onChange={(e) => setInvitationCode(e.target.value)}
                                     required
-                                    className='w-full bg-white/5 border border-white/10 rounded-md py-2.5 pl-10 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all'
+                                    className='w-full bg-background/50 border border-border rounded-md py-2.5 pl-10 pr-4 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all'
                                     placeholder='Enter your invitation code'
                                 />
                             </div>
-                            <p className='text-xs text-white/40 mt-1'>
+                            <p className='text-xs text-muted-foreground mt-1'>
                                 Sign up requires a valid invitation code
                             </p>
                         </div>
@@ -450,13 +426,13 @@ export default function SignIn({ onSuccess }: SignInProps) {
                         <button
                             type='submit'
                             disabled={isLoading || !allRequirementsMet}
-                            className='w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-500/50 disabled:cursor-not-allowed text-white font-medium py-2.5 rounded-md transition-all duration-200 flex items-center justify-center gap-2 mt-6'
+                            className='w-full bg-primary hover:bg-primary/90 disabled:bg-primary/50 disabled:cursor-not-allowed text-primary-foreground font-medium py-2.5 rounded-md transition-all duration-200 flex items-center justify-center gap-2 mt-6'
                         >
                             {isLoading ? (
                                 <motion.div
                                     animate={{ rotate: 360 }}
                                     transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                                    className='w-5 h-5 border-2 border-white/30 border-t-white rounded-full'
+                                    className='w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full'
                                 />
                             ) : (
                                 <>
@@ -467,7 +443,7 @@ export default function SignIn({ onSuccess }: SignInProps) {
                         </button>
 
                         {/* Toggle to Sign In */}
-                        <p className='text-center text-sm text-white/60 mt-4'>
+                        <p className='text-center text-sm text-muted-foreground mt-4'>
                             Already have an account?{' '}
                             <button
                                 type='button'
@@ -475,7 +451,7 @@ export default function SignIn({ onSuccess }: SignInProps) {
                                     setShowSignUp(false);
                                     setError(null);
                                 }}
-                                className='text-blue-400 hover:text-blue-300 font-medium'
+                                className='text-primary hover:text-primary/80 font-medium'
                             >
                                 Sign in
                             </button>
@@ -485,7 +461,7 @@ export default function SignIn({ onSuccess }: SignInProps) {
             </div>
 
             {/* Footer Info */}
-            <p className='text-center text-xs text-white/40 mt-6'>
+            <p className='text-center text-xs text-foreground/40 mt-6'>
                 By signing in, you agree to our Terms of Service and Privacy Policy
             </p>
         </div>

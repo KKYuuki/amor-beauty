@@ -99,6 +99,8 @@ export {
     transactionPaymentsRelations,
 } from './schema/transactions'
 
+
+
 // Services Schema
 export {
     services,
@@ -140,9 +142,5 @@ export {
     notifications,
 } from './schema/notifications'
 
-// Push Subscriptions Schema
-export {
-    pushSubscriptions,
-} from './schema/push-subscriptions'
-export type { PushSubscription, PushSubscriptionInsert } from './schema/push-subscriptions'
+
 

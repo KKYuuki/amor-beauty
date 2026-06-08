@@ -23,7 +23,6 @@ import { createLogs, logError } from './logs'
 import { createAutoLedgerEntry } from './accounting'
 import { deriveSalesCategoryAndDescription } from "./accounting-ledger-utils"
 import { calculateAndCreatePayrollEntry } from './payroll'
-import { getBranchById } from './branches'
 
 export type DateFilterPreset = DateRangePreset
 
@@ -161,7 +160,7 @@ export async function createTransaction(payload: CreateTransactionPayload): Prom
                 changeGiven: payload.change_given?.toString(),
                 referenceNumber: payload.reference_number ? sanitizeMinimal(payload.reference_number) : null,
                 status: payload.balance_due && payload.balance_due > 0 ? 'PARTIAL' : 'COMPLETED',
-                appointmentId: payload.appointment_id,
+                
                 notes: payload.notes ? sanitizeText(payload.notes) : null,
                 salesDescription: payload.sales_description ? sanitizeText(payload.sales_description) : null,
                 salesLabels: payload.sales_labels && payload.sales_labels.length > 0
@@ -485,7 +484,6 @@ function transformTransaction(
         change_given: dbTxn.changeGiven ? Number(dbTxn.changeGiven) : undefined,
         reference_number: dbTxn.referenceNumber || undefined,
         status: dbTxn.status as TransactionStatus,
-        appointment_id: dbTxn.appointmentId || undefined,
         client_type: dbTxn.clientType as ClientType | undefined,
         notes: dbTxn.notes || undefined,
         sales_description: dbTxn.salesDescription || undefined,
@@ -570,11 +568,7 @@ export async function getTransactions(options?: {
         const [staffMap, buyerMap, branchMap] = await Promise.all([
             Promise.all(staffIds.map(async (id) => ({ id, user: await getUserById(id!) }))).then(r => new Map(r.map(({ id, user }) => [id, user]))),
             Promise.all(buyerIds.map(async (id) => ({ id, user: await getUserById(id!) }))).then(r => new Map(r.map(({ id, user }) => [id, user]))),
-            Promise.all(branchIds.map(async (id) => {
-                const { getBranchById } = await import('./branches')
-                const result = await getBranchById(id!)
-                return { id, branch: result.success ? result.data : null }
-            })).then(r => new Map(r.map(({ id, branch }) => [id, branch]))),
+            Promise.resolve(new Map()),
         ])
 
         const transformedData = data.map(t =>
@@ -645,7 +639,7 @@ export async function getTransactionById(id: string): Promise<ActionResponse<Get
         const [staff, buyer, branchData] = await Promise.all([
             transaction.staffId ? getUserById(transaction.staffId) : null,
             transaction.buyerId ? getUserById(transaction.buyerId) : null,
-            transaction.branchId ? getBranchById(transaction.branchId).then(r => r.success ? r.data : null) : null,
+            null,
         ])
 
         const transformedTransaction = transformTransaction(
@@ -1585,12 +1579,6 @@ export async function generateReceipt(transactionId: string): Promise<ActionResp
 
     // Get branch name if branch_id exists
     let branchName = 'AMOR BEAUTY LOUNGE'
-    if (transaction.branch_id) {
-        const branchResult = await getBranchById(transaction.branch_id)
-        if (branchResult.success && branchResult.data) {
-            branchName = branchResult.data.name
-        }
-    }
 
     // Get staff name if staff_id exists
     let staffName: string | undefined

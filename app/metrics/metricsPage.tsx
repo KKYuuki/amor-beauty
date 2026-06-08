@@ -1,7 +1,7 @@
 "use client"
 import BusinessInsights from "@/components/metrics/businessInsights"
 import ExecutiveAccounting from "@/components/metrics/ExecutiveAccounting"
-import { useBranchContext } from "@/components/branch-context"
+
 import MetricsExportModal from "@/components/metrics/MetricsExportModal"
 import {
     BarChart3Icon,
@@ -13,12 +13,14 @@ import { getSetting } from "@/server/actions/settings"
 import { exportGroupedMetrics } from "@/server/actions/metrics"
 import { getDateRangeFromPreset } from "@/utils/date-utils"
 
+const currentBranch: any = null;
+
 export default function MetricsPageClient() {
     const [activeTab, setActiveTab] = useState<
         "insights" | "accounting"
     >("insights")
     const [showExportModal, setShowExportModal] = useState(false)
-    const { currentBranch } = useBranchContext()
+    
     const [currencySymbol, setCurrencySymbol] = useState("₱")
 
     useEffect(() => {
@@ -32,14 +34,14 @@ export default function MetricsPageClient() {
     return (
         <div className='flex flex-col gap-4'>
             {/* Tabs */}
-            <div className='flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-0 border-b-2 border-white/10 pb-2'>
+            <div className='flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-0 border-b-2 border-border pb-2'>
                 <div className='flex flex-row items-center gap-2'>
                     <button
                         onClick={() => setActiveTab("insights")}
                         className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg transition-colors font-medium text-sm ${
                             activeTab === "insights"
-                                ? "bg-white/10 text-white"
-                                : "text-white/60 hover:bg-white/5 hover:text-white"
+                                ? "bg-card text-foreground"
+                                : "text-muted-foreground hover:bg-muted hover:text-foreground"
                         }`}
                     >
                         <BarChart3Icon size={18} />
@@ -49,8 +51,8 @@ export default function MetricsPageClient() {
                         onClick={() => setActiveTab("accounting")}
                         className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg transition-colors font-medium text-sm ${
                             activeTab === "accounting"
-                                ? "bg-white/10 text-white"
-                                : "text-white/60 hover:bg-white/5 hover:text-white"
+                                ? "bg-card text-foreground"
+                                : "text-muted-foreground hover:bg-muted hover:text-foreground"
                         }`}
                     >
                         <BriefcaseIcon size={18} />
@@ -61,7 +63,7 @@ export default function MetricsPageClient() {
                 <div className='sm:ml-auto flex items-center gap-2'>
                     <button
                         onClick={() => setShowExportModal(true)}
-                        className='flex items-center gap-2 px-3 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-sm'
+                        className='flex items-center gap-2 px-3 py-2 bg-card hover:bg-muted rounded-lg transition-colors text-sm'
                     >
                         <DownloadIcon size={16} />
                         Export

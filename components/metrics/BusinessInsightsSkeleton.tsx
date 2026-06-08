@@ -12,7 +12,7 @@ export function BusinessInsightsSkeleton() {
 
             <div className='flex flex-col gap-4'>
                 <div className='flex items-center justify-between flex-wrap gap-4'>
-                    <div className='flex gap-2 p-1 bg-white/5 w-fit rounded-lg border border-white/5'>
+                    <div className='flex gap-2 p-1 bg-muted w-fit rounded-lg border border-border'>
                         {Array.from({ length: 4 }).map((_, i) => (
                             <Skeleton key={i} className='h-8 w-20 rounded-md' />
                         ))}
@@ -76,7 +76,7 @@ export function BusinessInsightsSkeleton() {
                 <Skeleton className='h-6 w-40' />
                 <div className='grid grid-cols-1 lg:grid-cols-3 gap-4'>
                     <MetricCardSkeleton count={1} />
-                    <div className='lg:col-span-2 bg-white/5 border-2 border-white/5 rounded-xl p-4 flex flex-col gap-4'>
+                    <div className='lg:col-span-2 bg-muted border-2 border-border rounded-xl p-4 flex flex-col gap-4'>
                         <Skeleton className='h-4 w-44' />
                         <Skeleton className='h-8 w-full' />
                         <Skeleton className='h-8 w-full' />

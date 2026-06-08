@@ -118,7 +118,7 @@ export default function RestockModal({
                 type='button'
                 onClick={onClose}
                 disabled={loading}
-                className='px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors disabled:opacity-50'
+                className='px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors disabled:opacity-50'
             >
                 Cancel
             </button>
@@ -160,7 +160,7 @@ export default function RestockModal({
                         type='date'
                         value={formData.restocked_at}
                         onChange={(e) => setFormData({...formData, restocked_at: e.target.value})}
-                        className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none transition-colors'
+                        className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none transition-colors'
                         required
                     />
                 </div>
@@ -177,7 +177,7 @@ export default function RestockModal({
                             min='0.01'
                             value={formData.quantity || ''}
                             onChange={(e) => updateTotal(parseFloat(e.target.value) || 0, formData.unit_cost)}
-                            className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none transition-colors'
+                            className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none transition-colors'
                             required
                         />
                     </div>
@@ -191,7 +191,7 @@ export default function RestockModal({
                             min='0'
                             value={formData.unit_cost || ''}
                             onChange={(e) => updateTotal(formData.quantity, parseFloat(e.target.value) || 0)}
-                            className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none transition-colors'
+                            className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none transition-colors'
                         />
                     </div>
                 </div>
@@ -218,7 +218,7 @@ export default function RestockModal({
                         value={formData.invoice_number}
                         onChange={(e) => setFormData({...formData, invoice_number: e.target.value})}
                         placeholder='e.g., INV-2024-001'
-                        className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none transition-colors'
+                        className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none transition-colors'
                     />
                 </div>
 
@@ -230,7 +230,7 @@ export default function RestockModal({
                         value={formData.supplier_name}
                         onChange={(e) => setFormData({...formData, supplier_name: e.target.value})}
                         placeholder='e.g., ABC Supplies Co.'
-                        className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none transition-colors'
+                        className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none transition-colors'
                     />
                 </div>
 
@@ -242,7 +242,7 @@ export default function RestockModal({
                         value={formData.order_reference}
                         onChange={(e) => setFormData({...formData, order_reference: e.target.value})}
                         placeholder='e.g., PO-2024-001'
-                        className='w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-white/30 outline-none transition-colors'
+                        className='w-full px-3 py-2 bg-card border border-border rounded-md focus:border-primary outline-none transition-colors'
                     />
                 </div>
 
@@ -254,7 +254,7 @@ export default function RestockModal({
                         className={`border-2 border-dashed rounded-md p-4 cursor-pointer transition-colors ${
                             isDragActive 
                                 ? 'border-blue-500 bg-blue-500/10' 
-                                : 'border-white/20 hover:border-white/40'
+                                : 'border-border hover:border-border'
                         }`}
                     >
                         <input {...getInputProps()} />
@@ -274,21 +274,21 @@ export default function RestockModal({
                                 </button>
                             </div>
                         ) : (
-                            <div className='flex flex-col items-center gap-2 text-white/60'>
+                            <div className='flex flex-col items-center gap-2 text-muted-foreground'>
                                 <UploadIcon className='w-8 h-8' />
                                 <p className='text-sm text-center'>
                                     {isDragActive 
                                         ? 'Drop the file here' 
                                         : 'Drag & drop invoice/delivery proof, or click to select'}
                                 </p>
-                                <p className='text-xs text-white/40'>PNG, JPG, or PDF up to 10MB</p>
+                                <p className='text-xs text-muted-foreground/70'>PNG, JPG, or PDF up to 10MB</p>
                             </div>
                         )}
                     </div>
                 </div>
 
                 {/* Create Accounting Entry Toggle */}
-                <label className='flex items-center gap-2 cursor-pointer p-3 bg-white/5 rounded-md'>
+                <label className='flex items-center gap-2 cursor-pointer p-3 bg-muted rounded-md'>
                     <input
                         type='checkbox'
                         checked={formData.create_accounting_entry}
@@ -297,7 +297,7 @@ export default function RestockModal({
                     />
                     <div>
                         <span className='text-sm font-medium'>Create accounting entry</span>
-                        <p className='text-xs text-white/50'>Automatically record this restock as an expense</p>
+                        <p className='text-xs text-muted-foreground'>Automatically record this restock as an expense</p>
                     </div>
                 </label>
             </form>

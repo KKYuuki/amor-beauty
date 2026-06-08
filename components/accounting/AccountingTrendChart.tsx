@@ -35,13 +35,13 @@ export default function AccountingTrendChart({
 }: AccountingTrendChartProps) {
   if (!data || data.length === 0) {
     return (
-      <div className='bg-white/5 border border-white/10 rounded-lg p-4'>
+      <div className='bg-muted border border-border rounded-lg p-4'>
         {title && (
-          <h3 className='text-sm font-semibold text-white/60 uppercase tracking-wider mb-3'>
+          <h3 className='text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3'>
             {title}
           </h3>
         )}
-        <div className='flex flex-col items-center justify-center py-12 text-white/40'>
+        <div className='flex flex-col items-center justify-center py-12 text-muted-foreground/70'>
           <p className='text-sm'>No data for selected period</p>
         </div>
       </div>
@@ -49,9 +49,9 @@ export default function AccountingTrendChart({
   }
 
   return (
-    <div className='bg-white/5 border border-white/10 rounded-lg p-4'>
+    <div className='bg-muted border border-border rounded-lg p-4'>
       {title && (
-        <h3 className='text-sm font-semibold text-white/60 uppercase tracking-wider mb-3'>
+        <h3 className='text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3'>
           {title}
         </h3>
       )}

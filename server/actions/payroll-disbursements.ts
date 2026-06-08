@@ -15,7 +15,6 @@ import { cache } from '@/utils/cache'
 import { createLogs, logError } from "./logs"
 import { completePayrollRequest } from "./payroll"
 import { CreateDisbursementSchema } from "./payroll-schemas"
-import { sendPushToUser } from './push-trigger'
 
 export interface CreateDisbursementInput {
     request_id: string
@@ -183,22 +182,6 @@ export async function createDisbursement(
         cache.invalidate('payroll_dashboard')
         cache.invalidate('staff_payroll')
         cache.invalidate('business_insights')
-        cache.invalidate('exec_accounting')
-
-        // Push notification: notify the staff that their payroll has been disbursed
-        // Fire-and-forget — never blocks the response
-        sendPushToUser(request.staffId, {
-          title: 'Payroll Disbursed',
-          body: 'Your payroll has been disbursed',
-          icon: '/icon-192.png',
-          badge: '/icon-192.png',
-          tag: `payroll-disbursement-${disbursement.id}`,
-          data: {
-            path: '/my-payroll',
-            requestId: payload.request_id,
-          },
-        })
-
         return success({ disbursement_id: disbursement.id })
     } catch (error) {
         await logError({

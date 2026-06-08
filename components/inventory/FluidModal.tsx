@@ -157,7 +157,7 @@ export default function FluidModal({
                 type="button"
                 onClick={onClose}
                 disabled={loading}
-                className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md transition-colors disabled:opacity-50"
+                className="px-4 py-2 bg-card hover:bg-muted rounded-md transition-colors disabled:opacity-50"
             >
                 Cancel
             </button>
@@ -201,7 +201,7 @@ export default function FluidModal({
                             )
                             setSelectedItem(item || null)
                         }}
-                        className="w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-cyan-500/50 outline-none transition-colors"
+                        className="w-full px-3 py-2 bg-card border border-border rounded-md focus:border-cyan-500/50 outline-none transition-colors"
                         required
                         disabled={loading}
                     >
@@ -218,14 +218,14 @@ export default function FluidModal({
                     <>
                         {/* Stock Info */}
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="p-3 bg-white/5 rounded-lg border border-white/10">
-                                <p className="text-sm text-white/60">Current Stock</p>
+                            <div className="p-3 bg-muted rounded-lg border border-border">
+                                <p className="text-sm text-muted-foreground">Current Stock</p>
                                 <p className="text-lg font-bold">
                                     {selectedItem.current_stock}
                                 </p>
                             </div>
-                            <div className="p-3 bg-white/5 rounded-lg border border-white/10">
-                                <p className="text-sm text-white/60">New Stock</p>
+                            <div className="p-3 bg-muted rounded-lg border border-border">
+                                <p className="text-sm text-muted-foreground">New Stock</p>
                                 <p
                                     className={`text-lg font-bold ${
                                         (calculateNewStock() || 0) <
@@ -242,21 +242,21 @@ export default function FluidModal({
                         {/* Fluid Details */}
                         <div className="grid grid-cols-3 gap-4 p-4 bg-cyan-500/5 border border-cyan-500/20 rounded-lg">
                             <div className="text-center">
-                                <p className="text-sm text-white/60">Full Container</p>
+                                <p className="text-sm text-muted-foreground">Full Container</p>
                                 <p className="text-lg font-bold">
                                     {selectedItem.fluid_unit_size}{" "}
                                     {selectedItem.fluid_unit_of_measure}
                                 </p>
                             </div>
                             <div className="text-center">
-                                <p className="text-sm text-white/60">Remaining</p>
+                                <p className="text-sm text-muted-foreground">Remaining</p>
                                 <p className="text-lg font-bold">
                                     {selectedItem.fluid_remaining}{" "}
                                     {selectedItem.fluid_unit_of_measure}
                                 </p>
                             </div>
                             <div className="text-center">
-                                <p className="text-sm text-white/60">After</p>
+                                <p className="text-sm text-muted-foreground">After</p>
                                 <p className="text-lg font-bold">
                                     {calculateNewRemaining()}{" "}
                                     {selectedItem.fluid_unit_of_measure}
@@ -279,11 +279,11 @@ export default function FluidModal({
                                     setFluidSubtract(e.target.value)
                                 }
                                 placeholder={`Enter amount in ${selectedItem.fluid_unit_of_measure}...`}
-                                className="w-full px-3 py-2 bg-white/10 border border-white/10 rounded-md focus:border-cyan-500/50 outline-none transition-colors"
+                                className="w-full px-3 py-2 bg-card border border-border rounded-md focus:border-cyan-500/50 outline-none transition-colors"
                                 required
                                 disabled={loading}
                             />
-                            <p className="mt-2 text-xs text-white/60">
+                            <p className="mt-2 text-xs text-muted-foreground">
                                 If amount exceeds remaining, it will carry over
                                 to the next container.
                             </p>

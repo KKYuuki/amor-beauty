@@ -2,6 +2,7 @@
 
 import { ReactNode } from "react"
 import { TrendingUpIcon, TrendingDownIcon, MinusIcon } from "lucide-react"
+import { Surfaces } from "@/components/ui/design-system"
 
 interface StatCardProps {
   label: string
@@ -14,16 +15,16 @@ interface StatCardProps {
 }
 
 const colorMap = {
-  default: "",
-  success: "text-green-400",
-  warning: "text-yellow-400",
-  danger: "text-red-400",
+  default: "text-foreground",
+  success: "text-green-600",
+  warning: "text-amber-600",
+  danger: "text-red-600",
 }
 
 const trendColorMap = {
-  up: "text-green-400",
-  down: "text-red-400",
-  neutral: "text-white/60",
+  up: "text-green-600",
+  down: "text-red-600",
+  neutral: "text-muted-foreground",
 }
 
 export default function StatCard({
@@ -49,11 +50,11 @@ export default function StatCard({
 
   return (
     <div
-      className={`bg-white/5 border border-white/10 rounded-lg p-4 ${className}`}
+      className={`${Surfaces.card} p-4 ${className}`}
     >
       <div className='flex items-start justify-between gap-4'>
         <div className='flex-1 min-w-0'>
-          <p className='text-xs sm:text-sm text-white/60'>{label}</p>
+          <p className='text-xs sm:text-sm text-muted-foreground'>{label}</p>
           <p
             className={`text-lg sm:text-2xl font-bold mt-1 ${colorMap[color] || ""} whitespace-nowrap overflow-hidden text-ellipsis min-w-0`}
           >
@@ -69,7 +70,7 @@ export default function StatCard({
           )}
         </div>
         {icon && (
-          <div className='shrink-0 text-white/40'>{icon}</div>
+          <div className='shrink-0 text-muted-foreground/70'>{icon}</div>
         )}
       </div>
     </div>

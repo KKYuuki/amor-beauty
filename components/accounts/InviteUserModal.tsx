@@ -49,7 +49,7 @@ export default function InviteUserModal({ onClose, onSuccess }: InviteUserModalP
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className='fixed top-1/2 left-1/2 -translate-1/2 bg-black/90 border-2 border-white/10 rounded-3xl px-4 py-5 flex flex-col gap-4 w-lg max-w-[calc(100%-1rem)] z-10'
+            className='fixed top-1/2 left-1/2 -translate-1/2 bg-black/90 border-2 border-border rounded-3xl px-4 py-5 flex flex-col gap-4 w-lg max-w-[calc(100%-1rem)] z-10'
         >
             <div className='flex flex-row gap-4 items-center justify-between font-bold'>
                 <div className='flex items-center gap-2'>
@@ -59,35 +59,35 @@ export default function InviteUserModal({ onClose, onSuccess }: InviteUserModalP
                 <button
                     title='Close'
                     type='button'
-                    className='p-1 transition-colors rounded-md bg-transparent hover:bg-white/10 cursor-pointer'
+                    className='p-1 transition-colors rounded-md bg-transparent hover:bg-muted cursor-pointer'
                     onClick={onClose}
                 >
                     <XIcon size={18} />
                 </button>
             </div>
 
-            <p className='text-sm text-white/60'>
+            <p className='text-sm text-muted-foreground'>
                 Send an invitation email to allow someone to join the system. They will receive a link to create their account.
             </p>
 
             <div className='flex flex-col gap-4'>
-                <label className='flex flex-col gap-1 font-semibold text-sm text-white/40'>
+                <label className='flex flex-col gap-1 font-semibold text-sm text-muted-foreground/70'>
                     Email Address
                     <input
                         type='email'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder='user@example.com'
-                        className='bg-white/5 border-2 border-white/10 rounded-lg px-2 py-1 text-white font-normal transition-colors hover:bg-white/10'
+                        className='bg-muted border-2 border-border rounded-lg px-2 py-1 text-foreground font-normal transition-colors hover:bg-muted'
                     />
                 </label>
 
-                <label className='flex flex-col gap-1 font-semibold text-sm text-white/40'>
+                <label className='flex flex-col gap-1 font-semibold text-sm text-muted-foreground/70'>
                     Role
                     <select
                         value={role}
                         onChange={(e) => setRole(e.target.value as UserRoleType)}
-                        className='bg-white/5 border-2 border-white/10 rounded-lg px-2 py-1 text-white font-normal cursor-pointer transition-colors hover:bg-white/10'
+                        className='bg-muted border-2 border-border rounded-lg px-2 py-1 text-foreground font-normal cursor-pointer transition-colors hover:bg-muted'
                     >
                         <option value='admin'>Admin</option>
                         <option value='manager'>Manager</option>
@@ -103,7 +103,7 @@ export default function InviteUserModal({ onClose, onSuccess }: InviteUserModalP
                 <button
                     title='Cancel'
                     type='button'
-                    className='bg-white/5 px-4 py-1 font-semibold border-2 border-white/10 rounded-lg cursor-pointer transition-colors hover:bg-white/10'
+                    className='bg-muted px-4 py-1 font-semibold border-2 border-border rounded-lg cursor-pointer transition-colors hover:bg-muted'
                     onClick={onClose}
                     disabled={isLoading}
                 >
@@ -112,7 +112,7 @@ export default function InviteUserModal({ onClose, onSuccess }: InviteUserModalP
                 <button
                     title='Send Invitation'
                     type='button'
-                    className='bg-blue-400/20 px-4 py-1 font-semibold border-2 border-white/10 rounded-lg cursor-pointer transition-colors hover:bg-blue-400/30 disabled:opacity-50 disabled:cursor-not-allowed'
+                    className='bg-blue-400/20 px-4 py-1 font-semibold border-2 border-border rounded-lg cursor-pointer transition-colors hover:bg-blue-400/30 disabled:opacity-50 disabled:cursor-not-allowed'
                     onClick={handleSubmit}
                     disabled={isLoading}
                 >
