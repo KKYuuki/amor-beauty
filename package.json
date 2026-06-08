@@ -5,8 +5,8 @@
     "packageManager": "bun@1.1.38",
     "scripts": {
         "dev": "next dev --turbopack --experimental-https",
-        "build": "bun run db:migrate && next build --turbopack",
-        "start": "next start",
+        "build": "next build --turbopack",
+        "start": "bun run db:migrate && next start",
         "lint": "eslint",
         "typecheck": "tsc --noEmit",
         "merge": "git as-work && git checkout prod && git merge dev && git push origin prod && git checkout dev && git as-personal",
