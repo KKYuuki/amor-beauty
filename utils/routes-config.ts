@@ -5,6 +5,7 @@ export interface RouteConfig {
     iconName: string
     group?: 'core' | 'management' | 'admin'
     exactMatch?: boolean
+    hidden?: boolean  // route exists but does not appear in sidebar
     fallbackPerms?: string[]  // optional — users with ANY of these flags can access in view-only mode
 }
 
@@ -89,8 +90,14 @@ export const routeConfig: RouteConfig[] = [
         href: "/metrics",
         perms: "metrics_view",
         iconName: "ChartAreaIcon",
-        group: "admin"
-
+    },
+    {
+        title: "Branches",
+        href: "/admin/branches",
+        perms: "admin",
+        iconName: "Building2Icon",
+        group: "admin",
+        hidden: true
     },
     {
         title: "System Logs",

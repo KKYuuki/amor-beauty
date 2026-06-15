@@ -48,15 +48,15 @@ export const routes: Route[] = routeConfig.map(route => ({
 export const routeGroups = {
     core: {
         title: "Core",
-        routes: routes.filter(r => r.group === 'core')
+        routes: routes.filter(r => r.group === 'core' && !r.hidden)
     },
     management: {
         title: "Management",
-        routes: routes.filter(r => r.group === 'management')
+        routes: routes.filter(r => r.group === 'management' && !r.hidden)
     },
     admin: {
         title: "Admin",
-        routes: routes.filter(r => r.group === 'admin')
+        routes: routes.filter(r => r.group === 'admin' && !r.hidden)
     }
 } as const
 

@@ -118,9 +118,10 @@ export const config = {
          * - unauthorized (the page we redirect to)
          * - api/auth (Better-Auth API routes — CRITICAL: must be excluded!)
          * - api/* (API routes)
+         * - kiosk (public customer-facing kiosk — no auth required)
          * - icon.svg (public asset)
          * - public assets (images, etc)
          */
-        '/((?!_next/static|_next/image|favicon.ico|auth|unauthorized|api|icon.svg|.*\\.(?:jpg|jpeg|gif|png|svg|ico)).*)',
+        '/((?!_next/static|_next/image|favicon.ico|auth|unauthorized|api|kiosk|icon.svg|.*\\.(?:jpg|jpeg|gif|png|svg|ico)).*)',
     ],
 }
